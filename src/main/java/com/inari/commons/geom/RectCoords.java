@@ -38,9 +38,9 @@ package com.inari.commons.geom;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
-public class RectCoords implements IStringConfigurable {
+public class RectCoords implements StringConfigurable {
     
     public final float[][] coords;
     

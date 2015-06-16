@@ -43,7 +43,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class FileResourceLoader implements IResourceLoader {
+public class FileResourceLoader implements ResourceLoader {
     
     private String configId;
     private File baseDir;

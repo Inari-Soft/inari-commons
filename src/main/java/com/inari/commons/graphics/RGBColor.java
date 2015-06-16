@@ -38,10 +38,10 @@ package com.inari.commons.graphics;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
 
-public final class RGBColor implements IStringConfigurable {
+public final class RGBColor implements StringConfigurable {
     
     // TODO remove static references (Color is mutable so we should create always a new instance)
     

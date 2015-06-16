@@ -40,9 +40,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
-public class PositionPath implements IStringConfigurable, Iterable<Position> {
+public class PositionPath implements StringConfigurable, Iterable<Position> {
     
     private List<Position> positionPath = new ArrayList<Position>();
 

@@ -38,10 +38,10 @@ package com.inari.commons.geom;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
 
-public class Position implements IStringConfigurable {
+public class Position implements StringConfigurable {
     
     public int x;
     public int y;

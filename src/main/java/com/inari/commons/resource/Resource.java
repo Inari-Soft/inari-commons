@@ -40,22 +40,22 @@ import java.io.InputStream;
 import java.net.URL;
 
 import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
+import com.inari.commons.config.ConfigObject;
 
 
-public class Resource implements IConfigObject {
+public class Resource implements ConfigObject {
     
     private String configId;
     
     @Configured( required=true )
     private String name;
     @Configured( required=true )
-    private IResourceLoader loader;
+    private ResourceLoader loader;
     
     public Resource() {
     }
     
-    public Resource( String name, IResourceLoader loader ) {
+    public Resource( String name, ResourceLoader loader ) {
         this.name = name;
         this.loader = loader;
     }
@@ -102,7 +102,7 @@ public class Resource implements IConfigObject {
         return loader.exists( this );
     }
     
-    public IResourceLoader loader() {
+    public ResourceLoader loader() {
         return loader;
     }
 

@@ -35,9 +35,9 @@
 */
 package com.inari.commons.geom;
 
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
-public final class Vector1i implements IStringConfigurable {
+public final class Vector1i implements StringConfigurable {
     
     public int d;
     

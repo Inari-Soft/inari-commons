@@ -32,13 +32,28 @@
 * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
-*/
-package com.inari.commons.config;
+*/ 
+package com.inari.commons.resource;
 
-public interface IConfigObject {
+import java.io.InputStream;
+import java.net.URL;
+
+import com.inari.commons.config.ConfigObject;
+import com.inari.commons.config.StringConfigurable;
+
+
+public interface ResourceLoader extends ConfigObject, StringConfigurable {
     
-    public String configId();
+    public String rootPath();
     
-    public void configId( String id );
+    public boolean exists( Resource resource );
+    
+    public InputStream inputStream( Resource resource );
+    
+    public String path( Resource resource );
+    
+    public URL url( Resource resource );
+    
+    
 
 }

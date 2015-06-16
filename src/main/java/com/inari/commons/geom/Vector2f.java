@@ -36,9 +36,9 @@
 package com.inari.commons.geom;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.IStringConfigurable;
+import com.inari.commons.config.StringConfigurable;
 
-public final class Vector2f implements IStringConfigurable {
+public final class Vector2f implements StringConfigurable {
     
     public float dx;
     public float dy;

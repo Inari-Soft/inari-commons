@@ -39,7 +39,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 
-public class ClassPathResourceLoader implements IResourceLoader {
+public class ClassPathResourceLoader implements ResourceLoader {
     
     private String configId;
     private String rootPath;

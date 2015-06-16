@@ -35,10 +35,10 @@
 */
 package com.inari.commons.config;
 
-public interface IStringConfigurable {
+public interface ConfigObject {
     
-    public void fromConfigString( String stringValue );
+    public String configId();
     
-    public String toConfigString();
+    public void configId( String id );
 
 }
