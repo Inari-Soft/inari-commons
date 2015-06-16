@@ -47,7 +47,7 @@ public class IndexedTypeSet extends AbstractIndexedBag {
     
     public IndexedTypeSet( Class<? extends IndexedType> indexedType ) {
         super( indexedType );
-        indexed = new Indexed[ IndexProvider.getIndexedTypeSize( indexedType ) ];
+        indexed = new Indexed[ Indexer.getIndexedTypeSize( indexedType ) ];
     }
     
     public IndexedTypeSet( Class<? extends IndexedType> indexedType, int length ) {
@@ -64,7 +64,7 @@ public class IndexedTypeSet extends AbstractIndexedBag {
         if ( indexed == null ) {
             return null;
         }
-        IndexProvider.checkIndexedType( indexed, indexedType );
+        Indexer.checkIndexedType( indexed, indexedType );
         ensureCapacity( indexed.index() );
         
         Indexed old = this.indexed[ indexed.index() ];
@@ -85,13 +85,13 @@ public class IndexedTypeSet extends AbstractIndexedBag {
     }
     
     public final Indexed remove( Indexed indexed ) {
-        IndexProvider.checkIndexedType( indexed, indexedType );
+        Indexer.checkIndexedType( indexed, indexedType );
         return this.remove( indexed.index() );
     }
     
     public final <I extends Indexed> I remove( Class<I> indexType ) {
-        IndexProvider.checkIndexedType( indexType, indexedType );
-        return indexType.cast( remove( IndexProvider.getIndexForType( indexType, indexedType ) ) );
+        Indexer.checkIndexedType( indexType, indexedType );
+        return indexType.cast( remove( Indexer.getIndexForType( indexType, indexedType ) ) );
     }
     
     public final Indexed remove( int index ) {
@@ -105,7 +105,7 @@ public class IndexedTypeSet extends AbstractIndexedBag {
     }
     
     public final <I extends Indexed> I get( Class<I> type ) {
-        int typeIndex = IndexProvider.getIndexForType( type, indexedType );
+        int typeIndex = Indexer.getIndexForType( type, indexedType );
         Indexed indexed = this.indexed[ typeIndex ];
         return type.cast( indexed );
     }

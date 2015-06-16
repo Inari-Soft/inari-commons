@@ -22,7 +22,7 @@ public final class IndexedTypeMap<V> extends AbstractIndexedBag implements Itera
     }
 
     public final V put( Class<? extends Indexed> type, V value ) {
-        return put( IndexProvider.getIndexForType( type, indexedType ), value );
+        return put( Indexer.getIndexForType( type, indexedType ), value );
     }
     
     public final V put( int index, V value ) {
@@ -42,7 +42,7 @@ public final class IndexedTypeMap<V> extends AbstractIndexedBag implements Itera
         if ( type == null ) {
             return null;
         }
-        return remove( IndexProvider.getIndexForType( type, indexedType ) );
+        return remove( Indexer.getIndexForType( type, indexedType ) );
     }
     
     public final V remove( Indexed indexed ) {
@@ -73,12 +73,12 @@ public final class IndexedTypeMap<V> extends AbstractIndexedBag implements Itera
     }
 
     public final V getValue( Indexed indexed ) {
-        IndexProvider.checkIndexedType( indexed.getClass(), indexedType );
+        Indexer.checkIndexedType( indexed.getClass(), indexedType );
         return getValue( indexed.index() );
     }
     
     public final V getValue( Class<? extends Indexed> type ) {
-        return getValue( IndexProvider.getIndexForType( type, indexedType ) );
+        return getValue( Indexer.getIndexForType( type, indexedType ) );
     }
     
     public final V getValueNoCheck( int index ) {
@@ -129,7 +129,7 @@ public final class IndexedTypeMap<V> extends AbstractIndexedBag implements Itera
         if ( indexed != null ) {
             for ( int i = 0; i < indexed.length; i++ ) {
                 if ( indexed[ i ] != null ) {
-                    builder.append( "\n    " ).append( IndexProvider.getTypeForIndex( indexedType, i ).getSimpleName() ).append( ":" ).append( String.valueOf( indexed[ i ] ) );
+                    builder.append( "\n    " ).append( Indexer.getTypeForIndex( indexedType, i ).getSimpleName() ).append( ":" ).append( String.valueOf( indexed[ i ] ) );
                 }
             }
         }

@@ -13,7 +13,7 @@ public class EventDispatcherTest {
     public void testCreation() {
         IEventDispatcher eventDispatcher = new EventDispatcher();
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=0\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=0\n" + 
             "  map: {\n" + 
             "  }\n" + 
             "]]", 
@@ -39,7 +39,7 @@ public class EventDispatcherTest {
         eventDispatcher.register( SimpleTestEvent2.class, listener22 );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    SimpleTestEvent1:[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]]\n" + 
             "    SimpleTestEvent2:[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]]\n" + 
@@ -51,7 +51,7 @@ public class EventDispatcherTest {
         eventDispatcher.notify( new SimpleTestEvent1() );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    SimpleTestEvent1:[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1]]\n" + 
             "    SimpleTestEvent2:[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]]\n" + 
@@ -63,7 +63,7 @@ public class EventDispatcherTest {
         eventDispatcher.notify( new SimpleTestEvent2() );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    SimpleTestEvent1:[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1]]\n" + 
             "    SimpleTestEvent2:[GenericTestEventListener [lastCall=SimpleTestEvent2], GenericTestEventListener [lastCall=SimpleTestEvent2]]\n" + 
@@ -85,7 +85,7 @@ public class EventDispatcherTest {
         eventDispatcher.register( CTestEvent2.class, listener2 );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    CTestEvent1:[CombinedTestEventListener [event1Notified=false, event2Notified=false]]\n" + 
             "    CTestEvent2:[CombinedTestEventListener [event1Notified=false, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false]]\n" + 
@@ -97,7 +97,7 @@ public class EventDispatcherTest {
         eventDispatcher.notify( new CTestEvent1() );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    CTestEvent1:[CombinedTestEventListener [event1Notified=true, event2Notified=false]]\n" + 
             "    CTestEvent2:[CombinedTestEventListener [event1Notified=true, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false]]\n" + 
@@ -109,7 +109,7 @@ public class EventDispatcherTest {
         eventDispatcher.notify( new CTestEvent2() );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=2\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=2\n" + 
             "  map: {\n" + 
             "    CTestEvent1:[CombinedTestEventListener [event1Notified=true, event2Notified=true]]\n" + 
             "    CTestEvent2:[CombinedTestEventListener [event1Notified=true, event2Notified=true], CombinedTestEventListener [event1Notified=false, event2Notified=true]]\n" + 
@@ -131,56 +131,56 @@ public class EventDispatcherTest {
         
         AspectedTestEventListener listener = new AspectedTestEventListener( filterAspect );
         
-        eventDispatcher.register( AspectedEvent.class, listener );
+        eventDispatcher.register( TestAspectedEvent.class, listener );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=1\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=1\n" + 
             "  map: {\n" + 
-            "    AspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
+            "    TestAspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
             "  }\n" + 
             "]]", 
             eventDispatcher.toString() 
         );
         
-        eventDispatcher.notify( new AspectedEvent( noMatchAspect1 ) );
+        eventDispatcher.notify( new TestAspectedEvent( noMatchAspect1 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=1\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=1\n" + 
             "  map: {\n" + 
-            "    AspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
+            "    TestAspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
             "  }\n" + 
             "]]", 
             eventDispatcher.toString() 
         );
         
-        eventDispatcher.notify( new AspectedEvent( noMatchAspect2 ) );
+        eventDispatcher.notify( new TestAspectedEvent( noMatchAspect2 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=1\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=1\n" + 
             "  map: {\n" + 
-            "    AspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
+            "    TestAspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]]\n" + 
             "  }\n" + 
             "]]", 
             eventDispatcher.toString() 
         );
         
-        eventDispatcher.notify( new AspectedEvent( matchAspect1 ) );
+        eventDispatcher.notify( new TestAspectedEvent( matchAspect1 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=1\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=1\n" + 
             "  map: {\n" + 
-            "    AspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 3} ]]]]\n" + 
+            "    TestAspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 3} ]]]]\n" + 
             "  }\n" + 
             "]]", 
             eventDispatcher.toString() 
         );
         
-        eventDispatcher.notify( new AspectedEvent( matchAspect2 ) );
+        eventDispatcher.notify( new TestAspectedEvent( matchAspect2 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=IndexedTypeMap [indexedType=IEvent, valueType=List, size=1\n" + 
+            "EventDispatcher [listeners=IndexedTypeMap [indexedType=Event, valueType=List, size=1\n" + 
             "  map: {\n" + 
-            "    AspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 2, 3} ]]]]\n" + 
+            "    TestAspectedEvent:[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 2, 3} ]]]]\n" + 
             "  }\n" + 
             "]]", 
             eventDispatcher.toString() 

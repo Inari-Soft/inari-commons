@@ -56,12 +56,12 @@ public final class IndexedAspect extends Aspect {
     }
 
     public boolean contains( Class<? extends Indexed> indexType ) {
-        IndexProvider.checkIndexedType( indexType, indexedType );
-        return contains( IndexProvider.getIndexForType( indexType, indexedType ) );
+        Indexer.checkIndexedType( indexType, indexedType );
+        return contains( Indexer.getIndexForType( indexType, indexedType ) );
     }
     
     public boolean contains( Indexed indexed ) {
-        IndexProvider.checkIndexedType( indexed.getClass(), indexedType );
+        Indexer.checkIndexedType( indexed.getClass(), indexedType );
         return contains( indexed.index() );
     }
 
@@ -86,7 +86,7 @@ public final class IndexedAspect extends Aspect {
         for ( int i = 0; i < bitset.size(); i++ ) {
             if ( bitset.get( i ) ) {
                 typeAdded = true;
-                sb.append( IndexProvider.getTypeForIndex( indexedType, i ).getSimpleName() ).append( "," );
+                sb.append( Indexer.getTypeForIndex( indexedType, i ).getSimpleName() ).append( "," );
             }
         }
         if ( typeAdded ) {

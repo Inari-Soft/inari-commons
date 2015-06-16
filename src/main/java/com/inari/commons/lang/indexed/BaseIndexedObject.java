@@ -7,15 +7,15 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     protected int indexedId;
     
     protected BaseIndexedObject() {
-        indexedId = IndexProvider.nextObjectIndex( getIndexedObjectType() );
+        indexedId = Indexer.nextObjectIndex( getIndexedObjectType() );
     }
     
     protected BaseIndexedObject( int indexedId ) {
         if ( indexedId < 0 ) {
-            this.indexedId = IndexProvider.nextObjectIndex( getIndexedObjectType() );
+            this.indexedId = Indexer.nextObjectIndex( getIndexedObjectType() );
         } else {
             this.indexedId = indexedId;
-            IndexProvider.setIndexedObjectIndex( this );
+            Indexer.setIndexedObjectIndex( this );
         }
     }
 
@@ -26,7 +26,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
 
     @Override
     public final void dispose() {
-        IndexProvider.disposeIndexedObject( this );
+        Indexer.disposeIndexedObject( this );
         indexedId = -1;
     }
 

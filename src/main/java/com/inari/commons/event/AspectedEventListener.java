@@ -35,6 +35,10 @@
 */
 package com.inari.commons.event;
 
-public abstract class IMatchedEvent<L> extends IEvent<L> {
-    // Just a marker class
+import com.inari.commons.lang.aspect.Aspect;
+
+public interface AspectedEventListener {
+    
+    public boolean match( Aspect aspect );
+
 }

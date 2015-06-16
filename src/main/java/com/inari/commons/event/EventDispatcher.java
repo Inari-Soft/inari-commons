@@ -40,19 +40,19 @@ import java.util.Collections;
 import java.util.List;
 
 import com.inari.commons.lang.functional.Matcher;
-import com.inari.commons.lang.indexed.IndexProvider;
+import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.indexed.IndexedTypeMap;
 
 public final class EventDispatcher implements IEventDispatcher {
     
     @SuppressWarnings( "rawtypes" )
-    private final IndexedTypeMap<List> listeners = new IndexedTypeMap<List>( IEvent.class, List.class );
+    private final IndexedTypeMap<List> listeners = new IndexedTypeMap<List>( Event.class, List.class );
     
     /* (non-Javadoc)
      * @see com.inari.commons.event.IEventDispatcher#register(java.lang.Class, L)
      */
     @Override
-    public final <L> void register( Class<? extends IEvent<L>> eventType, L listener ) {
+    public final <L> void register( Class<? extends Event<L>> eventType, L listener ) {
         synchronized( listeners ) {
             final List<L> listenersOfType = getListenersOfType( eventType, true );
             if ( !listenersOfType.contains( listener ) ) {
@@ -65,7 +65,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#unregister(java.lang.Class, L)
      */
     @Override
-    public final <L> boolean unregister( Class<? extends IEvent<L>> eventType, L listener ) {
+    public final <L> boolean unregister( Class<? extends Event<L>> eventType, L listener ) {
         synchronized( listeners ) {
             final List<L> listenersOfType = getListenersOfType( eventType, false );
             return listenersOfType.remove( listener );
@@ -76,7 +76,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IEvent)
      */
     @Override
-    public final <L> void notify( final IEvent<L> event ) {
+    public final <L> void notify( final Event<L> event ) {
         synchronized( listeners ) {
             for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
                 event.notify( listener );
@@ -88,7 +88,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IAspectedEvent)
      */
     @Override
-    public final <L extends IAspectedEventListener> void notify( final IAspectedEvent<L> event ) {
+    public final <L extends AspectedEventListener> void notify( final AspectedEvent<L> event ) {
         synchronized( listeners ) {
             for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
                 if ( listener.match( event.getAspect() ) ) {
@@ -102,10 +102,10 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IMatchedEvent)
      */
     @Override
-    public final <L extends IMatchedEventListener> void notify( final IMatchedEvent<L> event ) {
+    public final <L extends MatchedEventListener> void notify( final MatchedEvent<L> event ) {
         synchronized( listeners ) {
             for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                Matcher<IMatchedEvent<L>> matcherForEvent = listener.getMatcherForEvent( event );
+                Matcher<MatchedEvent<L>> matcherForEvent = listener.getMatcherForEvent( event );
                 if ( matcherForEvent != null && matcherForEvent.match( event ) ) {
                     event.notify( listener );
                 } else {
@@ -120,9 +120,9 @@ public final class EventDispatcher implements IEventDispatcher {
         return "EventDispatcher [listeners=" + listeners + "]";
     }
 
-    private final <L> List<L> getListenersOfType( Class<? extends IEvent<L>> eventType, boolean create ) {
+    private final <L> List<L> getListenersOfType( Class<? extends Event<L>> eventType, boolean create ) {
         return getListenersOfType( 
-            IndexProvider.getIndexForType( eventType, listeners.getIndexedType() ), create 
+            Indexer.getIndexForType( eventType, listeners.getIndexedType() ), create 
         );
     }
     

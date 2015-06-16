@@ -42,12 +42,12 @@ public abstract class AbstractIndexedBag implements IndexedBag {
     protected IndexedAspect aspect;
     
     protected AbstractIndexedBag( Class<? extends IndexedType> indexedType ) {
-        this.indexedType = IndexProvider.findIndexedType( indexedType );
-        aspect = new IndexedAspect( indexedType, IndexProvider.getIndexedTypeSize( this.indexedType ) );
+        this.indexedType = Indexer.findIndexedType( indexedType );
+        aspect = new IndexedAspect( indexedType, Indexer.getIndexedTypeSize( this.indexedType ) );
     }
     
     protected AbstractIndexedBag( Class<? extends IndexedType> indexedType, int length ) {
-        this.indexedType = IndexProvider.findIndexedType( indexedType );
+        this.indexedType = Indexer.findIndexedType( indexedType );
         aspect = new IndexedAspect( indexedType, length );
     }
     

@@ -165,7 +165,7 @@ public class FieldTest {
     @Test
     public void testSimpleIteration() {
         Field<String> field = ( new TestFieldFactory() ).createField( 1, 1, true );
-        IFieldIterator<Node<String>> nodeIterator = field.nodeIterator();
+        FieldIterator<Node<String>> nodeIterator = field.nodeIterator();
         Position pos = nodeIterator.getPosition();
         
         assertNotNull( nodeIterator );
@@ -232,7 +232,7 @@ public class FieldTest {
     @Test
     public void testSimpleValueIteration() {
         Field<String> field = ( new TestFieldFactory() ).createField( 1, 1, false );
-        IFieldIterator<String> valueIterator = field.valueIterator(); 
+        FieldIterator<String> valueIterator = field.valueIterator(); 
         Position pos = valueIterator.getPosition();
         
         assertNotNull( valueIterator );
@@ -315,7 +315,7 @@ public class FieldTest {
         );
         
         Rectangle clipRect = new Rectangle( 0, 0, 2, 2 );
-        IFieldIterator<String> valueIterator = field.valueIterator( clipRect );
+        FieldIterator<String> valueIterator = field.valueIterator( clipRect );
         Position pos = valueIterator.getPosition();
         
         assertNotNull( valueIterator );
@@ -372,7 +372,7 @@ public class FieldTest {
         );
         
         Rectangle clipRect = new Rectangle( 5, 5, 2, 2 );
-        IFieldIterator<String> valueIterator = field.valueIterator( clipRect );
+        FieldIterator<String> valueIterator = field.valueIterator( clipRect );
         Position pos = valueIterator.getPosition();
         
         assertNotNull( valueIterator );
@@ -414,7 +414,7 @@ public class FieldTest {
     public void testclippingWithToLargeClippingRectangle() {
         Field<String> field = ( new TestFieldFactory() ).createField( 5, 5, false );
         Rectangle clipRect = new Rectangle( 0, 0, 10, 10 );
-        IFieldIterator<String> valueIterator = field.valueIterator( clipRect );
+        FieldIterator<String> valueIterator = field.valueIterator( clipRect );
         
         for ( int y = 0; y < 5; y++ ) {
             for ( int x = 0; x < 5; x++ ) {

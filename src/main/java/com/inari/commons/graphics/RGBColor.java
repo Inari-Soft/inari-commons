@@ -38,12 +38,10 @@ package com.inari.commons.graphics;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
 import com.inari.commons.config.IStringConfigurable;
 
 
-public class RGBColor implements IConfigObject, IStringConfigurable {
+public final class RGBColor implements IStringConfigurable {
     
     // TODO remove static references (Color is mutable so we should create always a new instance)
     
@@ -84,12 +82,10 @@ public class RGBColor implements IConfigObject, IStringConfigurable {
     public static final RGBColor BLUE_08ALPHA = new RGBColor( 0f, 0f, 1f, .8f, "BLUE_08ALPHA" );
     public static final RGBColor BLUE_09ALPHA = new RGBColor( 0f, 0f, 1f, .9f, "BLUE_09ALPHA" );
     
-    public String configId;
-    
-    @Configured( required=true ) public float r;
-    @Configured( required=true ) public float g;
-    @Configured( required=true ) public float b;
-    @Configured( required=false ) public float a = 0;
+    public float r;
+    public float g;
+    public float b;
+    public float a = 0;
     
     
     public RGBColor() {
@@ -126,25 +122,14 @@ public class RGBColor implements IConfigObject, IStringConfigurable {
     
     protected RGBColor( float r, float g, float b, float a, String id ) {
         this( r, g, b, a );
-        configId = id;
     };
-
-    @Override
-    public String configId() {
-        return configId;
-    }
-
-    @Override
-    public void configId( String id ) {
-        configId = id;
-    }
     
-    public boolean hasAlpha() {
+    public final boolean hasAlpha() {
         return a >= 0;
     }
 
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         if ( StringUtils.isBlank( stringValue ) ) {
             r = 0; g = 0; b = 0; a = 1;
             return;
@@ -162,7 +147,7 @@ public class RGBColor implements IConfigObject, IStringConfigurable {
     }
 
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         StringBuilder sb = new StringBuilder();
         sb.append( r ).append( "," );
         sb.append( g ).append( "," );
@@ -174,11 +159,9 @@ public class RGBColor implements IConfigObject, IStringConfigurable {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append( "RGBColor [configId=" );
-        builder.append( configId );
-        builder.append( ", r=" );
+        builder.append( "RGBColor [r=" );
         builder.append( r );
         builder.append( ", g=" );
         builder.append( g );
@@ -189,6 +172,5 @@ public class RGBColor implements IConfigObject, IStringConfigurable {
         builder.append( "]" );
         return builder.toString();
     }
-
 
 }

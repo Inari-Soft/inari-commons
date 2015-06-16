@@ -54,7 +54,7 @@ package com.inari.commons.lang;
  *
  * @param <T> The value type of the key
  */
-public class TypedKey<T> {
+public final class TypedKey<T> {
     
     private final String id;
     private final Class<T> type;
@@ -71,11 +71,11 @@ public class TypedKey<T> {
         hash = result;
     }
 
-    public String id() {
+    public final String id() {
         return id;
     }
 
-    public Class<T> type() {
+    public final Class<T> type() {
         return type;
     }
     
@@ -84,12 +84,12 @@ public class TypedKey<T> {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return hash;
     }
 
     @Override
-    public boolean equals( Object obj ) {
+    public final boolean equals( Object obj ) {
         if ( this == obj )
             return true;
         if ( obj == null )
@@ -121,7 +121,7 @@ public class TypedKey<T> {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return id + ":" + type.getSimpleName();
     }
 

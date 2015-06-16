@@ -38,15 +38,10 @@ package com.inari.commons.geom;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
 import com.inari.commons.config.IStringConfigurable;
 
-public class RectCoords implements IConfigObject, IStringConfigurable {
+public class RectCoords implements IStringConfigurable {
     
-    private String configId;
-    
-    @Configured
     public final float[][] coords;
     
     public RectCoords() {
@@ -68,16 +63,6 @@ public class RectCoords implements IConfigObject, IStringConfigurable {
             throw new IllegalArgumentException( "The points array must have a dimension of [ 4 ][ 2 ]" );
         }
         this.coords = coords;
-    }
-
-    @Override
-    public String configId() {
-        return configId;
-    }
-
-    @Override
-    public void configId( String id ) {
-        configId = id;
     }
 
     public float width() {

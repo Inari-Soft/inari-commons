@@ -35,10 +35,28 @@
 */
 package com.inari.commons.event;
 
-import com.inari.commons.lang.functional.Matcher;
+import com.inari.commons.lang.indexed.Indexer;
+import com.inari.commons.lang.indexed.Indexed;
 
-public interface IMatchedEventListener {
+public abstract class Event<L> implements Indexed {
     
-    public <L extends IMatchedEventListener> Matcher<IMatchedEvent<L>> getMatcherForEvent( IMatchedEvent<L> event );
+    private final int index;
+    
+    protected Event() {
+        index = Indexer.getIndexForType( this.getClass(), Event.class );
+    }
+    
+    @Override
+    @SuppressWarnings( "rawtypes" )
+    public final Class<Event> indexedType() {
+        return Event.class;
+    }
+
+    @Override
+    public final int index() {
+        return index;
+    }
+    
+    public abstract void notify( final L listener );
 
 }

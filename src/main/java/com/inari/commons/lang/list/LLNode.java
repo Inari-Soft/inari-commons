@@ -36,9 +36,9 @@
 package com.inari.commons.lang.list;
 
 
-public class LLNode<T> implements INode<T> {
+public final class LLNode<T> implements INode<T> {
     
-boolean markerNode = false;
+    boolean markerNode = false;
     
     public T value;
     
@@ -58,22 +58,22 @@ boolean markerNode = false;
     }
     
     @Override
-    public T value() {
+    public final T value() {
         return value;
     }
 
     @Override
-    public INode<T> nextNode() {
+    public final INode<T> nextNode() {
         return nextNode;
     }
 
     @Override
-    public INode<T> previousNode() {
+    public final INode<T> previousNode() {
         return prevNode;
     }
     
     @Override
-    public void remove() {
+    public final void remove() {
         if ( this.prevNode != null ) {
             this.prevNode.nextNode = this.nextNode;
         }
@@ -83,7 +83,5 @@ boolean markerNode = false;
         this.nextNode = null;
         this.prevNode = null;
     }
-
-    
 
 }

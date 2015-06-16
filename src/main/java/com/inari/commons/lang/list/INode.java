@@ -37,12 +37,12 @@ package com.inari.commons.lang.list;
 
 public interface INode<T> {
     
-    public T value();
+    T value();
     
-    public INode<T> nextNode();
+    INode<T> nextNode();
     
-    public INode<T> previousNode();
+    INode<T> previousNode();
     
-    public void remove();
+    void remove();
 
 }

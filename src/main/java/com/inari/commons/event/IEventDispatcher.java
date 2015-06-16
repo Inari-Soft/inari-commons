@@ -44,14 +44,14 @@ package com.inari.commons.event;
  */
 public interface IEventDispatcher {
 
-    <L> void register( Class<? extends IEvent<L>> eventType, L listener );
+    <L> void register( Class<? extends Event<L>> eventType, L listener );
 
-    <L> boolean unregister( Class<? extends IEvent<L>> eventType, L listener );
+    <L> boolean unregister( Class<? extends Event<L>> eventType, L listener );
 
-    <L> void notify( IEvent<L> event );
+    <L> void notify( Event<L> event );
 
-    <L extends IAspectedEventListener> void notify( IAspectedEvent<L> event );
+    <L extends AspectedEventListener> void notify( AspectedEvent<L> event );
 
-    <L extends IMatchedEventListener> void notify( IMatchedEvent<L> event );
+    <L extends MatchedEventListener> void notify( MatchedEvent<L> event );
 
 }

@@ -36,16 +36,11 @@
 package com.inari.commons.geom;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
 import com.inari.commons.config.IStringConfigurable;
 
-public class Vector2i implements IConfigObject, IStringConfigurable {
+public final class Vector2i implements IStringConfigurable {
     
-    private String configId;
-    @Configured
     public int dx;
-    @Configured
     public int dy;
     
     public Vector2i() {
@@ -59,29 +54,19 @@ public class Vector2i implements IConfigObject, IStringConfigurable {
     }
 
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         int index = stringValue.indexOf( StringUtils.VALUE_SEPARATOR );
         dx = Integer.parseInt( stringValue.substring( 0, index) );
         dy = Integer.parseInt( stringValue.substring( index + 1, stringValue.length() ) );
     }
 
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         return dx + StringUtils.VALUE_SEPARATOR_STRING + dy;
     }
 
     @Override
-    public String configId() {
-        return configId;
-    }
-
-    @Override
-    public void configId( String id ) {
-        this.configId = id;
-    }
-
-    @Override
-    public String toString() {
+    public final String toString() {
         return "Vector2i:" + dx + StringUtils.VALUE_SEPARATOR_STRING + dy;
     }
 

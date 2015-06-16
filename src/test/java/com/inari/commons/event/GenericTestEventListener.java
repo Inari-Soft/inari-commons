@@ -2,9 +2,9 @@ package com.inari.commons.event;
 
 public class GenericTestEventListener {
     
-    private IEvent<GenericTestEventListener> lastCall;
+    private Event<GenericTestEventListener> lastCall;
     
-    public void notifyEventCall( IEvent<GenericTestEventListener> event ) {
+    public void notifyEventCall( Event<GenericTestEventListener> event ) {
         lastCall = event;
     }
 

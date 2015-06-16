@@ -40,7 +40,7 @@ import java.util.StringTokenizer;
 import com.inari.commons.StringUtils;
 
 
-public class Rectangle extends Position {
+public final class Rectangle extends Position {
 
     public int width;
     public int height;

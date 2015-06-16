@@ -5,7 +5,7 @@ public class BC implements B, Indexed {
     private final int index;
     
     public BC() {
-        index = IndexProvider.getIndexForType( this.getClass() );
+        index = Indexer.getIndexForType( this.getClass() );
     }
 
     @Override

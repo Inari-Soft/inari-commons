@@ -1,6 +1,6 @@
 package com.inari.commons.event;
 
-public class SimpleTestEvent2 extends IEvent<GenericTestEventListener> {
+public class SimpleTestEvent2 extends Event<GenericTestEventListener> {
 
     @Override
     public void notify( GenericTestEventListener listener ) {

@@ -38,19 +38,13 @@ package com.inari.commons.geom;
 import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
-import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
 import com.inari.commons.config.IStringConfigurable;
 
 
-public class Position implements IConfigObject, IStringConfigurable {
+public class Position implements IStringConfigurable {
     
-    private String configId;
-    @Configured
     public int x;
-    @Configured
     public int y;
-
     
     public Position() {
         x = 0;
@@ -70,17 +64,7 @@ public class Position implements IConfigObject, IStringConfigurable {
         setFrom( loc );
     }
 
-    @Override
-    public String configId() {
-        return configId;
-    }
-
-    @Override
-    public void configId( String id ) {
-        configId = id;
-    }
-
-    public void setFrom( Position p ) {
+    public final void setFrom( Position p ) {
         x = p.x;
         y = p.y;
     }

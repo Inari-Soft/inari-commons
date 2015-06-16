@@ -35,14 +35,10 @@
 */
 package com.inari.commons.geom;
 
-import com.inari.commons.config.Configured;
-import com.inari.commons.config.IConfigObject;
 import com.inari.commons.config.IStringConfigurable;
 
-public class Vector1i implements IConfigObject, IStringConfigurable {
+public final class Vector1i implements IStringConfigurable {
     
-    private String configId;
-    @Configured
     public int d;
     
     public Vector1i() {
@@ -54,27 +50,17 @@ public class Vector1i implements IConfigObject, IStringConfigurable {
     }
 
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         d = Integer.parseInt( stringValue );
     }
 
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         return String.valueOf( d );
     }
 
     @Override
-    public String configId() {
-        return configId;
-    }
-
-    @Override
-    public void configId( String id ) {
-        this.configId = id;
-    }
-
-    @Override
-    public String toString() {
+    public final String toString() {
         return "Vector1i:" + d;
     }
 

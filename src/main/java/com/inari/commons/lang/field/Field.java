@@ -89,19 +89,19 @@ public class Field<V> {
         fieldArray[ pos2.x ][ pos2.y ].value = temp;
     }
     
-    public IFieldIterator<Node<V>> nodeIterator() {
+    public FieldIterator<Node<V>> nodeIterator() {
         return new FieldNodeIterator( new Rectangle( 0, 0, width, height ) );
     }
     
-    public IFieldIterator<Node<V>> nodeIterator( Rectangle clip ) {
+    public FieldIterator<Node<V>> nodeIterator( Rectangle clip ) {
         return new FieldNodeIterator( clip );
     }
     
-    public IFieldIterator<V> valueIterator() {
+    public FieldIterator<V> valueIterator() {
         return new FieldValueIterator( new Rectangle( 0, 0, width, height ) );
     }
     
-    public IFieldIterator<V> valueIterator( Rectangle clip ) {
+    public FieldIterator<V> valueIterator( Rectangle clip ) {
         return new FieldValueIterator( clip );
     }
     
@@ -191,14 +191,14 @@ public class Field<V> {
         }
     }
     
-    private abstract class FieldIterator<T> implements IFieldIterator<T> {
+    private abstract class AbstractFieldIterator<T> implements FieldIterator<T> {
         
         protected Rectangle clip = new Rectangle( 0, 0, 0, 0 );
         protected Position pos;
         protected int w;
         protected int h;
         
-        public FieldIterator( Rectangle clipOrig ) {
+        public AbstractFieldIterator( Rectangle clipOrig ) {
             clip.x = clipOrig.x;
             clip.y = clipOrig.y;
             clip.width = clipOrig.width;
@@ -243,7 +243,7 @@ public class Field<V> {
         
     }
     
-    private final class FieldNodeIterator extends FieldIterator<Node<V>> {
+    private final class FieldNodeIterator extends AbstractFieldIterator<Node<V>> {
 
         public FieldNodeIterator( Rectangle clip ) {
             super( clip );
@@ -262,7 +262,7 @@ public class Field<V> {
         }
     }
     
-    private final class FieldValueIterator extends FieldIterator<V> {
+    private final class FieldValueIterator extends AbstractFieldIterator<V> {
         
         public FieldValueIterator( Rectangle clip ) {
             super( clip );

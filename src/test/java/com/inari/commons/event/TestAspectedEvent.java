@@ -2,11 +2,11 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspect;
 
-public class AspectedEvent extends IAspectedEvent<AspectedTestEventListener> {
+public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> {
     
     private final Aspect aspect;
 
-    public AspectedEvent( Aspect aspect ) {
+    public TestAspectedEvent( Aspect aspect ) {
         super();
         this.aspect = aspect;
     }

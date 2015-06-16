@@ -12,7 +12,7 @@ public class IndexProviderTest {
     
     @Before
     public void init() {
-        IndexProvider.clear();
+        Indexer.clear();
     }
     
     // NOTE: this test was used to find out what BitSet gives on bitset.nextClearBit( 0 ) for a bitset with full cardinality ( all bits are set to true )
@@ -48,7 +48,7 @@ public class IndexProviderTest {
             " * Indexed Objects :\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         TestIndexedObject indexedObject1 = new TestIndexedObject();
@@ -59,10 +59,10 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0}\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         assertEquals( 0, indexedObject1.indexedId() );
-        assertEquals( 1, IndexProvider.getIndexedObjectSize( TestIndexedObject.class ) );
+        assertEquals( 1, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         TestIndexedObject indexedObject2 = new TestIndexedObject();
         TestIndexedObject indexedObject3 = new TestIndexedObject();
@@ -75,13 +75,13 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 1, 2, 3, 4}\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         assertEquals( 1, indexedObject2.indexedId() );
         assertEquals( 2, indexedObject3.indexedId() );
         assertEquals( 3, indexedObject4.indexedId() );
         assertEquals( 4, indexedObject5.indexedId() );
-        assertEquals( 5, IndexProvider.getIndexedObjectSize( TestIndexedObject.class ) );
+        assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         indexedObject2.dispose();
         assertEquals( 
@@ -90,10 +90,10 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 2, 3, 4}\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         assertEquals( -1, indexedObject2.indexedId() );
-        assertEquals( 5, IndexProvider.getIndexedObjectSize( TestIndexedObject.class ) );
+        assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         TestIndexedObject indexedObject6 = new TestIndexedObject();
         assertEquals( 
@@ -102,10 +102,10 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 1, 2, 3, 4}\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         assertEquals( 1, indexedObject6.indexedId() );
-        assertEquals( 5, IndexProvider.getIndexedObjectSize( TestIndexedObject.class ) );
+        assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
     }
     
     @Test
@@ -116,7 +116,7 @@ public class IndexProviderTest {
             " * Indexed Objects :\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         AA aa1 = new AA();
@@ -129,7 +129,7 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         AB ab1 = new AB();
         
@@ -142,7 +142,7 @@ public class IndexProviderTest {
             "    1:com.inari.commons.lang.indexed.AB\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         AC ac1 = new AC();
@@ -160,7 +160,7 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         AA aa2 = new AA();
@@ -180,7 +180,7 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         BA ba1 = new BA();
@@ -198,7 +198,7 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.BA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         BB bb1 = new BB();
@@ -217,7 +217,7 @@ public class IndexProviderTest {
             "    1:com.inari.commons.lang.indexed.BB\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         BC bc1 = new BC();
@@ -240,7 +240,7 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
         BA ba2 = new BA();
@@ -265,7 +265,7 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}",
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
     }
     
@@ -276,10 +276,10 @@ public class IndexProviderTest {
             " * Indexed Objects :\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AA.class, A.class );
+        Indexer.getIndexForType( AA.class, A.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -289,24 +289,10 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AB.class, A.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "  }\n" + 
-            "}", 
-            IndexProvider.dump() 
-        );
-        
-        IndexProvider.getIndexForType( AC.class, A.class );
+        Indexer.getIndexForType( AB.class, A.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -315,15 +301,12 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AA.class, A.class );
-        IndexProvider.getIndexForType( AB.class, A.class );
-        IndexProvider.getIndexForType( AC.class, A.class );
+        Indexer.getIndexForType( AC.class, A.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -335,10 +318,27 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BA.class, B.class );
+        Indexer.getIndexForType( AA.class, A.class );
+        Indexer.getIndexForType( AB.class, A.class );
+        Indexer.getIndexForType( AC.class, A.class );
+        
+        assertEquals( 
+            "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            "  class com.inari.commons.lang.indexed.A : {\n" + 
+            "    0:com.inari.commons.lang.indexed.AA\n" + 
+            "    1:com.inari.commons.lang.indexed.AB\n" + 
+            "    2:com.inari.commons.lang.indexed.AC\n" + 
+            "  }\n" + 
+            "}", 
+            Indexer.dump() 
+        );
+        
+        Indexer.getIndexForType( BA.class, B.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -353,10 +353,10 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.BA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BB.class, B.class );
+        Indexer.getIndexForType( BB.class, B.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -372,10 +372,10 @@ public class IndexProviderTest {
             "    1:com.inari.commons.lang.indexed.BB\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BC.class, B.class );
+        Indexer.getIndexForType( BC.class, B.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -392,12 +392,12 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BA.class, B.class );
-        IndexProvider.getIndexForType( BB.class, B.class );
-        IndexProvider.getIndexForType( BC.class, B.class );
+        Indexer.getIndexForType( BA.class, B.class );
+        Indexer.getIndexForType( BB.class, B.class );
+        Indexer.getIndexForType( BC.class, B.class );
 
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -414,7 +414,7 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}",
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
     }
     
@@ -425,10 +425,10 @@ public class IndexProviderTest {
             " * Indexed Objects :\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AA.class );
+        Indexer.getIndexForType( AA.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -438,24 +438,10 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AB.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "  }\n" + 
-            "}", 
-            IndexProvider.dump() 
-        );
-        
-        IndexProvider.getIndexForType( AC.class );
+        Indexer.getIndexForType( AB.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -464,15 +450,12 @@ public class IndexProviderTest {
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( AA.class );
-        IndexProvider.getIndexForType( AB.class );
-        IndexProvider.getIndexForType( AC.class );
+        Indexer.getIndexForType( AC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -484,10 +467,27 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.AC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BA.class );
+        Indexer.getIndexForType( AA.class );
+        Indexer.getIndexForType( AB.class );
+        Indexer.getIndexForType( AC.class );
+        
+        assertEquals( 
+            "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            "  class com.inari.commons.lang.indexed.A : {\n" + 
+            "    0:com.inari.commons.lang.indexed.AA\n" + 
+            "    1:com.inari.commons.lang.indexed.AB\n" + 
+            "    2:com.inari.commons.lang.indexed.AC\n" + 
+            "  }\n" + 
+            "}", 
+            Indexer.dump() 
+        );
+        
+        Indexer.getIndexForType( BA.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -502,10 +502,10 @@ public class IndexProviderTest {
             "    0:com.inari.commons.lang.indexed.BA\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BB.class );
+        Indexer.getIndexForType( BB.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -521,10 +521,10 @@ public class IndexProviderTest {
             "    1:com.inari.commons.lang.indexed.BB\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BC.class );
+        Indexer.getIndexForType( BC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -541,12 +541,12 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( BA.class );
-        IndexProvider.getIndexForType( BB.class );
-        IndexProvider.getIndexForType( BC.class );
+        Indexer.getIndexForType( BA.class );
+        Indexer.getIndexForType( BB.class );
+        Indexer.getIndexForType( BC.class );
 
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -563,21 +563,21 @@ public class IndexProviderTest {
             "    2:com.inari.commons.lang.indexed.BC\n" + 
             "  }\n" + 
             "}",
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
     }
     
     @Test
     public void testWrongPreDefinition() {
         try {
-            IndexProvider.getIndexForType( AA.class, B.class );
+            Indexer.getIndexForType( AA.class, B.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
             assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedType:interface com.inari.commons.lang.indexed.B", e.getMessage() );
         } 
         
         try {
-            IndexProvider.getIndexForType( BA.class, A.class );
+            Indexer.getIndexForType( BA.class, A.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
             assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedType:class com.inari.commons.lang.indexed.A", e.getMessage() );
@@ -591,10 +591,10 @@ public class IndexProviderTest {
             " * Indexed Objects :\n" + 
             " * Indexed Types :\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( String.class );
+        Indexer.getIndexForType( String.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -603,23 +603,10 @@ public class IndexProviderTest {
             " * Unknown Indexed Types : {\n" + 
             "    0:java.lang.String\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
         );
         
-        IndexProvider.getIndexForType( Integer.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            " * Unknown Indexed Types : {\n" + 
-            "    0:java.lang.String\n" + 
-            "    1:java.lang.Integer\n" + 
-            "}", 
-            IndexProvider.dump() 
-        );
-        
-        IndexProvider.getIndexForType( String.class );
+        Indexer.getIndexForType( Integer.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -629,41 +616,54 @@ public class IndexProviderTest {
             "    0:java.lang.String\n" + 
             "    1:java.lang.Integer\n" + 
             "}", 
-            IndexProvider.dump() 
+            Indexer.dump() 
+        );
+        
+        Indexer.getIndexForType( String.class );
+        
+        assertEquals( 
+            "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            " * Unknown Indexed Types : {\n" + 
+            "    0:java.lang.String\n" + 
+            "    1:java.lang.Integer\n" + 
+            "}", 
+            Indexer.dump() 
         );
     }
     
     @Test
     public void testCheckIndexedType() {
-        IndexProvider.checkIndexedType( AA.class, A.class );
-        IndexProvider.checkIndexedType( AA.class, AA.class );
+        Indexer.checkIndexedType( AA.class, A.class );
+        Indexer.checkIndexedType( AA.class, AA.class );
         
         try {
-            IndexProvider.checkIndexedType( A.class, A.class );
+            Indexer.checkIndexedType( A.class, A.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "indexType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
         }
         
         try {
-            IndexProvider.checkIndexedType( A.class, AA.class );
+            Indexer.checkIndexedType( A.class, AA.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "indexType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
         }
         
-        IndexProvider.checkIndexedType( BB.class, B.class );
-        IndexProvider.checkIndexedType( BB.class, BB.class );
+        Indexer.checkIndexedType( BB.class, B.class );
+        Indexer.checkIndexedType( BB.class, BB.class );
         
         try {
-            IndexProvider.checkIndexedType( B.class, B.class );
+            Indexer.checkIndexedType( B.class, B.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "indexType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
         }
         
         try {
-            IndexProvider.checkIndexedType( B.class, BB.class );
+            Indexer.checkIndexedType( B.class, BB.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "indexType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
@@ -672,14 +672,14 @@ public class IndexProviderTest {
         
         
         try {
-            IndexProvider.checkIndexedType( AA.class, B.class );
+            Indexer.checkIndexedType( AA.class, B.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedType:interface com.inari.commons.lang.indexed.B", iae.getMessage() );
         }
         
         try {
-            IndexProvider.checkIndexedType( BC.class, A.class );
+            Indexer.checkIndexedType( BC.class, A.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
             assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.BC is not a valid substitute of indexedType:class com.inari.commons.lang.indexed.A", iae.getMessage() );

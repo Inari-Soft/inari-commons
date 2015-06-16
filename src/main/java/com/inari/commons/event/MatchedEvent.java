@@ -35,10 +35,6 @@
 */
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.Aspect;
-
-public abstract class IAspectedEvent<L> extends IEvent<L> {
-    
-    public abstract Aspect getAspect();
-    
+public abstract class MatchedEvent<L> extends Event<L> {
+    // Just a marker class
 }

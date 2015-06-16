@@ -2,10 +2,10 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspect;
 
-public class AspectedTestEventListener implements IAspectedEventListener {
+public class AspectedTestEventListener implements AspectedEventListener {
     
     private final Aspect aspect;
-    private IAspectedEvent<?> lastCall;
+    private AspectedEvent<?> lastCall;
 
     public AspectedTestEventListener( Aspect aspect ) {
         this.aspect = aspect;
@@ -18,7 +18,7 @@ public class AspectedTestEventListener implements IAspectedEventListener {
 
 
 
-    public void notifyAspectedEvent( IAspectedEvent<? extends IAspectedEventListener> event ) {
+    public void notifyAspectedEvent( AspectedEvent<? extends AspectedEventListener> event ) {
         lastCall = event;
     }
 

@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class IndexProvider {
+public abstract class Indexer {
     
     private final static List<Class<?>> unknownIndexedTypes = new ArrayList<Class<?>>();
     
@@ -280,7 +280,7 @@ public abstract class IndexProvider {
         
         IndexedTypeList( Class<? extends IndexedType> indexedType ) {
             this.indexedType = indexedType;
-            this.indexedTypes = IndexProvider.indexedTypeList( indexedType );
+            this.indexedTypes = Indexer.indexedTypeList( indexedType );
         }
 
         public Class<? extends IndexedType> getIndexedType() {

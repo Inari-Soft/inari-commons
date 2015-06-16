@@ -33,12 +33,12 @@
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
 */
-package com.inari.commons.graphics;
+package com.inari.commons.event;
 
-import java.awt.image.BufferedImage;
+import com.inari.commons.lang.aspect.Aspect;
 
-public interface IImageColorTransform {
+public abstract class AspectedEvent<L> extends Event<L> {
     
-    public BufferedImage transform( BufferedImage image );
-
+    public abstract Aspect getAspect();
+    
 }

@@ -45,7 +45,7 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.util.Map;
 
-public class ColorConverter extends RGBImageFilter implements IImageColorTransform {
+public class ColorConverter extends RGBImageFilter implements ImageColorTransform {
     
     private int[][] colorMap;
     

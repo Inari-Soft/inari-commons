@@ -28,7 +28,7 @@ import java.util.Iterator;
 import com.inari.commons.geom.Position;
 
 /** An Iterator to iterate a Field of specified value types. */
-public interface IFieldIterator<T> extends Iterator<T> {
+public interface FieldIterator<T> extends Iterator<T> {
     
     /** Use this to get the current field Position of the iterator */
     public Position getPosition();

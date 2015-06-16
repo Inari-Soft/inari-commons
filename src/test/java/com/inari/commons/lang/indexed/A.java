@@ -5,7 +5,7 @@ public abstract class A implements Indexed {
     private final int index;
     
     protected A() {
-        index = IndexProvider.getIndexForType( this.getClass(), A.class );
+        index = Indexer.getIndexForType( this.getClass(), A.class );
     }
 
     @Override

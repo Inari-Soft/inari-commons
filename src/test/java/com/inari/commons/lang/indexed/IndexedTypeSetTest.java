@@ -16,7 +16,7 @@ public class IndexedTypeSetTest {
     
     @Before
     public void init() {
-        IndexProvider.clear();
+        Indexer.clear();
     }
     
     @Test
@@ -25,9 +25,9 @@ public class IndexedTypeSetTest {
         IndexedTypeSet aSet1 = new IndexedTypeSet( A.class );
         assertEquals( "IndexedTypeSet [ indexedType=A length=0 size:0, indexed={} ]", aSet1.toString() );
         
-        IndexProvider.getIndexForType( AA.class );
-        IndexProvider.getIndexForType( AB.class );
-        IndexProvider.getIndexForType( AC.class );
+        Indexer.getIndexForType( AA.class );
+        Indexer.getIndexForType( AB.class );
+        Indexer.getIndexForType( AC.class );
         
         IndexedTypeSet aSet2 = new IndexedTypeSet( A.class );
         assertEquals( "IndexedTypeSet [ indexedType=A length=3 size:0, indexed={null,null,null} ]", aSet2.toString() );
