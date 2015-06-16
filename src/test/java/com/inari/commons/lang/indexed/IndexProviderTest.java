@@ -113,6 +113,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "}", 
             IndexProvider.dump() 
         );
@@ -121,6 +123,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
@@ -131,6 +135,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -146,6 +152,8 @@ public class IndexProviderTest {
         assertEquals( 2, ac1.index() );
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -164,6 +172,8 @@ public class IndexProviderTest {
         assertEquals( 2, ac2.index() );
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -177,6 +187,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -193,6 +205,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -213,6 +227,8 @@ public class IndexProviderTest {
         assertEquals( 2, bc1.index() );
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -236,6 +252,8 @@ public class IndexProviderTest {
         assertEquals( 2, bc2.index() );
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -255,6 +273,8 @@ public class IndexProviderTest {
     public void testPreDefinition() {
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "}", 
             IndexProvider.dump() 
         );
@@ -263,6 +283,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
@@ -274,6 +296,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -286,6 +310,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -301,6 +327,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -314,6 +342,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -330,6 +360,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -347,6 +379,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -367,6 +401,8 @@ public class IndexProviderTest {
 
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -386,6 +422,8 @@ public class IndexProviderTest {
     public void testPreDefinitionWithoutIndexedType() {
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "}", 
             IndexProvider.dump() 
         );
@@ -394,6 +432,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "  }\n" + 
@@ -405,6 +445,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -417,6 +459,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -432,6 +476,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -445,6 +491,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -461,6 +509,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -478,6 +528,8 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -498,6 +550,8 @@ public class IndexProviderTest {
 
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "  class com.inari.commons.lang.indexed.A : {\n" + 
             "    0:com.inari.commons.lang.indexed.AA\n" + 
             "    1:com.inari.commons.lang.indexed.AB\n" + 
@@ -534,6 +588,8 @@ public class IndexProviderTest {
     public void testUnknownTypes() {
         assertEquals( 
             "IndexProvider : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
             "}", 
             IndexProvider.dump() 
         );
@@ -542,7 +598,9 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
-            "  Unknown Indexed Types : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            " * Unknown Indexed Types : {\n" + 
             "    0:java.lang.String\n" + 
             "}", 
             IndexProvider.dump() 
@@ -552,7 +610,9 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
-            "  Unknown Indexed Types : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            " * Unknown Indexed Types : {\n" + 
             "    0:java.lang.String\n" + 
             "    1:java.lang.Integer\n" + 
             "}", 
@@ -563,7 +623,9 @@ public class IndexProviderTest {
         
         assertEquals( 
             "IndexProvider : {\n" + 
-            "  Unknown Indexed Types : {\n" + 
+            " * Indexed Objects :\n" + 
+            " * Indexed Types :\n" + 
+            " * Unknown Indexed Types : {\n" + 
             "    0:java.lang.String\n" + 
             "    1:java.lang.Integer\n" + 
             "}", 

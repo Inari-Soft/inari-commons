@@ -197,7 +197,7 @@ public abstract class IndexProvider {
             indexedIndex++;
         }
         if ( !unknownIndexedTypes.isEmpty() ) {
-            builder.append( "  " ).append( " * Unknown Indexed Types : {\n" );
+            builder.append( " * Unknown Indexed Types : {\n" );
             int index = 0;
             for ( Class<?> indexed : unknownIndexedTypes ) {
                 builder.append( "    " ).append( index ).append( ":" ).append( indexed.getName() ).append( "\n" );
