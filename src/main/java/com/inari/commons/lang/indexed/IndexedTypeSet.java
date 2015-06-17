@@ -40,27 +40,47 @@ import java.util.Iterator;
 import com.inari.commons.lang.Clearable;
 import com.inari.commons.lang.aspect.AspectBuilder;
 
-public class IndexedTypeSet extends AbstractIndexedBag {
+public final class IndexedTypeSet {
     
     private Indexed[] indexed;
+    protected final Class<? extends IndexedType> indexedType;
+    protected final IndexedAspect aspect;
+    protected int size = 0;
     
     
     public IndexedTypeSet( Class<? extends IndexedType> indexedType ) {
-        super( indexedType );
+        this.indexedType = Indexer.findIndexedType( indexedType );
+        aspect = new IndexedAspect( indexedType, Indexer.getIndexedTypeSize( this.indexedType ) );
         indexed = new Indexed[ Indexer.getIndexedTypeSize( indexedType ) ];
     }
     
     public IndexedTypeSet( Class<? extends IndexedType> indexedType, int length ) {
-        super( indexedType, length );
+        this.indexedType = Indexer.findIndexedType( indexedType );
+        aspect = new IndexedAspect( indexedType, length );
         indexed = new Indexed[ length ];
     }
     
-    @Override
+    public final int size() {
+        return size;
+    }
+    
+    public final IndexedAspect getAspect() {
+        return aspect;
+    }
+    
+    public final Class<? extends IndexedType> getIndexedType() {
+        return indexedType;
+    }
+    
+    public final boolean include( IndexedAspect aspect ) {
+        return this.aspect.include( aspect );
+    }
+    
     public final int length() {
         return indexed.length;
     }
 
-    public Indexed set( Indexed indexed ) {
+    public final Indexed set( Indexed indexed ) {
         if ( indexed == null ) {
             return null;
         }
@@ -134,9 +154,11 @@ public class IndexedTypeSet extends AbstractIndexedBag {
         indexed = newArray;
     }
     
-    @Override
     public final void clear() {
-        super.clear();
+        if ( aspect != null ) {
+            IndexedAspectBuilder.clear( aspect );
+        }
+        size = 0;
         if ( indexed != null ) {
             for ( int i = 0; i < indexed.length; i++ ) {
                 if ( indexed[ i ] != null && indexed[ i ] instanceof Clearable ) {

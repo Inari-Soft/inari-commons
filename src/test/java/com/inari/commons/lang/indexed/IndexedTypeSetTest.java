@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 import org.junit.Before;
@@ -116,33 +115,6 @@ public class IndexedTypeSetTest {
         bSet1.set( bb );
         assertEquals( "IndexedTypeSet [ indexedType=B length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
         assertEquals( "IndexedAspect [ indexedType=B, bitset={0, 1, 2}, types={BA,BB,BC} ]", bSet1.getAspect().toString() );
-    }
-    
-    @Test
-    public void testMappedIndexes() {
-        BA ba = new BA();
-        BB bb = new BB();
-        BC bc = new BC();
-        
-        assertTrue( ba.index() == 0 );
-        assertTrue( bb.index() == 1 );
-        assertTrue( bc.index() == 2 );
-        
-        IndexedTypeSet bSet1 = new IndexedTypeSet( B.class );
-        assertEquals( "IndexedTypeSet [ indexedType=B length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
-        assertEquals( "[]", Arrays.toString( bSet1.getMappedIndexes() ) );
-
-        bSet1.set( ba );
-        assertEquals( "IndexedTypeSet [ indexedType=B length=3 size:1, indexed={BA,null,null} ]", bSet1.toString() );
-        assertEquals( "[0]", Arrays.toString( bSet1.getMappedIndexes() ) );
-        
-        bSet1.set( bc );
-        assertEquals( "IndexedTypeSet [ indexedType=B length=3 size:2, indexed={BA,null,BC} ]", bSet1.toString() );
-        assertEquals( "[0, 2]", Arrays.toString( bSet1.getMappedIndexes() ) );
-        
-        bSet1.set( bb );
-        assertEquals( "IndexedTypeSet [ indexedType=B length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
-        assertEquals( "[0, 1, 2]", Arrays.toString( bSet1.getMappedIndexes() ) );
     }
     
     @Test

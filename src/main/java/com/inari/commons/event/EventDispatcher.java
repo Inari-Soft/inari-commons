@@ -41,12 +41,12 @@ import java.util.List;
 
 import com.inari.commons.lang.functional.Matcher;
 import com.inari.commons.lang.indexed.Indexer;
-import com.inari.commons.lang.indexed.IndexedTypeMap;
+import com.inari.commons.lang.list.DynArray;
 
 public final class EventDispatcher implements IEventDispatcher {
     
-    @SuppressWarnings( "rawtypes" )
-    private final IndexedTypeMap<List> listeners = new IndexedTypeMap<List>( Event.class, List.class );
+
+    private final DynArray<List<?>> listeners = new DynArray<List<?>>();
     
     /* (non-Javadoc)
      * @see com.inari.commons.event.IEventDispatcher#register(java.lang.Class, L)
@@ -122,17 +122,19 @@ public final class EventDispatcher implements IEventDispatcher {
 
     private final <L> List<L> getListenersOfType( Class<? extends Event<L>> eventType, boolean create ) {
         return getListenersOfType( 
-            Indexer.getIndexForType( eventType, listeners.getIndexedType() ), create 
+            Indexer.getIndexForType( eventType, Event.class ), create 
         );
     }
     
+    @SuppressWarnings( "unchecked" )
     private final <L> List<L> getListenersOfType( int eventIndex, boolean create ) {
-        @SuppressWarnings( "unchecked" )
-        List<L> listenersOfType = listeners.getValue( eventIndex );
-        if ( listenersOfType == null ) {
+        List<L> listenersOfType;
+        if ( listeners.contains( eventIndex ) ) {
+            listenersOfType = (List<L>) listeners.get( eventIndex );
+        } else {
             if ( create ) {
                 listenersOfType = new ArrayList<L>();
-                listeners.put( eventIndex, listenersOfType );
+                listeners.set( eventIndex, listenersOfType );
             } else {
                 return Collections.emptyList();
             }
