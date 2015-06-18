@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /** The advantages of ArrayList and an Array in one.
- *  Use DynArray if a good performance matters and just a simple indexed storage is used to set and get objects from.
+ *  Use DynArray if a good performance matters and just a simple indexed storage is needed to set and get objects from.
  *  
  *  Internally this is implemented within an ArrayList but with fixed positions (indices) of stored objects like 
  *  an Array. An ArrayList has good performance on get and add calls but not an add( index ) and remove( index ) 
@@ -42,7 +42,7 @@ import java.util.Iterator;
  *  DynArray uses an Iterator implementation using index without concurrent modification checks and is as fast as 
  *  an array iteration. But DynArray is not synchronized and do not check concurrent modifications in any case.
  *  
- *  If the index to set is higher as the current capacity of the internal ArrayList the internal ArrayList is 
+ *  If the index to set is higher then the current capacity of the internal ArrayList the internal ArrayList is 
  *  been automatically growing like a normal ArrayList and filled with null values to fit the new capacity.
  *  The capacity of the list (and the internal ArrayList) never shrink while just remove objects. Only the clear 
  *  functions removes all objects and also clears the internal ArrayList.
@@ -90,14 +90,21 @@ public final class DynArray<T> implements Iterable<T> {
     }
     
     /** Get the object at specified index or null if there is no object referenced by specified index.
-     *  Id index is out of range ( 0 - capacity ) then an IndexedOutOfBoundsException is thrown.
+     *  If index is out of range ( 0 - capacity ) then an IndexOutOfBoundsException is thrown.
+     * 
      *  @param index the index
-     *  @throws IndexedOutOfBoundsException if index is out of bounds ( 0 - capacity )
+     *  @throws IndexOutOfBoundsException if index is out of bounds ( 0 - capacity )
      */
     public final T get( int index ) {
         return list.get( index );
     }
     
+    /** Indicates if there is an object referenced by the specified id. If there is no object referenced
+     *  by the index, false is returned also in the case, the index is out of bounds.
+     * 
+     *  @param index the index
+     *  @return true if there is an object referenced by the specified id
+     */
     public final boolean contains( int index ) {
         if ( index < 0 || index >= list.size() ) {
             return false;
@@ -105,25 +112,39 @@ public final class DynArray<T> implements Iterable<T> {
         return list.get( index ) != null;
     }
     
+    /** Use this to get the index of a specified object in the DynArray. This inernally uses
+     *  ArrayList.indexOf and has the same performance.
+     * 
+     *  @param value The object value to get the associated index 
+     */
     public final int indexOf( T value ) {
         return list.indexOf( value );
     }
     
+    /** Removes the object on specified index of DynArray and returns the objects that was set before.
+     * 
+     *  @param index the index
+     *  @return The objects that was set before or null of there was none
+     *  @throws IndexOutOfBoundsException if index is out of bounds ( 0 - capacity )
+     */
     public final T remove( int index ) {
-        if ( index >= list.size() ) {
-            return null;
-        }
-        
         T result = list.get( index );
         list.set( index, null );
         size--;
         return result;
     }
     
+    /** Get the size of the DynArray. The size is defined by the number of objects that
+     *  the DynArray contains. 
+     *  NOTE: this is not the same like length of an array which also counts the null/empty values
+     */
     public final int size() {
         return size;
     }
     
+    /** Get the capacity of the DynArray. This is the size of the internal ArrayList and is
+     *  according to the length of an array.
+     */
     public final int capacity() {
         return list.size();
     }
@@ -135,8 +156,11 @@ public final class DynArray<T> implements Iterable<T> {
         }
     }
     
+    /** Clears the whole list, removes all objects and sets the capacity to 0.
+     */
     public final void clear() {
         list.clear();
+        size = 0;
     }
 
     @Override
