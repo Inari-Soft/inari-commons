@@ -149,13 +149,6 @@ public final class DynArray<T> implements Iterable<T> {
         return list.size();
     }
 
-    private final void ensureCapacity( int index ) {
-        int newSize = index + 1;
-        while( list.size() < newSize ) {
-            list.add( null );
-        }
-    }
-    
     /** Clears the whole list, removes all objects and sets the capacity to 0.
      */
     public final void clear() {
@@ -163,6 +156,10 @@ public final class DynArray<T> implements Iterable<T> {
         size = 0;
     }
 
+    /** Gets an Iterator of specified type to iterate over all objects in the DynArray
+     *  by skiping the empty/null values. This does not concurrent modification checks at all
+     *  and should be as fast as a array iteration.
+     */
     @Override
     public final Iterator<T> iterator() {
         return new DynArrayIterator();
@@ -181,6 +178,12 @@ public final class DynArray<T> implements Iterable<T> {
         return builder.toString();
     }
     
+    private final void ensureCapacity( int index ) {
+        int newSize = index + 1;
+        while( list.size() < newSize ) {
+            list.add( null );
+        }
+    }
 
     private final class DynArrayIterator implements Iterator<T> {
         
