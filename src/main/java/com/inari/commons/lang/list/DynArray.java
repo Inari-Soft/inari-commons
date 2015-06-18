@@ -89,6 +89,11 @@ public final class DynArray<T> implements Iterable<T> {
         return old;
     }
     
+    /** Get the object at specified index or null if there is no object referenced by specified index.
+     *  Id index is out of range ( 0 - capacity ) then an IndexedOutOfBoundsException is thrown.
+     *  @param index the index
+     *  @throws IndexedOutOfBoundsException if index is out of bounds ( 0 - capacity )
+     */
     public final T get( int index ) {
         return list.get( index );
     }
