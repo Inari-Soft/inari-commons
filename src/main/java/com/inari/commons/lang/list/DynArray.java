@@ -24,6 +24,7 @@
 package com.inari.commons.lang.list;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /** The advantages of ArrayList and an Array in one.
@@ -52,11 +53,13 @@ import java.util.Iterator;
 public final class DynArray<T> implements Iterable<T> {
     
     private ArrayList<T> list;
+    private final int grow;
     private int size = 0;
     
-    /** Creates a DynArray with no intial capacity */
+    /** Creates a DynArray with no initial capacity */
     public DynArray() {
         list = new ArrayList<T>();
+        grow = 1;
     }
     
     /** Creates a DynArray with specified initial capacity. The internal ArrayList is initialized with 
@@ -64,12 +67,29 @@ public final class DynArray<T> implements Iterable<T> {
      *  @param initialCapacity
      */
     public DynArray( int initialCapacity ) {
-        list = new ArrayList<T>( initialCapacity + ( initialCapacity / 2 ) );
-        for ( int i = 0; i < initialCapacity; i++ ) {
-            list.add( null );
-        }
+        createList( initialCapacity );
+        grow = 1;
+    }
+
+    /** Creates a DynArray with specified initial capacity. The internal ArrayList is initialized with 
+     *  initialCapacity + ( initialCapacity / 2 ) and filled up with null values for the indexes to initialCapacity.
+     *  @param initialCapacity
+     */
+    public DynArray( int initialCapacity, int grow ) {
+        createList( initialCapacity );
+        this.grow = grow;
     }
     
+    
+    /** Indicates the grow number that defines the number of additional capacity that is added when a object is set with an
+     *  index higher then the actual capacity.
+     *  
+     *  @return the grow number
+     */
+    public final int getGrow() {
+        return grow;
+    }
+
     /** Sets the value at the specified position of the DynArray and returns the value that was at the position before 
      *  or null of the position was empty. If the index is out of the range of the current capacity of DynArray, the 
      *  internal ArrayList will be resized to fit the new index. This is the only case where this method will take 
@@ -87,6 +107,22 @@ public final class DynArray<T> implements Iterable<T> {
             size++;
         }
         return old;
+    }
+    
+    /** Add the specified value at the first empty (null) position that is found in the DynArray.
+     *  If there is no empty position the list is growing by the grow value and the value is added
+     *  to at the end of old list.
+     *
+     *  @param value The value to add to the DynArray
+     *  @return the index of the newly added value
+     */
+    public final int add( T value ) {
+        int index = 0;
+        while( index < list.size() && list.get( index ) != null ) {
+            index++;
+        }
+        set( index, value );
+        return index;
     }
     
     /** Get the object at specified index or null if there is no object referenced by specified index.
@@ -134,6 +170,28 @@ public final class DynArray<T> implements Iterable<T> {
         return result;
     }
     
+    /** Removes the specified object value from DynArray and returns the index where it as removed.
+     *  Also this remove sets a null value on specified index of internal ArrayList instead of removing it
+     *  to avoid the index shift of an ArrayList remove.
+     *  
+     *  @param value The value to remove.
+     *  @return the index of the value that was removed or -1 if there was no such value.
+     */
+    public final int remove( T value ) {
+        int indexOf = list.indexOf( value );
+        if ( indexOf >= 0 ) {
+            remove( indexOf );
+        }
+        return indexOf;
+    }
+    
+    /** Sorts the list within the given comparator.
+     *  @param coparator
+     */
+    public final void sort( Comparator<T> coparator ) {
+        list.sort( coparator );
+    }
+    
     /** Get the size of the DynArray. The size is defined by the number of objects that
      *  the DynArray contains. 
      *  NOTE: this is not the same like length of an array which also counts the null/empty values
@@ -155,10 +213,22 @@ public final class DynArray<T> implements Iterable<T> {
         list.clear();
         size = 0;
     }
+    
+    /** Gets the iterator from internal list. NOTE: this also gets the null values in the internal
+     *  list but is as fast as a normal ArrayList iterator.
+     *  
+     *  @return the iterator from internal list
+     */
+    public final Iterator<T> listIterator() {
+        return list.iterator();
+    }
 
     /** Gets an Iterator of specified type to iterate over all objects in the DynArray
-     *  by skiping the empty/null values. This does not concurrent modification checks at all
-     *  and should be as fast as a array iteration.
+     *  by skipping the empty/null values. This does not concurrent modification checks at all
+     *  but is not that fast like an array iteration or by using the listIterator but skips
+     *  the null values.
+     *  
+     *  @return an Iterator of specified type to iterate over all objects in the DynArray by skipping the empty/null values
      */
     @Override
     public final Iterator<T> iterator() {
@@ -179,8 +249,20 @@ public final class DynArray<T> implements Iterable<T> {
     }
     
     private final void ensureCapacity( int index ) {
-        int newSize = index + 1;
-        while( list.size() < newSize ) {
+        int size = list.size();
+        int newSize = size;
+        while ( index >= newSize ) {
+            newSize += grow;
+        }
+        while( size < newSize ) {
+            list.add( null );
+            size++;
+        }
+    }
+    
+    private final void createList( int initialCapacity ) {
+        list = new ArrayList<T>( initialCapacity + ( initialCapacity / 2 ) );
+        for ( int i = 0; i < initialCapacity; i++ ) {
             list.add( null );
         }
     }
@@ -188,34 +270,35 @@ public final class DynArray<T> implements Iterable<T> {
     private final class DynArrayIterator implements Iterator<T> {
         
         private int index = 0;
+        private final int size = list.size();
         
         private DynArrayIterator() {
             findNext();
         }
 
         @Override
-        public boolean hasNext() {
+        public final boolean hasNext() {
             return index < list.size();
         }
 
         @Override
-        public T next() {
+        public final T next() {
             T result = list.get( index );
+            index++;
             findNext();
             return result;
         }
 
         @Override
-        public void remove() {
+        public final void remove() {
             list.set( index, null );
         }
         
-        public void findNext() {
-            while( index < list.size() && list.get( index ) == null ) {
+        private final void findNext() {
+            while( index < size && list.get( index ) == null ) {
                 index++;
             }
         }
-        
     }
 
 }
