@@ -1,6 +1,8 @@
 package com.inari.commons.lang.indexed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.BitSet;
@@ -8,11 +10,28 @@ import java.util.BitSet;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IndexProviderTest {
+public class IndexerTest {
     
     @Before
     public void init() {
         Indexer.clear();
+    }
+    
+    @Test
+    public void testClassTypeCompare() {
+        AA aa = new AA();
+        BB bb = new BB();
+        Class<?> aaType = aa.getClass();
+        Class<?> bbType = bb.getClass();
+        assertTrue( AA.class == AA.class );
+        assertTrue( AA.class == aa.getClass() );
+        assertTrue( AA.class == aaType );
+        assertFalse( AA.class == bbType );
+        
+        assertTrue( AA.class.equals( AA.class ) );
+        assertTrue( AA.class.equals( aa.getClass() ) );
+        assertTrue( AA.class.equals( aaType ) );
+        assertFalse( AA.class.equals( bbType ) );
     }
     
     // NOTE: this test was used to find out what BitSet gives on bitset.nextClearBit( 0 ) for a bitset with full cardinality ( all bits are set to true )
