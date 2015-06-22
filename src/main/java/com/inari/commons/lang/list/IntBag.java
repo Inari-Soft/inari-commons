@@ -119,6 +119,10 @@ public final class IntBag {
         size++;
     }
     
+    public final boolean isEmpty( int index ) {
+        return array[ index ] == nullValue;
+    }
+    
     public final boolean remove( int value ) {
         int indexOf = indexOf( value );
         if ( indexOf >= 0 ) {
@@ -130,8 +134,12 @@ public final class IntBag {
         return false;
     }
     
+    public final int get( int index ) {
+        return array[ index ];
+    }
+    
     public final IntIterator iterator() {
-        return new DynIntArrayIterator();
+        return new IntBagIterator();
     }
     
     private int firstEmptyIndex() {
@@ -193,11 +201,11 @@ public final class IntBag {
         System.arraycopy( temp, 0, array, 0, temp.length );
     }
     
-    private final class DynIntArrayIterator implements IntIterator {
+    private final class IntBagIterator implements IntIterator {
         
         private int currentIndex = 0;
         
-        DynIntArrayIterator() {
+        IntBagIterator() {
             findNext();
         }
 
@@ -220,5 +228,7 @@ public final class IntBag {
             }
         };
     }
+
+    
 
 }
