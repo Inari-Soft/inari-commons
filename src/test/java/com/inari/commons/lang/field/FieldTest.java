@@ -320,35 +320,34 @@ public class FieldTest {
         
         assertNotNull( valueIterator );
         assertNotNull( pos );
-        assertEquals( "Position: -1,0", String.valueOf( pos ) );
+        assertEquals( "[x=-1,y=0]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         String value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:0 y:0", value );
-        assertEquals( "Position: 0,0", String.valueOf( pos ) );
+        assertEquals( "[x=0,y=0]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:1 y:0", value );
-        assertEquals( "Position: 1,0", String.valueOf( pos ) );
+        assertEquals( "[x=1,y=0]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:0 y:1", value );
-        assertEquals( "Position: 0,1", String.valueOf( pos ) );
-        
+        assertEquals( "[x=0,y=1]", String.valueOf( pos ) );
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:1 y:1", value );
-        assertEquals( "Position: 1,1", String.valueOf( pos ) );
+        assertEquals( "[x=1,y=1]", String.valueOf( pos ) );
         
         assertFalse( valueIterator.hasNext() );
     }
@@ -377,35 +376,35 @@ public class FieldTest {
         
         assertNotNull( valueIterator );
         assertNotNull( pos );
-        assertEquals( "Position: 4,5", String.valueOf( pos ) );
+        assertEquals( "[x=4,y=5]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         String value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:5 y:5", value );
-        assertEquals( "Position: 5,5", String.valueOf( pos ) );
+        assertEquals( "[x=5,y=5]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:6 y:5", value );
-        assertEquals( "Position: 6,5", String.valueOf( pos ) );
+        assertEquals( "[x=6,y=5]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:5 y:6", value );
-        assertEquals( "Position: 5,6", String.valueOf( pos ) );
+        assertEquals( "[x=5,y=6]", String.valueOf( pos ) );
         
         assertTrue( valueIterator.hasNext() );
         value = valueIterator.next();
         pos = valueIterator.getPosition();
         assertNotNull( value );
         assertEquals( "x:6 y:6", value );
-        assertEquals( "Position: 6,6", String.valueOf( pos ) );
+        assertEquals( "[x=6,y=6]", String.valueOf( pos ) );
         
         assertFalse( valueIterator.hasNext() );
     }

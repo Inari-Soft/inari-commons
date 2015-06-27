@@ -112,34 +112,34 @@ public class GeomUtilsTest {
         Rectangle r2 = new Rectangle( 50, 50, 100, 100 );
         
         Rectangle intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 50,50,50,50", intersection.toString() );
+        assertEquals( "[x=50,y=50,width=50,height=50]", intersection.toString() );
         intersection = GeomUtils.intersection( r2, r1 );
-        assertEquals( "Rectangle: 50,50,50,50", intersection.toString() );
+        assertEquals( "[x=50,y=50,width=50,height=50]", intersection.toString() );
         assertTrue( intersection.area() > 0 );
         
         r2 = new Rectangle( 100, 100, 100, 100 );
         intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 100,100,0,0", intersection.toString() );
+        assertEquals( "[x=100,y=100,width=0,height=0]", intersection.toString() );
         assertFalse( intersection.area() > 0 );
         
         r2 = new Rectangle( 101, 100, 100, 100 );
         intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 101,100,0,0", intersection.toString() );
+        assertEquals( "[x=101,y=100,width=0,height=0]", intersection.toString() );
         assertFalse( intersection.area() > 0 );
         
         r2 = new Rectangle( 101, 101, 100, 100 );
         intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 101,101,0,0", intersection.toString() );
+        assertEquals( "[x=101,y=101,width=0,height=0]", intersection.toString() );
         assertFalse( intersection.area() > 0 );
         
         r2 = new Rectangle( 99, 101, 100, 100 );
         intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 99,101,1,0", intersection.toString() );
+        assertEquals( "[x=99,y=101,width=1,height=0]", intersection.toString() );
         assertFalse( intersection.area() > 0 );
         
         r2 = new Rectangle( 99, 99, 100, 100 );
         intersection = GeomUtils.intersection( r1, r2 );
-        assertEquals( "Rectangle: 99,99,1,1", intersection.toString() );
+        assertEquals( "[x=99,y=99,width=1,height=1]", intersection.toString() );
         assertTrue( intersection.area() > 0 );
     }
 

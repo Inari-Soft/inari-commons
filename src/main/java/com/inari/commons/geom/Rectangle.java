@@ -110,14 +110,20 @@ public final class Rectangle extends Position {
             return false;
         }
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Rectangle: " + toConfigString();
+        StringBuilder builder = new StringBuilder();
+        builder.append( "[x=" );
+        builder.append( x );
+        builder.append( ",y=" );
+        builder.append( y );
+        builder.append( ",width=" );
+        builder.append( width );
+        builder.append( ",height=" );
+        builder.append( height );
+        builder.append( "]" );
+        return builder.toString();
     }
-
-    
 
 }

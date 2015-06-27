@@ -46,8 +46,16 @@ public final class Vector2i implements StringConfigurable {
     }
 
     @Override
-    public final String toString() {
-        return "Vector2i:" + dx + StringUtils.VALUE_SEPARATOR_STRING + dy;
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append( "[dx=" );
+        builder.append( dx );
+        builder.append( ",dy=" );
+        builder.append( dy );
+        builder.append( "]" );
+        return builder.toString();
     }
+
+    
 
 }

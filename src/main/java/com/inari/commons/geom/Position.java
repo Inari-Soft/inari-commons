@@ -70,12 +70,18 @@ public class Position implements StringConfigurable {
     public String toConfigString() {
         return x + StringUtils.VALUE_SEPARATOR_STRING + y;
     }
-    
+
     @Override
     public String toString() {
-        return "Position: " + toConfigString();
+        StringBuilder builder = new StringBuilder();
+        builder.append( "[x=" );
+        builder.append( x );
+        builder.append( ",y=" );
+        builder.append( y );
+        builder.append( "]" );
+        return builder.toString();
     }
-    
+
     @Override
     public int hashCode() {
         int result = 1;

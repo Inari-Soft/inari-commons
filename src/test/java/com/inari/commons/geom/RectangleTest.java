@@ -67,7 +67,7 @@ public class RectangleTest {
         assertEquals( r1.width, 111 );
         assertEquals( r1.height, 444 );
         
-        assertEquals( "Rectangle: 30,20,111,444", r1.toString() );
+        assertEquals( "[x=30,y=20,width=111,height=444]", r1.toString() );
     }
     
     public void testEquality() {

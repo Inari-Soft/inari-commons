@@ -73,7 +73,7 @@ public class PositionTest {
         assertEquals( p1.x, 30 );
         assertEquals( p1.y, 40 );
         
-        assertEquals( "Position: 30,40", p1.toString() );
+        assertEquals( "[x=30,y=40]", p1.toString() );
     }
     
     @Test

@@ -161,13 +161,13 @@ public final class RGBColor implements StringConfigurable {
     @Override
     public final String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append( "RGBColor [r=" );
+        builder.append( "[r=" );
         builder.append( r );
-        builder.append( ", g=" );
+        builder.append( ",g=" );
         builder.append( g );
-        builder.append( ", b=" );
+        builder.append( ",b=" );
         builder.append( b );
-        builder.append( ", a=" );
+        builder.append( ",a=" );
         builder.append( a );
         builder.append( "]" );
         return builder.toString();

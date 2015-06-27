@@ -40,8 +40,14 @@ public final class Vector1i implements StringConfigurable {
     }
 
     @Override
-    public final String toString() {
-        return "Vector1i:" + d;
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append( "[d=" );
+        builder.append( d );
+        builder.append( "]" );
+        return builder.toString();
     }
+
+    
 
 }
