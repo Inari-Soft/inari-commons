@@ -24,6 +24,7 @@
 package com.inari.commons.lang.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -189,7 +190,7 @@ public final class DynArray<T> implements Iterable<T> {
      *  @param coparator
      */
     public final void sort( Comparator<T> coparator ) {
-        list.sort( coparator );
+        Collections.sort( list, coparator );
     }
     
     /** Get the size of the DynArray. The size is defined by the number of objects that
