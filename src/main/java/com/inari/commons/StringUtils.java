@@ -36,6 +36,7 @@
 package com.inari.commons;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -146,6 +147,16 @@ public abstract class StringUtils {
     public static final String escapeSeparatorKeys( String value ) {
         // TODO
         return value;
+    }
+
+    public static String array2DToString( int[][] grid ) {
+        StringBuilder sb = new StringBuilder();
+        sb.append( "[" );
+        for ( int i = 0; i < grid.length; i++ ) {
+            sb.append( Arrays.toString( grid[ i ] ) );
+        }
+        sb.append( "]" );
+        return sb.toString();
     }
 
 }
