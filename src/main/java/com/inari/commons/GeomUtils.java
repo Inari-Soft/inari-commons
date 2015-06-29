@@ -298,35 +298,6 @@ public abstract class GeomUtils {
         p.y += d.dy;
     }
     
-//    public final static void translate( Position p, Direction d, int dx, int dy ) {
-//        switch ( d.xDir ) {
-//            case LEFT: {
-//                p.x -= dx;
-//                break;
-//            }
-//            case RIGHT: {
-//                p.x += dx;
-//                break;
-//            }
-//            case NONE: {
-//                break;
-//            }
-//        }
-//        switch ( d.yDir ) {
-//            case UP: {
-//                p.y -= dy;
-//                break;
-//            }
-//            case DOWN: {
-//                p.y += dy;
-//                break;
-//            }
-//            case NONE: {
-//                break;
-//            }
-//        }
-//    }
-    
     public static final int getTranslatedXPos( Position p, Direction d ) {
         return getTranslatedXPos( p, d, 1 );
     }
