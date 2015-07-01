@@ -37,9 +37,11 @@ package com.inari.commons.lang.list;
 
 import java.util.Arrays;
 
+import com.inari.commons.StringUtils;
+import com.inari.commons.config.StringConfigurable;
 import com.inari.commons.lang.IntIterator;
 
-public final class IntBag {
+public final class IntBag implements StringConfigurable {
     
     private int nullValue = Integer.MIN_VALUE;
     private int expand = 10;
@@ -166,7 +168,30 @@ public final class IntBag {
         }
     }
 
-    
+    @Override
+    public void fromConfigString( String stringValue ) {
+        if ( StringUtils.isBlank( stringValue ) ) {
+            return;
+        }
+        
+        clear();
+        String[] splited = stringValue.split( "," );
+        for ( int i = 0; i < splited.length; i++ ) {
+            add( Integer.parseInt( splited[ i ] ) );
+        }
+    }
+
+    @Override
+    public String toConfigString() {
+        StringBuilder sb = new StringBuilder();
+        for ( int i = 0; i < array.length; i++ ) {
+            sb.append( array[ i ] );
+            if ( i < array.length - 1 ) {
+                sb.append( "," );
+            }
+        }
+        return sb.toString();
+    }
 
     @Override
     public String toString() {
@@ -228,7 +253,5 @@ public final class IntBag {
             }
         };
     }
-
-    
 
 }
