@@ -14,22 +14,22 @@ public class IndexedAspectTest {
 //        IndexedAspect attrA1 = IndexedAspectBuilder.c( A.class );
 //        IndexedAspect attrA2 = new IndexedAspect( AA.class );
 //        
-//        assertEquals( "Aspect [ indexedType=A, bitset={}, types={} ]", attrA1.toString() );
-//        assertEquals( "Aspect [ indexedType=A, bitset={}, types={} ]", attrA2.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={}, types={} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={}, types={} ]", attrA2.toString() );
 //        
 //        attrA1.set( AA.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={0}, types={AA} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={0}, types={AA} ]", attrA1.toString() );
 //        attrA1.set( AB.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
 //        attrA1.set( AC.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={0, 1, 2}, types={AA,AB,AC} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={0, 1, 2}, types={AA,AB,AC} ]", attrA1.toString() );
 //        
 //        attrA1.reset( AB.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={0, 2}, types={AA,AC} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={0, 2}, types={AA,AC} ]", attrA1.toString() );
 //        attrA1.reset( AA.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={2}, types={AC} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={2}, types={AC} ]", attrA1.toString() );
 //        attrA1.reset( AA.class );
-//        assertEquals( "Aspect [ indexedType=A, bitset={2}, types={AC} ]", attrA1.toString() );
+//        assertEquals( "Aspect [ indexedBaseType=A, bitset={2}, types={AC} ]", attrA1.toString() );
 //    }
     
     @Test
@@ -52,8 +52,8 @@ public class IndexedAspectTest {
         
         // A1=AA,AB : A2=AA
         IndexedAspectBuilder.set( attrA1, AB.class );
-        assertEquals( "IndexedAspect [ indexedType=A, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
-        assertEquals( "IndexedAspect [ indexedType=A, bitset={0}, types={AA} ]", attrA2.toString() );
+        assertEquals( "IndexedAspect [ indexedBaseType=A, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
+        assertEquals( "IndexedAspect [ indexedBaseType=A, bitset={0}, types={AA} ]", attrA2.toString() );
         assertTrue( attrA1.include( attrA2 ) );
         assertFalse( attrA2.include( attrA1 ) );
         

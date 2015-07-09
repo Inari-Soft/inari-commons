@@ -15,10 +15,10 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.indexed.Indexed;
+import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.Indexer;
 
-public abstract class Event<L> implements Indexed {
+public abstract class Event<L> implements IndexedType {
     
     private final int index;
     
@@ -28,7 +28,7 @@ public abstract class Event<L> implements Indexed {
     
     @Override
     @SuppressWarnings( "rawtypes" )
-    public final Class<Event> indexedType() {
+    public final Class<Event> indexedBaseType() {
         return Event.class;
     }
 

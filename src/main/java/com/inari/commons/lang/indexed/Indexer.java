@@ -47,17 +47,13 @@ public abstract class Indexer {
     
     private final static List<Class<?>> unknownIndexedTypes = new ArrayList<Class<?>>();
     
-    private final static List<Class<? extends IndexedType>> indexedTypes = new ArrayList<Class<? extends IndexedType>>();
-    private final static List<List<Class<? extends Indexed>>> indexMap = Collections.synchronizedList( new ArrayList<List<Class<? extends Indexed>>>() );
+    private final static List<Class<? extends IndexedBaseType>> indexedBaseTypes = new ArrayList<Class<? extends IndexedBaseType>>();
+    private final static List<List<Class<? extends IndexedType>>> indexedTypeMap = Collections.synchronizedList( new ArrayList<List<Class<? extends IndexedType>>>() );
     
     private final static Map<Class<? extends IndexedObject>, BitSet> indexedObjectTypes = new HashMap<Class<? extends IndexedObject>, BitSet>();
     
     
     // **** OBJECT INDEX *********************************************************
-    
-    static int nextObjectIndex( IndexedObject indexedObject ) {
-        return nextObjectIndex( indexedObject.getClass() );
-    }
     
     final static int nextObjectIndex( Class<? extends IndexedObject> indexedObjectType ) {
         BitSet indexSet = indexedObjectTypes.get( indexedObjectType );
@@ -112,33 +108,33 @@ public abstract class Indexer {
     
     // **** INDEXED TYPE *********************************************************
     
-    public final static int getIndexForType( Class<? extends Indexed> type, Class<? extends IndexedType> indexedType ) {
-        checkIndexedType( type, indexedType );
-        List<Class<? extends Indexed>> indexedOfType = getCreateIndexedOfType( indexedType, type );
-        return indexedOfType.indexOf( type );
+    public final static int getIndexForType( Class<? extends IndexedType> indexedType, Class<? extends IndexedBaseType> indexedBaseType ) {
+        checkIndexedType( indexedType, indexedBaseType );
+        List<Class<? extends IndexedType>> indexedOfType = getCreateIndexedOfType( indexedBaseType, indexedType );
+        return indexedOfType.indexOf( indexedType );
     }
     
     @SuppressWarnings( "unchecked" )
-    public final static int getIndexForType( Class<?> type ) {
-        if ( Indexed.class.isAssignableFrom( type ) ) {
-            Class<? extends Indexed> _type = (Class<? extends Indexed>) type;
-            Class<? extends IndexedType> indexedType = findIndexedType( _type );
-            return getIndexForType( _type, indexedType );
+    public final static int getIndexForType( Class<?> indexedType ) {
+        if ( IndexedType.class.isAssignableFrom( indexedType ) ) {
+            Class<? extends IndexedType> _type = (Class<? extends IndexedType>) indexedType;
+            Class<? extends IndexedBaseType> indexedBaseType = findIndexedType( _type );
+            return getIndexForType( _type, indexedBaseType );
         } 
         
-        if ( !unknownIndexedTypes.contains( type ) ) {
-            unknownIndexedTypes.add( type );
+        if ( !unknownIndexedTypes.contains( indexedType ) ) {
+            unknownIndexedTypes.add( indexedType );
         }
-        return unknownIndexedTypes.indexOf( type );
+        return unknownIndexedTypes.indexOf( indexedType );
     }
     
-    public final static Class<? extends Indexed> getTypeForIndex( Class<? extends IndexedType> indexedType, int index ) {
-        List<Class<? extends Indexed>> indexedTypeList = indexedTypeList( indexedType );
-        if ( indexedTypeList != null ) {
-            if ( index < 0 || index >= indexedTypeList.size() ) {
+    public final static Class<? extends IndexedType> getTypeForIndex( Class<? extends IndexedBaseType> indexedBaseType, int index ) {
+        List<Class<? extends IndexedType>> indexedBaseTypeList = indexedTypeList( indexedBaseType );
+        if ( indexedBaseTypeList != null ) {
+            if ( index < 0 || index >= indexedBaseTypeList.size() ) {
                 return null;
             }
-            return indexedTypeList.get( index );
+            return indexedBaseTypeList.get( index );
         }
         return null;
     }
@@ -151,28 +147,28 @@ public abstract class Indexer {
     }
     
     @SuppressWarnings( "unchecked" )
-    public final static <T extends Indexed> Class<T> getCastedTypeForIndex( Class<? extends IndexedType> indexedType, int index ) {
-        return (Class<T>) getTypeForIndex( indexedType, index );
+    public final static <T extends IndexedType> Class<T> getCastedTypeForIndex( Class<? extends IndexedBaseType> indexedBaseType, int index ) {
+        return (Class<T>) getTypeForIndex( indexedBaseType, index );
     }
     
-    public final static int getIndexedTypeSize( Class<? extends IndexedType> indexedType ) {
-        indexedType = findIndexedType( indexedType );
-        List<Class<? extends Indexed>> indexedOfType = getCreateIndexedTypeList( indexedType );
+    public final static int getIndexedTypeSize( Class<? extends IndexedBaseType> indexedBaseType ) {
+        indexedBaseType = findIndexedType( indexedBaseType );
+        List<Class<? extends IndexedType>> indexedOfType = getCreateIndexedTypeList( indexedBaseType );
         return indexedOfType.size();
     }
     
-    public int getNumberOfTypes( Class<? extends IndexedType> indexedType ) {
-        return indexedTypes.size();
+    public int getNumberOfRegisteredBaseTypes() {
+        return indexedBaseTypes.size();
     }
     
-    public int getNumberOfKnownIndexedTypes() {
+    public int getNumberOfRegisteredIndexedTypes() {
         return unknownIndexedTypes.size();
     }
 
     public final static void clear() {
         unknownIndexedTypes.clear();
-        indexedTypes.clear();
-        indexMap.clear();
+        indexedBaseTypes.clear();
+        indexedTypeMap.clear();
         indexedObjectTypes.clear();
     }
 
@@ -185,11 +181,11 @@ public abstract class Indexer {
             builder.append( "\n  " ).append( indexedObjectType.getKey() ).append( " : " ).append( indexedObjectType.getValue() );
         }
         builder.append( "\n * Indexed Types :\n" );
-        for ( Class<? extends IndexedType> indexedType : indexedTypes ) {
-            List<Class<? extends Indexed>> value = indexMap.get( indexedIndex );
-            builder.append( "  " ).append( indexedType ).append( " : {\n" );
+        for ( Class<? extends IndexedBaseType> indexedBaseType : indexedBaseTypes ) {
+            List<Class<? extends IndexedType>> value = indexedTypeMap.get( indexedIndex );
+            builder.append( "  " ).append( indexedBaseType ).append( " : {\n" );
             int index = 0;
-            for ( Class<? extends Indexed> indexed : value ) {
+            for ( Class<? extends IndexedType> indexed : value ) {
                 builder.append( "    " ).append( index ).append( ":" ).append( indexed.getName() ).append( "\n" );
                 index++;
             }
@@ -208,66 +204,66 @@ public abstract class Indexer {
         return builder.toString();
     }
     
-    public static final void checkIndexedType( Class<? extends Indexed> indexType, Class<? extends IndexedType> indexedType ) {
-        if ( indexType.isInterface() || Modifier.isAbstract( indexType.getModifiers() ) ) {
-            throw new IllegalArgumentException( "indexType: " + indexType + " is not an instantiable class" );
+    public static final void checkIndexedType( Class<? extends IndexedType> indexedType, Class<? extends IndexedBaseType> indexedBaseType ) {
+        if ( indexedType.isInterface() || Modifier.isAbstract( indexedType.getModifiers() ) ) {
+            throw new IllegalArgumentException( "indexedType: " + indexedType + " is not an instantiable class" );
         }
-        if ( !indexedType.isAssignableFrom( indexType ) ) {
-            throw new IllegalArgumentException( String.format( "IndexedType missmatch: indexType:%s is not a valid substitute of indexedType:%s", indexType, indexedType ) );
+        if ( !indexedBaseType.isAssignableFrom( indexedType ) ) {
+            throw new IllegalArgumentException( String.format( "IndexedType missmatch: indexedType:%s is not a valid substitute of indexedBaseType:%s", indexedType, indexedBaseType ) );
         }
     }
 
-    public static final void checkIndexedType( Indexed indexed, Class<? extends IndexedType> indexedType ) {
-        if ( indexed.indexedType() != indexedType ) {
-            throw new IllegalArgumentException( "IndexedType missmatch: indexedType=" + indexedType + " indexType=" + indexed.indexedType() );
+    public static final void checkIndexedType( IndexedType indexedType, Class<? extends IndexedBaseType> indexedBaseType ) {
+        if ( indexedType.indexedBaseType() != indexedBaseType ) {
+            throw new IllegalArgumentException( "IndexedType missmatch: indexedBaseType=" + indexedBaseType + " indexType=" + indexedType.indexedBaseType() );
         }
     }
     
     @SuppressWarnings( "unchecked" )
-    final static Class<? extends IndexedType> findIndexedType( Class<? extends IndexedType> indexedType ) {
-        while ( ( indexedType.getSuperclass() != null ) && IndexedType.class.isAssignableFrom( indexedType.getSuperclass() ) ) {
-            indexedType = (Class<? extends IndexedType>) indexedType.getSuperclass();
+    final static Class<? extends IndexedBaseType> findIndexedType( Class<? extends IndexedBaseType> indexedBaseType ) {
+        while ( ( indexedBaseType.getSuperclass() != null ) && IndexedBaseType.class.isAssignableFrom( indexedBaseType.getSuperclass() ) ) {
+            indexedBaseType = (Class<? extends IndexedBaseType>) indexedBaseType.getSuperclass();
         }
-        if ( indexedType.isInterface() ) {
-            return indexedType;
+        if ( indexedBaseType.isInterface() ) {
+            return indexedBaseType;
         }
-        Class<?>[] interfaces = indexedType.getInterfaces();
+        Class<?>[] interfaces = indexedBaseType.getInterfaces();
         if ( interfaces != null ) {
             for ( Class<?> _interface : interfaces ) {
-                if ( _interface != Indexed.class && _interface != IndexedType.class && IndexedType.class.isAssignableFrom( _interface ) ) {
-                    indexedType = (Class<? extends IndexedType>) _interface;
+                if ( _interface != IndexedType.class && _interface != IndexedBaseType.class && IndexedBaseType.class.isAssignableFrom( _interface ) ) {
+                    indexedBaseType = (Class<? extends IndexedBaseType>) _interface;
                 }
             }
         }
-        return indexedType;
+        return indexedBaseType;
     }
     
-    public final static IndexedTypeList getIndexedTypeList( Class<? extends IndexedType> indexedType ) {
-        indexedType = findIndexedType( indexedType );
-        return new IndexedTypeList( indexedType );
+    public final static IndexedTypeList getIndexedTypeList( Class<? extends IndexedBaseType> indexedBaseType ) {
+        indexedBaseType = findIndexedType( indexedBaseType );
+        return new IndexedTypeList( indexedBaseType );
     }
     
-    private final static List<Class<? extends Indexed>> indexedTypeList( Class<? extends IndexedType> indexedType ) {
-        if ( !indexedTypes.contains( indexedType ) ) {
+    private final static List<Class<? extends IndexedType>> indexedTypeList( Class<? extends IndexedBaseType> indexedBaseType ) {
+        if ( !indexedBaseTypes.contains( indexedBaseType ) ) {
             return null;
         }
-        return indexMap.get( indexedTypes.indexOf( indexedType ) );
+        return indexedTypeMap.get( indexedBaseTypes.indexOf( indexedBaseType ) );
     }
     
-    private final static List<Class<? extends Indexed>> getCreateIndexedTypeList( Class<? extends IndexedType> indexedType ) {
-        if ( !indexedTypes.contains( indexedType ) ) {
-            indexedTypes.add( indexedType );
-            List<Class<? extends Indexed>> indexedOfType = Collections.synchronizedList( new ArrayList<Class<? extends Indexed>>() );
-            indexMap.add( indexedOfType );
+    private final static List<Class<? extends IndexedType>> getCreateIndexedTypeList( Class<? extends IndexedBaseType> indexedBaseType ) {
+        if ( !indexedBaseTypes.contains( indexedBaseType ) ) {
+            indexedBaseTypes.add( indexedBaseType );
+            List<Class<? extends IndexedType>> indexedOfType = Collections.synchronizedList( new ArrayList<Class<? extends IndexedType>>() );
+            indexedTypeMap.add( indexedOfType );
         }
         
-        return indexedTypeList( indexedType );
+        return indexedTypeList( indexedBaseType );
     }
 
-    private final static List<Class<? extends Indexed>> getCreateIndexedOfType( Class<? extends IndexedType> indexedType, Class<? extends Indexed> type ) {
-        List<Class<? extends Indexed>> indexedOfType = getCreateIndexedTypeList( indexedType );
-        if ( !indexedOfType.contains( type ) ) {
-            indexedOfType.add( type );
+    private final static List<Class<? extends IndexedType>> getCreateIndexedOfType( Class<? extends IndexedBaseType> indexedBaseType, Class<? extends IndexedType> indexedType ) {
+        List<Class<? extends IndexedType>> indexedOfType = getCreateIndexedTypeList( indexedBaseType );
+        if ( !indexedOfType.contains( indexedType ) ) {
+            indexedOfType.add( indexedType );
         }
         return indexedOfType;
     }
@@ -275,19 +271,19 @@ public abstract class Indexer {
     
     public static final class IndexedTypeList {
         
-        private final Class<? extends IndexedType> indexedType;
-        private final List<Class<? extends Indexed>> indexedTypes;
+        private final Class<? extends IndexedBaseType> indexedBaseType;
+        private final List<Class<? extends IndexedType>> indexedTypes;
         
-        IndexedTypeList( Class<? extends IndexedType> indexedType ) {
-            this.indexedType = indexedType;
-            this.indexedTypes = Indexer.indexedTypeList( indexedType );
+        IndexedTypeList( Class<? extends IndexedBaseType> indexedBaseType ) {
+            this.indexedBaseType = indexedBaseType;
+            this.indexedTypes = Indexer.indexedTypeList( indexedBaseType );
         }
 
-        public Class<? extends IndexedType> getIndexedType() {
-            return indexedType;
+        public Class<? extends IndexedBaseType> getIndexedBaseType() {
+            return indexedBaseType;
         }
 
-        public int getTypeIndex( Class<? extends Indexed> indexType ) {
+        public int getTypeIndex( Class<? extends IndexedType> indexType ) {
             return indexedTypes.indexOf( indexType );
         }
     }

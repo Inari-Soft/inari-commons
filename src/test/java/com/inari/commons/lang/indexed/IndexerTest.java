@@ -592,14 +592,14 @@ public class IndexerTest {
             Indexer.getIndexForType( AA.class, B.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
-            assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedType:interface com.inari.commons.lang.indexed.B", e.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType:interface com.inari.commons.lang.indexed.B", e.getMessage() );
         } 
         
         try {
             Indexer.getIndexForType( BA.class, A.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
-            assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedType:class com.inari.commons.lang.indexed.A", e.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedBaseType:class com.inari.commons.lang.indexed.A", e.getMessage() );
         } 
     }
     
@@ -661,14 +661,14 @@ public class IndexerTest {
             Indexer.checkIndexedType( A.class, A.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
+            assertEquals( "indexedType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
         }
         
         try {
             Indexer.checkIndexedType( A.class, AA.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
+            assertEquals( "indexedType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
         }
         
         Indexer.checkIndexedType( BB.class, B.class );
@@ -678,14 +678,14 @@ public class IndexerTest {
             Indexer.checkIndexedType( B.class, B.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
+            assertEquals( "indexedType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
         }
         
         try {
             Indexer.checkIndexedType( B.class, BB.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
+            assertEquals( "indexedType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
         }
         
         
@@ -694,14 +694,14 @@ public class IndexerTest {
             Indexer.checkIndexedType( AA.class, B.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedType:interface com.inari.commons.lang.indexed.B", iae.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType:interface com.inari.commons.lang.indexed.B", iae.getMessage() );
         }
         
         try {
             Indexer.checkIndexedType( BC.class, A.class );
             fail( "Exception expected" );
         } catch ( IllegalArgumentException iae ) {
-            assertEquals( "IndexedType missmatch: indexType:class com.inari.commons.lang.indexed.BC is not a valid substitute of indexedType:class com.inari.commons.lang.indexed.A", iae.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.BC is not a valid substitute of indexedBaseType:class com.inari.commons.lang.indexed.A", iae.getMessage() );
         }
     }
 }

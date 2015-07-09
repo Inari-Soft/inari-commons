@@ -1,6 +1,6 @@
 package com.inari.commons.lang.indexed;
 
-public abstract class A implements Indexed {
+public abstract class A implements IndexedType {
     
     private final int index;
     
@@ -9,7 +9,7 @@ public abstract class A implements Indexed {
     }
 
     @Override
-    public final Class<A> indexedType() {
+    public final Class<A> indexedBaseType() {
         return A.class;
     }
 

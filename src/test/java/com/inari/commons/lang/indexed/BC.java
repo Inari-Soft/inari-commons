@@ -1,6 +1,6 @@
 package com.inari.commons.lang.indexed;
 
-public class BC implements B, Indexed {
+public class BC implements B, IndexedType {
     
     private final int index;
     
@@ -9,7 +9,7 @@ public class BC implements B, Indexed {
     }
 
     @Override
-    public Class<B> indexedType() {
+    public Class<B> indexedBaseType() {
         return B.class;
     }
 

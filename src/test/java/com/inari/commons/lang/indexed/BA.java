@@ -9,7 +9,7 @@ public class BA implements B {
     }
 
     @Override
-    public Class<B> indexedType() {
+    public Class<B> indexedBaseType() {
         return B.class;
     }
 

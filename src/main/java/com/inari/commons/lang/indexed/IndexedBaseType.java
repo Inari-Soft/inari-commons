@@ -35,9 +35,8 @@
 */
 package com.inari.commons.lang.indexed;
 
-// TODO I should find a better name for this. maybe IndexedFinalType or IndexedSubType or TypeIndex
-public interface Indexed extends IndexedType {
+public interface IndexedBaseType {
     
-    public int index();
+    Class<? extends IndexedBaseType> indexedBaseType();
 
 }

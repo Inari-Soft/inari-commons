@@ -39,9 +39,9 @@ import com.inari.commons.lang.aspect.Aspect;
 
 public final class IndexedAspect extends Aspect {
     
-    final Class<? extends IndexedType> indexedType;
+    final Class<? extends IndexedBaseType> indexedType;
 
-    IndexedAspect( Class<? extends IndexedType> indexedType, int length ) {
+    IndexedAspect( Class<? extends IndexedBaseType> indexedType, int length ) {
         super( length );
         this.indexedType = indexedType;
     }
@@ -51,18 +51,18 @@ public final class IndexedAspect extends Aspect {
         indexedType = source.indexedType;
     }
 
-    public final Class<? extends IndexedType> getIndexedType() {
+    public final Class<? extends IndexedBaseType> getIndexedType() {
         return indexedType;
     }
 
-    public boolean contains( Class<? extends Indexed> indexType ) {
+    public boolean contains( Class<? extends IndexedType> indexType ) {
         Indexer.checkIndexedType( indexType, indexedType );
         return contains( Indexer.getIndexForType( indexType, indexedType ) );
     }
     
-    public boolean contains( Indexed indexed ) {
-        Indexer.checkIndexedType( indexed.getClass(), indexedType );
-        return contains( indexed.index() );
+    public boolean contains( IndexedType indexedType ) {
+        Indexer.checkIndexedType( indexedType.getClass(), this.indexedType );
+        return contains( indexedType.index() );
     }
 
     
@@ -79,7 +79,7 @@ public final class IndexedAspect extends Aspect {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append( "IndexedAspect [ indexedType=" ).append( indexedType.getSimpleName() );
+        sb.append( "IndexedAspect [ indexedBaseType=" ).append( indexedType.getSimpleName() );
         sb.append( ", bitset=" ).append( bitset );
         sb.append( ", types={" );
         boolean typeAdded = false;

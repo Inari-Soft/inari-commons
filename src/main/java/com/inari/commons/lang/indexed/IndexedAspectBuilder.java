@@ -42,18 +42,18 @@ public final class IndexedAspectBuilder {
     private IndexedAspect toBuild;
     
     
-    public IndexedAspectBuilder( Class<? extends IndexedType> indexedType ) {
+    public IndexedAspectBuilder( Class<? extends IndexedBaseType> indexedType ) {
         indexedType = Indexer.findIndexedType( indexedType );
         int indexedTypeSize = Indexer.getIndexedTypeSize( indexedType );
         toBuild = new IndexedAspect( indexedType, indexedTypeSize );
     }
     
-    public IndexedAspectBuilder( Class<? extends IndexedType> indexedType, int length ) {
+    public IndexedAspectBuilder( Class<? extends IndexedBaseType> indexedType, int length ) {
         indexedType = Indexer.findIndexedType( indexedType );
         toBuild = new IndexedAspect( indexedType, length );
     }
     
-    public final IndexedAspectBuilder set( Class<? extends Indexed> indexType ) {
+    public final IndexedAspectBuilder set( Class<? extends IndexedType> indexType ) {
         if ( indexType == null ) {
             return this;
         }
@@ -63,7 +63,7 @@ public final class IndexedAspectBuilder {
         return this;
     }
 
-    public final IndexedAspectBuilder reset( Class<? extends Indexed> indexType ) {
+    public final IndexedAspectBuilder reset( Class<? extends IndexedType> indexType ) {
         if ( indexType == null ) {
             return this;
         }
@@ -78,15 +78,15 @@ public final class IndexedAspectBuilder {
         return result;
     }
     
-    public static final IndexedAspect build( Class<? extends IndexedType> indexedType ) {
-        return build( indexedType, Indexer.getIndexedTypeSize( indexedType ), (Class<? extends Indexed>) null );
+    public static final IndexedAspect build( Class<? extends IndexedBaseType> indexedType ) {
+        return build( indexedType, Indexer.getIndexedTypeSize( indexedType ), (Class<? extends IndexedType>) null );
     }
     
-    public static final IndexedAspect build( Class<? extends IndexedType> indexedType, Class<? extends Indexed> indexType ) {
+    public static final IndexedAspect build( Class<? extends IndexedBaseType> indexedType, Class<? extends IndexedType> indexType ) {
         return build( indexedType, Indexer.getIndexedTypeSize( indexedType ), indexType );
     }
     
-    public static final IndexedAspect build( Class<? extends IndexedType> indexedType, int length, Class<? extends Indexed> indexType ) {
+    public static final IndexedAspect build( Class<? extends IndexedBaseType> indexedType, int length, Class<? extends IndexedType> indexType ) {
         indexedType = Indexer.findIndexedType( indexedType );
         IndexedAspect result = new IndexedAspect( indexedType, length );
         if ( indexType == null ) {
@@ -105,7 +105,7 @@ public final class IndexedAspectBuilder {
         aspect.clear();
     }
 
-    public static final void set( IndexedAspect aspect, Class<? extends Indexed> indexType ) {
+    public static final void set( IndexedAspect aspect, Class<? extends IndexedType> indexType ) {
         if ( indexType == null ) {
             return;
         }
@@ -113,15 +113,15 @@ public final class IndexedAspectBuilder {
         AspectBuilder.set( aspect, Indexer.getIndexForType( indexType, aspect.indexedType ) );
     }
     
-    public static final void set( IndexedAspect aspect, Indexed indexed ) {
-        if ( indexed == null ) {
+    public static final void set( IndexedAspect aspect, IndexedType indexedType ) {
+        if ( indexedType == null ) {
             return;
         }
-        Indexer.checkIndexedType( indexed.getClass(), aspect.indexedType );
-        AspectBuilder.set( aspect, indexed.index() );
+        Indexer.checkIndexedType( indexedType.getClass(), aspect.indexedType );
+        AspectBuilder.set( aspect, indexedType.index() );
     }
     
-    public static final void reset( IndexedAspect aspect, Class<? extends Indexed> indexType ) {
+    public static final void reset( IndexedAspect aspect, Class<? extends IndexedType> indexType ) {
         if ( indexType == null ) {
             return;
         }
@@ -129,12 +129,12 @@ public final class IndexedAspectBuilder {
         AspectBuilder.reset( aspect, Indexer.getIndexForType( indexType, aspect.indexedType ) );
     }
     
-    public static final void reset( IndexedAspect aspect, Indexed indexed ) {
-        if ( indexed == null ) {
+    public static final void reset( IndexedAspect aspect, IndexedType indexedType ) {
+        if ( indexedType == null ) {
             return;
         }
-        Indexer.checkIndexedType( indexed.getClass(), aspect.indexedType );
-        AspectBuilder.reset( aspect, indexed.index() );
+        Indexer.checkIndexedType( indexedType.getClass(), aspect.indexedType );
+        AspectBuilder.reset( aspect, indexedType.index() );
     }
 
 }

@@ -35,8 +35,8 @@
 */
 package com.inari.commons.lang.indexed;
 
-public interface IndexedType {
+public interface IndexedType extends IndexedBaseType {
     
-    public Class<? extends IndexedType> indexedType();
+    int index();
 
 }

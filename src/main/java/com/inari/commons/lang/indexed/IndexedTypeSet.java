@@ -42,22 +42,23 @@ import com.inari.commons.lang.aspect.AspectBuilder;
 
 public final class IndexedTypeSet {
     
-    private Indexed[] indexed;
-    protected final Class<? extends IndexedType> indexedType;
+    private IndexedType[] indexedType;
+    protected final Class<? extends IndexedBaseType> indexedBaseType;
     protected final IndexedAspect aspect;
     protected int size = 0;
     
     
-    public IndexedTypeSet( Class<? extends IndexedType> indexedType ) {
-        this.indexedType = Indexer.findIndexedType( indexedType );
-        aspect = new IndexedAspect( indexedType, Indexer.getIndexedTypeSize( this.indexedType ) );
-        indexed = new Indexed[ Indexer.getIndexedTypeSize( indexedType ) ];
+    public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType ) {
+        this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
+        int size = Indexer.getIndexedTypeSize( this.indexedBaseType );
+        aspect = new IndexedAspect( indexedBaseType, size );
+        this.indexedType = new IndexedType[ size ];
     }
     
-    public IndexedTypeSet( Class<? extends IndexedType> indexedType, int length ) {
-        this.indexedType = Indexer.findIndexedType( indexedType );
-        aspect = new IndexedAspect( indexedType, length );
-        indexed = new Indexed[ length ];
+    public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType, int length ) {
+        this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
+        aspect = new IndexedAspect( indexedBaseType, length );
+        this.indexedType = new IndexedType[ length ];
     }
     
     public final int size() {
@@ -68,8 +69,8 @@ public final class IndexedTypeSet {
         return aspect;
     }
     
-    public final Class<? extends IndexedType> getIndexedType() {
-        return indexedType;
+    public final Class<? extends IndexedBaseType> getIndexedBaseType() {
+        return indexedBaseType;
     }
     
     public final boolean include( IndexedAspect aspect ) {
@@ -77,19 +78,19 @@ public final class IndexedTypeSet {
     }
     
     public final int length() {
-        return indexed.length;
+        return indexedType.length;
     }
 
-    public final Indexed set( Indexed indexed ) {
-        if ( indexed == null ) {
+    public final IndexedType set( IndexedType indexedType ) {
+        if ( indexedType == null ) {
             return null;
         }
-        Indexer.checkIndexedType( indexed, indexedType );
-        ensureCapacity( indexed.index() );
+        Indexer.checkIndexedType( indexedType, indexedBaseType );
+        ensureCapacity( indexedType.index() );
         
-        Indexed old = this.indexed[ indexed.index() ];
-        this.indexed[ indexed.index() ] = indexed;
-        IndexedAspectBuilder.set( aspect, indexed );
+        IndexedType old = this.indexedType[ indexedType.index() ];
+        this.indexedType[ indexedType.index() ] = indexedType;
+        IndexedAspectBuilder.set( aspect, indexedType );
         if ( old == null ) {
             size++;
         }
@@ -98,25 +99,25 @@ public final class IndexedTypeSet {
     }
     
     public final boolean contains( int index ) {
-        if ( index < 0 || index >= indexed.length ) {
+        if ( index < 0 || index >= indexedType.length ) {
             return false;
         }
-        return indexed[ index ] != null;
+        return indexedType[ index ] != null;
     }
     
-    public final Indexed remove( Indexed indexed ) {
-        Indexer.checkIndexedType( indexed, indexedType );
-        return this.remove( indexed.index() );
+    public final IndexedType remove( IndexedType indexedType ) {
+        Indexer.checkIndexedType( indexedType, indexedBaseType );
+        return this.remove( indexedType.index() );
     }
     
-    public final <I extends Indexed> I remove( Class<I> indexType ) {
-        Indexer.checkIndexedType( indexType, indexedType );
-        return indexType.cast( remove( Indexer.getIndexForType( indexType, indexedType ) ) );
+    public final <I extends IndexedType> I remove( Class<I> indexType ) {
+        Indexer.checkIndexedType( indexType, indexedBaseType );
+        return indexType.cast( remove( Indexer.getIndexForType( indexType, indexedBaseType ) ) );
     }
     
-    public final Indexed remove( int index ) {
-        Indexed result = this.indexed[ index ];
-        this.indexed[ index ] = null;
+    public final IndexedType remove( int index ) {
+        IndexedType result = this.indexedType[ index ];
+        this.indexedType[ index ] = null;
         AspectBuilder.reset( aspect, index );
         if ( result != null ) {
             size--;
@@ -124,18 +125,18 @@ public final class IndexedTypeSet {
         return result;
     }
     
-    public final <I extends Indexed> I get( Class<I> type ) {
-        int typeIndex = Indexer.getIndexForType( type, indexedType );
-        Indexed indexed = this.indexed[ typeIndex ];
-        return type.cast( indexed );
+    public final <I extends IndexedType> I get( Class<I> type ) {
+        int typeIndex = Indexer.getIndexForType( type, indexedBaseType );
+        IndexedType indexedType = this.indexedType[ typeIndex ];
+        return type.cast( indexedType );
     }
     
     @SuppressWarnings( "unchecked" )
-    public final <I extends Indexed> I get( int typeIndex ) {
-        return (I) this.indexed[ typeIndex ];
+    public final <I extends IndexedType> I get( int typeIndex ) {
+        return (I) this.indexedType[ typeIndex ];
     }
     
-    public <T extends Indexed> Iterable<T> getIterable() {
+    public <T extends IndexedType> Iterable<T> getIterable() {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
@@ -145,13 +146,13 @@ public final class IndexedTypeSet {
     }
 
     private void ensureCapacity( int index ) {
-        if ( index <indexed.length ) {
+        if ( index < indexedType.length ) {
             return;
         }
         
-        Indexed[] newArray = new Indexed[ index + 1 ];
-        System.arraycopy( indexed, 0, newArray, 0, indexed.length );
-        indexed = newArray;
+        IndexedType[] newArray = new IndexedType[ index + 1 ];
+        System.arraycopy( indexedType, 0, newArray, 0, indexedType.length );
+        indexedType = newArray;
     }
     
     public final void clear() {
@@ -159,12 +160,12 @@ public final class IndexedTypeSet {
             IndexedAspectBuilder.clear( aspect );
         }
         size = 0;
-        if ( indexed != null ) {
-            for ( int i = 0; i < indexed.length; i++ ) {
-                if ( indexed[ i ] != null && indexed[ i ] instanceof Clearable ) {
-                    ( (Clearable) indexed[ i ] ).clear();
+        if ( indexedType != null ) {
+            for ( int i = 0; i < indexedType.length; i++ ) {
+                if ( indexedType[ i ] != null && indexedType[ i ] instanceof Clearable ) {
+                    ( (Clearable) indexedType[ i ] ).clear();
                 }
-                indexed[ i ] = null;
+                indexedType[ i ] = null;
             }
         }
     }
@@ -172,13 +173,13 @@ public final class IndexedTypeSet {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append( "IndexedTypeSet [ indexedType=" ).append( indexedType.getSimpleName() );
-        sb.append( " length=" ).append( indexed.length ).append( " size:" ).append( size );
+        sb.append( "IndexedTypeSet [ indexedBaseType=" ).append( indexedBaseType.getSimpleName() );
+        sb.append( " length=" ).append( indexedType.length ).append( " size:" ).append( size );
         sb.append( ", indexed={" );
         boolean deleteLastSep = false;
-        for ( int i = 0; i < indexed.length; i++ ) {
+        for ( int i = 0; i < indexedType.length; i++ ) {
             deleteLastSep = true;
-            sb.append( ( indexed[ i ] != null )? indexed[ i ].getClass().getSimpleName() : "null" ).append( "," );
+            sb.append( ( indexedType[ i ] != null )? indexedType[ i ].getClass().getSimpleName() : "null" ).append( "," );
         }
         if ( deleteLastSep ) {
             sb.deleteCharAt( sb.length() - 1 );
@@ -188,7 +189,7 @@ public final class IndexedTypeSet {
     }
     
     
-    private final class IndexedIterator<T extends Indexed> implements Iterator<T> {
+    private final class IndexedIterator<T extends IndexedType> implements Iterator<T> {
         
         private int i = aspect.nextSetBit( 0 );
 
@@ -202,7 +203,7 @@ public final class IndexedTypeSet {
         public T next() {
             int nextIndex = i;
             i = aspect.nextSetBit( i + 1 );
-            return (T) indexed[ nextIndex ];
+            return (T) indexedType[ nextIndex ];
         }
 
         @Override
