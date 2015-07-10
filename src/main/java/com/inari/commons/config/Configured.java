@@ -21,11 +21,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /** Annotation for configured fields on a IConfigObject instance.
- *     Expects to a configuration property or reference on ConfigData of the specified IConfigObject instance
- *     The name, if it is set, expects the name of the configuration property in ConfigData.
- *     If the name is not set (empty) the name of the field will be the name of the configuration property.
+ *  Expects to a configuration property or reference on ConfigData of the specified IConfigObject instance
+ *  The name, if it is set, expects the name of the configuration property in ConfigData.
+ *  If the name is not set (empty) the name of the field will be the name of the configuration property.
  *     
- *     @author ahefti
+ *   @author andreas hefti
  *
  */
 @Retention( RetentionPolicy.RUNTIME )

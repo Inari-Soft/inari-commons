@@ -14,6 +14,11 @@ public abstract class A implements IndexedType {
     }
 
     @Override
+    public final Class<? extends IndexedType> indexedType() {
+        return this.getClass();
+    }
+
+    @Override
     public final int index() {
         return index;
     }

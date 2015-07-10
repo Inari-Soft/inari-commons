@@ -17,8 +17,20 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspect;
 
-public abstract class AspectedEvent<L> extends Event<L> {
+/** An Event with an Aspect to verify interested listeners.
+ *  Use this to notify AspectedEventListener listening to specified Event and Aspect.
+ *  
+ *  @author andreas hefti
+ *
+ *  @param <L> The AspectedEventListener implementation type
+ */
+public abstract class AspectedEvent<L extends AspectedEventListener> extends Event<L> {
     
+    /** Get the Aspect for this event. Only AspectedEventListener that are listening to the specified Event and Aspect are 
+     *  going to be notified on this event.
+     *  
+     *  @return The Aspect of this event
+     */
     public abstract Aspect getAspect();
     
 }

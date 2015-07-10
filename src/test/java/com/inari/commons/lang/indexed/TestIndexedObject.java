@@ -7,7 +7,7 @@ public class TestIndexedObject extends BaseIndexedObject {
     }
 
     @Override
-    public Class<TestIndexedObject> getIndexedObjectType() {
+    public Class<TestIndexedObject> indexedObjectType() {
         return TestIndexedObject.class;
     }
 

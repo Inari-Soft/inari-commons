@@ -23,6 +23,11 @@ import com.inari.commons.lang.functional.Matcher;
 import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.list.DynArray;
 
+/** A simple, synchronous and none thread save implementation of the IEventDispatcher interface.
+ * 
+ * @author andreas hefti
+ * @see IEventDispatcher
+ */
 public final class EventDispatcher implements IEventDispatcher {
     
 
@@ -85,12 +90,15 @@ public final class EventDispatcher implements IEventDispatcher {
     public final <L extends MatchedEventListener> void notify( final MatchedEvent<L> event ) {
         synchronized( listeners ) {
             for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                Matcher<MatchedEvent<L>> matcherForEvent = listener.getMatcherForEvent( event );
-                if ( matcherForEvent != null && matcherForEvent.match( event ) ) {
+                Matcher<MatchedEvent<L>> matcher = listener.getMatcher();
+                if( matcher == null ) {
                     event.notify( listener );
-                } else {
-                    event.notify( listener );
+                    return;
                 }
+                
+                if ( matcher.match( event ) ) {
+                    event.notify( listener );
+                } 
             }
         }
     }

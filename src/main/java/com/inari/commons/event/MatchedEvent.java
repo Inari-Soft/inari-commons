@@ -15,6 +15,12 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-public abstract class MatchedEvent<L> extends Event<L> {
+/** This is just a marker interface and used to bind MatchedEvent(s) to MatchedEventListener.
+ * 
+ * @author andreas hefti
+ *
+ * @param <L> The type of MatchedEventListener to which the MatchedEvent type is bound to.
+ */
+public abstract class MatchedEvent<L extends MatchedEventListener> extends Event<L> {
     // Just a marker class
 }

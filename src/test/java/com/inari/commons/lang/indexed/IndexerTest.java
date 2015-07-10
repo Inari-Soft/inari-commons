@@ -80,7 +80,7 @@ public class IndexerTest {
             "}", 
             Indexer.dump() 
         );
-        assertEquals( 0, indexedObject1.indexedId() );
+        assertEquals( 0, indexedObject1.index() );
         assertEquals( 1, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         TestIndexedObject indexedObject2 = new TestIndexedObject();
@@ -96,10 +96,10 @@ public class IndexerTest {
             "}", 
             Indexer.dump() 
         );
-        assertEquals( 1, indexedObject2.indexedId() );
-        assertEquals( 2, indexedObject3.indexedId() );
-        assertEquals( 3, indexedObject4.indexedId() );
-        assertEquals( 4, indexedObject5.indexedId() );
+        assertEquals( 1, indexedObject2.index() );
+        assertEquals( 2, indexedObject3.index() );
+        assertEquals( 3, indexedObject4.index() );
+        assertEquals( 4, indexedObject5.index() );
         assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         indexedObject2.dispose();
@@ -111,7 +111,7 @@ public class IndexerTest {
             "}", 
             Indexer.dump() 
         );
-        assertEquals( -1, indexedObject2.indexedId() );
+        assertEquals( -1, indexedObject2.index() );
         assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
         
         TestIndexedObject indexedObject6 = new TestIndexedObject();
@@ -123,7 +123,7 @@ public class IndexerTest {
             "}", 
             Indexer.dump() 
         );
-        assertEquals( 1, indexedObject6.indexedId() );
+        assertEquals( 1, indexedObject6.index() );
         assertEquals( 5, Indexer.getIndexedObjectSize( TestIndexedObject.class ) );
     }
     

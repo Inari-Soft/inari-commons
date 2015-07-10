@@ -17,8 +17,21 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.functional.Matcher;
 
+/** An EventListener which implements also a specified Matcher for the MatchedEvent that matches if
+ *  the listener is interested on specified MatchedEvent.
+ *  <p>
+ *  Use this to listen to an MatchedEvent that matches the Event on that the listener is interested in.
+ *  The listener will only get notifies on a specified MatchedEvent if the Matcher matches
+ *  @author andreas hefti
+ *
+ */
 public interface MatchedEventListener {
     
-    public <L extends MatchedEventListener> Matcher<MatchedEvent<L>> getMatcherForEvent( MatchedEvent<L> event );
+    /** Get the Matcher for this listener. Only MatchedEventListener that are listening to the specified Event and matches 
+     *  the specified Event are going to be notified.
+     *  
+     *  @return The Matcher to check if the MatchedEventListener is interested in a specified Event
+     */
+    public <L extends MatchedEventListener> Matcher<MatchedEvent<L>> getMatcher();
 
 }

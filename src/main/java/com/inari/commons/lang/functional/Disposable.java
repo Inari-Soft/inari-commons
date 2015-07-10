@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.inari.commons.lang.list;
+package com.inari.commons.lang.functional;
 
-public interface INode<T> {
+public interface Disposable {
     
-    T value();
-    
-    INode<T> nextNode();
-    
-    INode<T> previousNode();
-    
-    void remove();
+    void dispose();
 
 }

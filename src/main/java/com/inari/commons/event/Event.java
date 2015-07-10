@@ -15,21 +15,60 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
+import com.inari.commons.lang.indexed.Indexed;
+import com.inari.commons.lang.indexed.IndexedBaseType;
 import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.Indexer;
 
-public abstract class Event<L> implements IndexedType {
+/** Base implementation of an Event handled by the IEventDispatcher.
+ *  <p>
+ *  Implement this for a specific Event type bound to a EventListener implementation (L)
+ *  For example if a specified Event is needed to notify specified listener(s) creation and 
+ *  implementation of the following interfaces/classes are needed:
+ *  <p>
+ *  <pre>
+ *  public interface TheEventListener extends EventListener {
+ *  
+ *      void onTheEvent( TheEvent event );
+ *      
+ *  }
+ *  
+ *  public class TheEvent extends Event<TheEventListener> {
+ *  
+ *      public final String anEventAttribute;
+ *      
+ *      public TheEvent( String anEventAttribute ) {
+ *          super();
+ *          this.anEventAttribute = anEventAttribute;
+ *      }
+ *      
+ *      public final void notify( TheEventListener listener ) {
+ *          listener.onTheEvent( this );
+ *      }
+ *  }
+ *  </pre>
+ *  
+ *  
+ * @author andreas hefti
+ *
+ * @param <L> The type of EventListener the is interested in the specified Event.
+ */
+public abstract class Event<L> implements IndexedType, Indexed {
     
     private final int index;
     
     protected Event() {
-        index = Indexer.getIndexForType( this.getClass(), Event.class );
+        index = Indexer.getIndexForType( this );
     }
     
     @Override
-    @SuppressWarnings( "rawtypes" )
-    public final Class<Event> indexedBaseType() {
+    public final Class<? extends IndexedBaseType> indexedBaseType() {
         return Event.class;
+    }
+
+    @Override
+    public final Class<? extends IndexedType> indexedType() {
+        return this.getClass();
     }
 
     @Override
@@ -37,6 +76,11 @@ public abstract class Event<L> implements IndexedType {
         return index;
     }
     
+    /** Implements the notification of specified listener.
+     *  For an implementation example have a look at the class documentation example
+     *  
+     *  @param listener the listener to notify.
+     */
     public abstract void notify( final L listener );
 
 }

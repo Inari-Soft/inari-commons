@@ -17,8 +17,21 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspect;
 
+/** An EventListener which implements also a specified matching within an Aspect to verify if
+ *  the listener is interested on a certain AspectedEvent or not.
+ *  <p>
+ *  Use this to listen to an ApsectedEvent that matches the Aspect on that the listener is interested in.
+ *  The listener will only get notifies on a specified AspectedEvent if it match the Aspect
+ *  @author andreas hefti
+ *
+ */
 public interface AspectedEventListener {
     
+    /** Use this to implement the Aspect matching.
+     * 
+     * @param aspect the Aspect form AspectedEvent to test the matching
+     * @return true if the listener is interested on a AspectedEvent with specified Aspect.
+     */
     public boolean match( Aspect aspect );
 
 }

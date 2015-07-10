@@ -12,6 +12,11 @@ public class BB implements B, IndexedType {
     public Class<B> indexedBaseType() {
         return B.class;
     }
+    
+    @Override
+    public final Class<? extends IndexedType> indexedType() {
+        return this.getClass();
+    }
 
     @Override
     public int index() {

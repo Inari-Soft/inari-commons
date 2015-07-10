@@ -1,18 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2015, Andreas Hefti, inarisoft@yahoo.de 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
-import com.inari.commons.lang.Disposable;
+import com.inari.commons.lang.functional.Disposable;
 
 public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     
     protected int indexedId;
     
     protected BaseIndexedObject() {
-        indexedId = Indexer.nextObjectIndex( getIndexedObjectType() );
+        indexedId = Indexer.nextObjectIndex( indexedObjectType() );
     }
     
     protected BaseIndexedObject( int indexedId ) {
         if ( indexedId < 0 ) {
-            this.indexedId = Indexer.nextObjectIndex( getIndexedObjectType() );
+            this.indexedId = Indexer.nextObjectIndex( indexedObjectType() );
         } else {
             this.indexedId = indexedId;
             Indexer.setIndexedObjectIndex( this );
@@ -20,7 +35,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     }
 
     @Override
-    public final int indexedId() {
+    public final int index() {
         return indexedId;
     }
 
@@ -41,7 +56,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
         final int prime = 31;
         int result = 1;
         result = prime * result + indexedId;
-        result = prime * result + getIndexedObjectType().hashCode();
+        result = prime * result + indexedObjectType().hashCode();
         return result;
     }
 
@@ -56,10 +71,10 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
         BaseIndexedObject other = (BaseIndexedObject) obj;
         if ( indexedId != other.indexedId )
             return false;
-        if ( getIndexedObjectType() == null ) {
-            if ( other.getIndexedObjectType() != null )
+        if ( indexedObjectType() == null ) {
+            if ( other.indexedObjectType() != null )
                 return false;
-        } else if ( !getIndexedObjectType().equals( other.getIndexedObjectType() ) )
+        } else if ( !indexedObjectType().equals( other.indexedObjectType() ) )
             return false;
         return true;
     }
