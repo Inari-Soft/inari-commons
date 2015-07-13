@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.indexed.Indexed;
 import com.inari.commons.lang.indexed.IndexedBaseType;
 import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.Indexer;

@@ -15,23 +15,23 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.functional.Matcher;
+import com.inari.commons.lang.functional.Predicate;
 
-/** An EventListener which implements also a specified Matcher for the MatchedEvent that matches if
- *  the listener is interested on specified MatchedEvent.
+/** An EventListener which implements also a specified Matcher for the PredicatedEvent that matches if
+ *  the listener is interested on specified PredicatedEvent.
  *  <p>
- *  Use this to listen to an MatchedEvent that matches the Event on that the listener is interested in.
- *  The listener will only get notifies on a specified MatchedEvent if the Matcher matches
+ *  Use this to listen to an PredicatedEvent that matches the Event on that the listener is interested in.
+ *  The listener will only get notifies on a specified PredicatedEvent if the Predicate matches
  *  @author andreas hefti
  *
  */
-public interface MatchedEventListener {
+public interface PredicatedEventListener {
     
     /** Get the Matcher for this listener. Only MatchedEventListener that are listening to the specified Event and matches 
      *  the specified Event are going to be notified.
      *  
      *  @return The Matcher to check if the MatchedEventListener is interested in a specified Event
      */
-    public <L extends MatchedEventListener> Matcher<MatchedEvent<L>> getMatcher();
+    public <L extends PredicatedEventListener> Predicate<PredicatedEvent<L>> getMatcher();
 
 }

@@ -91,11 +91,11 @@ public interface IEventDispatcher {
      */
     <L extends AspectedEventListener> void notify( AspectedEvent<L> event );
 
-    /** Notifies all MatchedEventListener that are interested on the specific type of Event and that matches the
-     *  the specified MatchedEvent, within the specified MatchedEvent.
+    /** Notifies all PredicatedEventListener that are interested on the specific type of Event and that matches
+     *  the specified PredicatedEvent, within the specified Predicate.
      * 
      *  @param event The AspectedEvent to send to the AspectedEventListener(s).
      */
-    <L extends MatchedEventListener> void notify( MatchedEvent<L> event );
+    <L extends PredicatedEventListener> void notify( PredicatedEvent<L> event );
 
 }

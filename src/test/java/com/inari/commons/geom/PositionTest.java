@@ -54,8 +54,8 @@ public class PositionTest {
         try {
             p1.fromConfigString( "hey" );
             fail( "this should not work and throw an exception!" );
-        } catch ( NumberFormatException nfe ) {
-            assertEquals( "For input string: \"hey\"", nfe.getMessage() );
+        } catch ( IllegalArgumentException iae ) {
+            assertEquals( "The stringValue as invalid format: hey", iae.getMessage() );
         }
         
         Position p2 = new Position( 1, 1 );

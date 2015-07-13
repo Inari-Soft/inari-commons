@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.inari.commons.lang.functional.Matcher;
+import com.inari.commons.lang.functional.Predicate;
 import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.list.DynArray;
 
@@ -58,7 +58,7 @@ public final class EventDispatcher implements IEventDispatcher {
     }
     
     /* (non-Javadoc)
-     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IEvent)
+     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.Event)
      */
     @Override
     public final <L> void notify( final Event<L> event ) {
@@ -70,7 +70,7 @@ public final class EventDispatcher implements IEventDispatcher {
     }
     
     /* (non-Javadoc)
-     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IAspectedEvent)
+     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.AspectedEvent)
      */
     @Override
     public final <L extends AspectedEventListener> void notify( final AspectedEvent<L> event ) {
@@ -84,19 +84,19 @@ public final class EventDispatcher implements IEventDispatcher {
     }
     
     /* (non-Javadoc)
-     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.IMatchedEvent)
+     * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.PredicatedEvent<L>)
      */
     @Override
-    public final <L extends MatchedEventListener> void notify( final MatchedEvent<L> event ) {
+    public final <L extends PredicatedEventListener> void notify( final PredicatedEvent<L> event ) {
         synchronized( listeners ) {
             for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                Matcher<MatchedEvent<L>> matcher = listener.getMatcher();
+                Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
                 if( matcher == null ) {
                     event.notify( listener );
                     return;
                 }
                 
-                if ( matcher.match( event ) ) {
+                if ( matcher.apply( event ) ) {
                     event.notify( listener );
                 } 
             }
