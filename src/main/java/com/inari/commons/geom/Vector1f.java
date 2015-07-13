@@ -17,14 +17,18 @@ package com.inari.commons.geom;
 
 import com.inari.commons.config.StringConfigurable;
 
+/** A simple one dimensional vector within float precision */
 public final class Vector1f implements StringConfigurable {
-    
+
+    /** The vector value */
     public float d;
-    
+
+    /** Use this to create a default Vector1f with d=1.0 */
     public Vector1f() {
-        d = 1;
+        d = 1.0f;
     }
-    
+
+    /** Use this to create a Vector1f with specified value */
     public Vector1f( float d ) {
         this.d = d;
     }

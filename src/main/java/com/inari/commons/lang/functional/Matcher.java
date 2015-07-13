@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.inari.commons.lang.functional;
 
+@Deprecated // use Predicate instead
 public interface Matcher<T> {
     
-    public boolean match( T t );
+    boolean match( T t );
 
 }

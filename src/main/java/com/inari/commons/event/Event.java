@@ -53,7 +53,7 @@ import com.inari.commons.lang.indexed.Indexer;
  *
  * @param <L> The type of EventListener the is interested in the specified Event.
  */
-public abstract class Event<L> implements IndexedType, Indexed {
+public abstract class Event<L> implements IndexedType {
     
     private final int index;
     

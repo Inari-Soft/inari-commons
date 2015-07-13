@@ -32,6 +32,6 @@ public interface AspectedEventListener {
      * @param aspect the Aspect form AspectedEvent to test the matching
      * @return true if the listener is interested on a AspectedEvent with specified Aspect.
      */
-    public boolean match( Aspect aspect );
+    boolean match( Aspect aspect );
 
 }

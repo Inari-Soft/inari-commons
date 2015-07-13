@@ -19,54 +19,84 @@ import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
 
-
+/** A simple Rectangle with integer precision */
 public final class Rectangle extends Position {
 
+    /** The width of the Rectangle */
     public int width;
+    /** The height of the Rectangle */
     public int height;
-    
+
+    /** Use this ti create a Rectangle with default attributes: x=0,y=0,width=0,height=0 */
     public Rectangle() {
         super( 0, 0 );
         width = 0;
         height = 0;
     }
-    
+
+    /** Use this as a copy constructor */
     public Rectangle ( Rectangle source ) {
         super( source.x, source.y );
         this.width = source.width;
         this.height = source.height;
     }
-    
+
+    /** Use this to create a Rectangle on specified Position with specified width and height
+     *
+     * @param pos the Position of the new Rectangle
+     * @param width the width of the new Rectangle
+     * @param height the height of the new Rectangle
+     */
     public Rectangle( Position pos, int width, int height ) {
         super( pos );
         this.width = width;
         this.height = height;
     }
-    
+
+    /** Use this to create a new Rectangle with specified attributes.
+     *
+     * @param xpos the x axis position of the new Rectangle
+     * @param ypos the y axis position of the new Rectangle
+     * @param width the width of the new Rectangle
+     * @param height the height of the new Rectangle
+     */
     public Rectangle( int xpos, int ypos, int width, int height ) {
         super( xpos, ypos );
         this.width = width;
         this.height = height;
     }
-    
+
+    /** Use this to create a new Rectangle form configuration String value.
+     *
+     * @param rectString configuration String value. See also fromConfigString method documentation
+     */
     public Rectangle( String rectString ) {
-        StringTokenizer st = new StringTokenizer( rectString, StringUtils.VALUE_SEPARATOR_STRING );
-        super.x = Integer.parseInt( st.nextToken() );
-        super.y = Integer.parseInt( st.nextToken() );
-        width = Integer.parseInt( st.nextToken() );
-        height = Integer.parseInt( st.nextToken() );
+        fromConfigString( rectString );
     }
-    
+
+    /** Use this to get the area value (width * height) form this Rectangle.
+     * @return the area value (width * height) form this Rectangle.
+     */
     public int area() {
         return width * height;
     }
-    
-    public void fromOther( Rectangle other ) {
-        super.fromOther( other );
+
+    /** Use this to set the attributes of this Rectangle by another Rectangle.
+     * @param other the other Rectangle to get/take the attributes from
+     */
+    public void setFrom( Rectangle other ) {
+        super.setFrom( other );
         width = other.width;
         height = other.height;
     }
 
+    /** Use this to set  the Rectangle attributes from specified configuration String value with the
+     *  format: [x],[y],[width],[height].
+     *
+     * @param stringValue the configuration String value
+     * @throws IllegalArgumentException If the String value as a invalid format
+     * @throws NumberFormatException if the x/y/width/height values from the String value aren't numbers
+     */
     @Override
     public void fromConfigString( String stringValue ) {
         if ( !StringUtils.isBlank( stringValue ) ) {
@@ -78,6 +108,11 @@ public final class Rectangle extends Position {
         } 
     }
 
+    /** Use this to get a configuration String value that represents this Rectangle
+     *  and can be used to reset the attributes of a Rectangle by using fromConfigString
+     *  The format is: [x],[y],[width],[height].
+     *  @return A configuration String value that represents this Rectangle
+     */
     @Override
     public String toConfigString() {
         StringBuilder sb = new StringBuilder();

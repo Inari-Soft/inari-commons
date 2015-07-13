@@ -22,15 +22,29 @@ import java.util.List;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
+/** A simple list of Position that defines a path of Position in a two dimensional
+ *  coordinate system with integer precision.
+ *  <p>
+ *  Use this if a path of Positions is needed in a two dimensional coordinate system
+ *  with integer precision.
+ */
 public class PositionPath implements StringConfigurable, Iterable<Position> {
     
     private List<Position> positionPath = new ArrayList<Position>();
 
+    /** Get the Position Iterator to iterate through the path. */
     @Override
     public Iterator<Position> iterator() {
         return positionPath.iterator();
     }
 
+    /** Use this to set the path elemements from a specified configuration String value
+     *  with the format: [xValue1],[yValue1]|[xValue2],[yValue2]|[xValue3],[yValue3]|...
+     *
+     * @param stringValue the configuration String value
+     * @throws IllegalArgumentException If the String value as a invalid format
+     * @throws NumberFormatException if the x/y values from the String value aren't numbers
+     */
     @Override
     public void fromConfigString( String stringValue ) {
         if ( StringUtils.isBlank( stringValue ) ) {
@@ -42,6 +56,11 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
         }
     }
 
+    /** Use this to get a configuration String value that represents this PositionPath
+     *  and can be used to reset the attributes of a PositionPath by using fromConfigString
+     *  The format is: [xValue1],[yValue1]|[xValue2],[yValue2]|[xValue3],[yValue3]|...
+     *  @return A configuration String value that represents this PositionPath
+     */
     @Override
     public String toConfigString() {
         StringBuilder sb = new StringBuilder();

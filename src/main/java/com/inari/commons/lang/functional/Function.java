@@ -15,6 +15,11 @@
  ******************************************************************************/
 package com.inari.commons.lang.functional;
 
+/** Use this if there has to be a function passed that can be applied to a specified type
+ *  of value and returns a value of specified type in a generic way.
+ * @param <IN> The input value for the function.
+ * @param <OUT> The output value of the function.
+ */
 public interface Function<IN, OUT> {
     
     public OUT apply( IN value );

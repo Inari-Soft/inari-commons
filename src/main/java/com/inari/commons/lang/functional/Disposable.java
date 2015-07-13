@@ -15,8 +15,10 @@
  ******************************************************************************/
 package com.inari.commons.lang.functional;
 
+/** Use this on types that can be disposed */
 public interface Disposable {
-    
+
+    /** Dispose the instance */
     void dispose();
 
 }

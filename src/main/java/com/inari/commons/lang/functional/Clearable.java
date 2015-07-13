@@ -15,8 +15,12 @@
  ******************************************************************************/
 package com.inari.commons.lang.functional;
 
+/** Use this for types that can be cleared or are used in an abstract service that used to
+ *  clear object(s) but do not have to know the exact type of the object(s)
+ */
 public interface Clearable {
-    
-    public void clear();
+
+    /** Clears the instance */
+    void clear();
 
 }

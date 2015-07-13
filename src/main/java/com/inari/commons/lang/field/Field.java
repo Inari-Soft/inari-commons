@@ -19,6 +19,13 @@ import com.inari.commons.geom.Direction;
 import com.inari.commons.geom.Position;
 import com.inari.commons.geom.Rectangle;
 
+/** A two dimensional field of node(s) having references to its neighbors and one reference to
+ *  a value of type V.
+ *
+ *  Use this if you need a two dimensional field like a two dimensional array but with references
+ *  to neighbor values and therefor easy and fast navigation.
+ * @param <V> the type of the values referenced by the Node(s)
+ */
 public class Field<V> {
     
     protected boolean spherical = false;
