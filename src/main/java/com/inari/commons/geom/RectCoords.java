@@ -20,8 +20,16 @@ import java.util.StringTokenizer;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
+/** Implements 2d coordinates of a Rectangle in a float array.
+ *  <P>
+ *  Use this for dealing with 2d coordinates in float precision
+ *  
+ * @author andreashefti
+ *
+ */
 public class RectCoords implements StringConfigurable {
     
+    /** The 2d coordinates of a Rectangle */
     public final float[][] coords;
     
     public RectCoords() {

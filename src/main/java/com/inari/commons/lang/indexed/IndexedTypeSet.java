@@ -24,20 +24,20 @@ public final class IndexedTypeSet {
     
     private IndexedType[] indexedType;
     protected final Class<? extends IndexedBaseType> indexedBaseType;
-    protected final IndexedAspect aspect;
+    protected final IndexedTypeAspect aspect;
     protected int size = 0;
     
     
     public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType ) {
         this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
         int size = Indexer.getIndexedTypeSize( this.indexedBaseType );
-        aspect = new IndexedAspect( indexedBaseType, size );
+        aspect = new IndexedTypeAspect( indexedBaseType, size );
         this.indexedType = new IndexedType[ size ];
     }
     
     public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType, int length ) {
         this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
-        aspect = new IndexedAspect( indexedBaseType, length );
+        aspect = new IndexedTypeAspect( indexedBaseType, length );
         this.indexedType = new IndexedType[ length ];
     }
     
@@ -45,7 +45,7 @@ public final class IndexedTypeSet {
         return size;
     }
     
-    public final IndexedAspect getAspect() {
+    public final IndexedTypeAspect getAspect() {
         return aspect;
     }
     
@@ -53,7 +53,7 @@ public final class IndexedTypeSet {
         return indexedBaseType;
     }
     
-    public final boolean include( IndexedAspect aspect ) {
+    public final boolean include( IndexedTypeAspect aspect ) {
         return this.aspect.include( aspect );
     }
     
@@ -71,7 +71,7 @@ public final class IndexedTypeSet {
         
         IndexedType old = this.indexedType[ indexedType.index() ];
         this.indexedType[ indexedType.index() ] = indexedType;
-        IndexedAspectBuilder.set( aspect, indexedType );
+        IndexedTypeAspectBuilder.set( aspect, indexedType );
         if ( old == null ) {
             size++;
         }
@@ -138,7 +138,7 @@ public final class IndexedTypeSet {
     
     public final void clear() {
         if ( aspect != null ) {
-            IndexedAspectBuilder.clear( aspect );
+            IndexedTypeAspectBuilder.clear( aspect );
         }
         size = 0;
         if ( indexedType != null ) {

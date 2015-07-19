@@ -25,6 +25,11 @@ import java.awt.image.ImageProducer;
 import java.awt.image.RGBImageFilter;
 import java.util.Map;
 
+/** A simple image color converter that uses a int typed color map and BufferedImage.TYPE_INT_ARGB typed color values
+ * 
+ * @author andreashefti
+ *
+ */
 public class ColorConverter extends RGBImageFilter implements ImageColorTransform {
     
     private int[][] colorMap;

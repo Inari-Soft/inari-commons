@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.geom;
 
+/** Implements Easing types within static classes implementing the Easing interface */
 public abstract class EasingImpls {
     
     static final class CircularIn implements Easing {

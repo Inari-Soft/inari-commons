@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.inari.commons.lang.aspect.Aspect;
+import com.inari.commons.lang.aspect.IndexedAspect;
 import com.inari.commons.lang.aspect.AspectBuilder;
 import com.inari.commons.lang.indexed.Indexer;
 
@@ -115,11 +115,11 @@ public class EventDispatcherTest {
     public void testAspectedEvent() {
         EventDispatcher eventDispatcher = new EventDispatcher();
         
-        Aspect filterAspect = AspectBuilder.create( 5, 1, 3 );
-        Aspect noMatchAspect1 = AspectBuilder.create( 5, 1, 2 );
-        Aspect noMatchAspect2 = AspectBuilder.create( 5, 1, 4 );
-        Aspect matchAspect1 = AspectBuilder.create( 5, 1, 3 );
-        Aspect matchAspect2 = AspectBuilder.create( 5, 1, 2, 3 );
+        IndexedAspect filterAspect = AspectBuilder.create( 5, 1, 3 );
+        IndexedAspect noMatchAspect1 = AspectBuilder.create( 5, 1, 2 );
+        IndexedAspect noMatchAspect2 = AspectBuilder.create( 5, 1, 4 );
+        IndexedAspect matchAspect1 = AspectBuilder.create( 5, 1, 3 );
+        IndexedAspect matchAspect2 = AspectBuilder.create( 5, 1, 2, 3 );
         
         AspectedTestEventListener listener = new AspectedTestEventListener( filterAspect );
         

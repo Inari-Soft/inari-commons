@@ -1,18 +1,18 @@
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.Aspect;
+import com.inari.commons.lang.aspect.IndexedAspect;
 
 public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> {
     
-    private final Aspect aspect;
+    private final IndexedAspect aspect;
 
-    public TestAspectedEvent( Aspect aspect ) {
+    public TestAspectedEvent( IndexedAspect aspect ) {
         super();
         this.aspect = aspect;
     }
     
     @Override
-    public Aspect getAspect() {
+    public IndexedAspect getAspect() {
         return aspect;
     }
 

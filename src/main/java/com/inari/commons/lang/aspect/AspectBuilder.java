@@ -17,10 +17,10 @@ package com.inari.commons.lang.aspect;
 
 public final class AspectBuilder {
     
-    private Aspect toBuild;
+    private IndexedAspect toBuild;
     
     public final AspectBuilder newAspect( int length ) {
-        toBuild = new Aspect( length );
+        toBuild = new IndexedAspect( length );
         return this;
     }
     
@@ -39,25 +39,25 @@ public final class AspectBuilder {
         return this;
     }
     
-    public static final Aspect create( int length ) {
-        return new Aspect( length );
+    public static final IndexedAspect create( int length ) {
+        return new IndexedAspect( length );
     }
     
-    public static final Aspect create( int length, int... toSet ) {
+    public static final IndexedAspect create( int length, int... toSet ) {
         return set( create( length ), toSet );
     }
     
-    public static final Aspect set( Aspect aspect, int index ) {
+    public static final IndexedAspect set( IndexedAspect aspect, int index ) {
         aspect.bitset.set( index );
         return aspect;
     }
     
-    public static final Aspect reset( Aspect aspect, int index ) {
+    public static final IndexedAspect reset( IndexedAspect aspect, int index ) {
         aspect.bitset.set( index, false );
         return aspect;
     }
     
-    public static final Aspect set( Aspect aspect, int... toSet ) {
+    public static final IndexedAspect set( IndexedAspect aspect, int... toSet ) {
         if ( toSet != null && toSet.length > 0 ) {
             for ( int i = 0; i < toSet.length; i++ ) {
                 aspect.bitset.set( toSet[ i ] );
@@ -66,7 +66,7 @@ public final class AspectBuilder {
         return aspect;
     }
     
-    public static final Aspect reset( Aspect aspect, int... toReset ) {
+    public static final IndexedAspect reset( IndexedAspect aspect, int... toReset ) {
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {
                 aspect.bitset.set( toReset[ i ], false );
@@ -75,7 +75,7 @@ public final class AspectBuilder {
         return aspect;
     }
     
-    public static final Aspect modify( Aspect aspect, int[] toSet, int[] toReset ) {
+    public static final IndexedAspect modify( IndexedAspect aspect, int[] toSet, int[] toReset ) {
         set( aspect, toSet );
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {

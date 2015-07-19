@@ -17,8 +17,14 @@ package com.inari.commons.graphics;
 
 import java.awt.image.BufferedImage;
 
+/** An image transformation using BufferdImage for input and output */
 public interface ImageColorTransform {
     
+    /** Transform the specified image to a new one.
+     * 
+     * @param image The BufferedImage instance to transform
+     * @return The transformed image within a new BufferedImage instance 
+     */
     public BufferedImage transform( BufferedImage image );
 
 }

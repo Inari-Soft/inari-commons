@@ -1,18 +1,18 @@
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.Aspect;
+import com.inari.commons.lang.aspect.IndexedAspect;
 
 public class AspectedTestEventListener implements AspectedEventListener {
     
-    private final Aspect aspect;
+    private final IndexedAspect aspect;
     private AspectedEvent<?> lastCall;
 
-    public AspectedTestEventListener( Aspect aspect ) {
+    public AspectedTestEventListener( IndexedAspect aspect ) {
         this.aspect = aspect;
     }
 
     @Override
-    public boolean match( Aspect aspect ) {
+    public boolean match( IndexedAspect aspect ) {
         return aspect.include( this.aspect );
     }
 

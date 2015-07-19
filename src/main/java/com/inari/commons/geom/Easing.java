@@ -15,8 +15,10 @@
  ******************************************************************************/
 package com.inari.commons.geom;
 
+/** Interface to calculate a specified type of Easing */ 
 public interface Easing {
     
+    /** Defines a Easing repository with different types of Easing implementations */
     public static enum Type {
         LINEAR( new EasingImpls.Linear() ),
         QUAD_IN( new EasingImpls.QuadraticIn() ),
@@ -53,7 +55,7 @@ public interface Easing {
         }
     }
     
-    /** Calculate easing with t,s,c,d
+    /** Calculate easing for current time (t) for specified start value (b) and current value (c) for a given duration of the Easing (d)
      * @param t current time
      * @param b start value
      * @param c change in value

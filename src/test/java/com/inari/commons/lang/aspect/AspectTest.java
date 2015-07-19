@@ -10,9 +10,9 @@ public class AspectTest {
     
     @Test
     public void testAspects() {
-        Aspect aspect1 = new Aspect( 5 );
-        Aspect aspect2 = new Aspect( 10 );
-        Aspect aspect3 = new Aspect( 100 );
+        IndexedAspect aspect1 = new IndexedAspect( 5 );
+        IndexedAspect aspect2 = new IndexedAspect( 10 );
+        IndexedAspect aspect3 = new IndexedAspect( 100 );
         
         assertEquals( "Aspect [ size=64 bitset={} ]", aspect1.toString() );
         assertEquals( "Aspect [ size=64 bitset={} ]", aspect2.toString() );
@@ -38,10 +38,10 @@ public class AspectTest {
     
     @Test
     public void testInclude() {
-        Aspect aspect1 = new Aspect( 5 );
-        Aspect aspect2 = new Aspect( 5 );
-        Aspect aspect3 = new Aspect( 10 );
-        Aspect aspect4 = new Aspect( 10 );
+        IndexedAspect aspect1 = new IndexedAspect( 5 );
+        IndexedAspect aspect2 = new IndexedAspect( 5 );
+        IndexedAspect aspect3 = new IndexedAspect( 10 );
+        IndexedAspect aspect4 = new IndexedAspect( 10 );
         
         assertFalse( aspect1.include( aspect2 ) );
         assertFalse( aspect2.include( aspect3 ) );
@@ -76,10 +76,10 @@ public class AspectTest {
     
     @Test
     public void testExclude() {
-        Aspect aspect1 = new Aspect( 5 );
-        Aspect aspect2 = new Aspect( 5 );
-        Aspect aspect3 = new Aspect( 10 );
-        Aspect aspect4 = new Aspect( 10 );
+        IndexedAspect aspect1 = new IndexedAspect( 5 );
+        IndexedAspect aspect2 = new IndexedAspect( 5 );
+        IndexedAspect aspect3 = new IndexedAspect( 10 );
+        IndexedAspect aspect4 = new IndexedAspect( 10 );
         
         assertFalse( aspect1.exclude( aspect2 ) );
         assertFalse( aspect2.exclude( aspect3 ) );

@@ -20,79 +20,87 @@ import java.util.StringTokenizer;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
-
+/** A simple color value with read/green/blue and alpha value in float precision.
+ *  
+ *  Use this if a simple string value configurable color value within float precision is needed.
+ *  
+ * @author andreashefti
+ *
+ */
 public final class RGBColor implements StringConfigurable {
     
-    // TODO remove static references (Color is mutable so we should create always a new instance)
-    
-    public static final RGBColor BLACK = new RGBColor( 0f, 0f, 0f, 1f, "BLACK" );
-    public static final RGBColor WHITE = new RGBColor( 1f, 1f, 1f, 1f, "WHITE" );
-    public static final RGBColor RED = new RGBColor( 1f, 0f, 0f, 1f, "RED" );
-    public static final RGBColor GREEN = new RGBColor( 0f, 1f, 0f, 1f, "GREEN" );
-    public static final RGBColor BLU = new RGBColor( 0f, 0f, 1f, 1f, "BLU" );
-    
-    
-    public static final RGBColor RED_01ALPHA = new RGBColor( 1f, 0f, 0f, .1f, "RED_01ALPHA" );
-    public static final RGBColor RED_02ALPHA = new RGBColor( 1f, 0f, 0f, .2f, "RED_02ALPHA" );
-    public static final RGBColor RED_03ALPHA = new RGBColor( 1f, 0f, 0f, .3f, "RED_03ALPHA" );
-    public static final RGBColor RED_04ALPHA = new RGBColor( 1f, 0f, 0f, .4f, "RED_04ALPHA" );
-    public static final RGBColor RED_05ALPHA = new RGBColor( 1f, 0f, 0f, .5f, "RED_05ALPHA" );
-    public static final RGBColor RED_06ALPHA = new RGBColor( 1f, 0f, 0f, .6f, "RED_06ALPHA" );
-    public static final RGBColor RED_07ALPHA = new RGBColor( 1f, 0f, 0f, .7f, "RED_07ALPHA" );
-    public static final RGBColor RED_08ALPHA = new RGBColor( 1f, 0f, 0f, .8f, "RED_08ALPHA" );
-    public static final RGBColor RED_09ALPHA = new RGBColor( 1f, 0f, 0f, .9f, "RED_09ALPHA" );
-    
-    public static final RGBColor GREEN_01ALPHA = new RGBColor( 0f, 1f, 0f, .1f, "GREEN_01ALPHA" );
-    public static final RGBColor GREEN_02ALPHA = new RGBColor( 0f, 1f, 0f, .2f, "GREEN_02ALPHA" );
-    public static final RGBColor GREEN_03ALPHA = new RGBColor( 0f, 1f, 0f, .3f, "GREEN_03ALPHA" );
-    public static final RGBColor GREEN_04ALPHA = new RGBColor( 0f, 1f, 0f, .4f, "GREEN_04ALPHA" );
-    public static final RGBColor GREEN_05ALPHA = new RGBColor( 0f, 1f, 0f, .5f, "GREEN_05ALPHA" );
-    public static final RGBColor GREEN_06ALPHA = new RGBColor( 0f, 1f, 0f, .6f, "GREEN_06ALPHA" );
-    public static final RGBColor GREEN_07ALPHA = new RGBColor( 0f, 1f, 0f, .7f, "GREEN_07ALPHA" );
-    public static final RGBColor GREEN_08ALPHA = new RGBColor( 0f, 1f, 0f, .8f, "GREEN_08ALPHA" );
-    public static final RGBColor GREEN_09ALPHA = new RGBColor( 0f, 1f, 0f, .9f, "GREEN_09ALPHA" );
-    
-    public static final RGBColor BLUE_01ALPHA = new RGBColor( 0f, 0f, 1f, .1f, "BLUE_01ALPHA" );
-    public static final RGBColor BLUE_02ALPHA = new RGBColor( 0f, 0f, 1f, .2f, "BLUE_02ALPHA" );
-    public static final RGBColor BLUE_03ALPHA = new RGBColor( 0f, 0f, 1f, .3f, "BLUE_03ALPHA" );
-    public static final RGBColor BLUE_04ALPHA = new RGBColor( 0f, 0f, 1f, .4f, "BLUE_04ALPHA" );
-    public static final RGBColor BLUE_05ALPHA = new RGBColor( 0f, 0f, 1f, .5f, "BLUE_05ALPHA" );
-    public static final RGBColor BLUE_06ALPHA = new RGBColor( 0f, 0f, 1f, .6f, "BLUE_06ALPHA" );
-    public static final RGBColor BLUE_07ALPHA = new RGBColor( 0f, 0f, 1f, .7f, "BLUE_07ALPHA" );
-    public static final RGBColor BLUE_08ALPHA = new RGBColor( 0f, 0f, 1f, .8f, "BLUE_08ALPHA" );
-    public static final RGBColor BLUE_09ALPHA = new RGBColor( 0f, 0f, 1f, .9f, "BLUE_09ALPHA" );
-    
+    /** Some predefined color values */
+    public static enum Colors {
+        BLACK( new RGBColor( 0f, 0f, 0f, 1f ) ),
+        WHITE( new RGBColor( 1f, 1f, 1f, 1f ) ),
+        RED( new RGBColor( 1f, 0f, 0f, 1f ) ),
+        GREEN ( new RGBColor( 0f, 1f, 0f, 1f ) ),
+        BLU( new RGBColor( 0f, 0f, 1f, 1f ) )
+        ;
+        private RGBColor prototype;
+
+        private Colors( RGBColor prototype ) {
+            this.prototype = prototype;
+        }
+        
+        public RGBColor get() {
+            return new RGBColor( prototype );
+        }
+    }
+
+    /** The red ratio value of the color */
     public float r;
+    /** The green ratio value of the color */
     public float g;
+    /** The blue ratio value of the color */
     public float b;
+    /** The alpha ratio value of the color */
     public float a = 0;
     
-    
+    /** Create new RGBColor with r/g/b = 0.0f and alpha = 1.0f */
     public RGBColor() {
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
-        this.a = 1;
+        this.r = 0.0f;
+        this.g = 0.0f;
+        this.b = 0.0f;
+        this.a = 1.0f;
     }
     
+    /** Create new RGBColor with specified r/g/b ratio values and no alpha (-1.0f) 
+     * @param r The red ratio value of the color
+     * @param g The green ratio value of the color
+     * @param b The blue ratio value of the color
+     */
     public RGBColor( float r, float g, float b ) {
         this.r = r;
         this.g = g;
         this.b = b;
-        this.a = -1;
+        this.a = -1.0f;
+        adjustValues();
     }
     
+    /** Create new RGBColor with specified r/g/b/a ratio values
+     * @param r The red ratio value of the color
+     * @param g The green ratio value of the color
+     * @param b The blue ratio value of the color
+     * @param a The alpha ratio value of the color
+     */
     public RGBColor( float r, float g, float b, float a ) {
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        adjustValues();
     }
     
+    /** Create a RGBColor form specified configuration string value.
+     *  @see RGBColor.fromConfigString
+     *  @param colorString RGBColor configuration string value
+     */
     public RGBColor( String colorString ) {
         fromConfigString( colorString );
     }
     
+    /** Copy constructor */
     public RGBColor( RGBColor source ) {
         this.r = source.r;
         this.g = source.g;
@@ -100,14 +108,40 @@ public final class RGBColor implements StringConfigurable {
         this.a = source.a;
     }
     
-    protected RGBColor( float r, float g, float b, float a, String id ) {
-        this( r, g, b, a );
-    };
-    
+    /** Indicates if this RGBColor has an alpha ratio value (a >= 0)
+     *  @return true if this RGBColor has an alpha ratio value (a >= 0)
+     */
     public final boolean hasAlpha() {
         return a >= 0;
     }
+    
+    /** Adjust the ration values to be between 0.0 and 1,0
+     *  Except the a ration values is only adjust to the upper bound value (negative a value means no alpha)
+     */
+    public final void adjustValues() {
+        if ( r < 0.0f )
+            r = 0.0f;
+        if ( r > 1.0f )
+            r = 1.0f;
+        if ( g < 0.0f )
+            g = 0.0f;
+        if ( g > 1.0f )
+            g = 1.0f;
+        if ( b < 0.0f )
+            b = 0.0f;
+        if ( b > 1.0f )
+            b = 1.0f;
+        if ( a > 1.0f )
+            a = 1.0f;
+    }
 
+    /** Use this to set the RBColor attributes from specified configuration String value with the
+     *  format: [r],[g],[b](,[a]).
+     *
+     * @param stringValue the configuration String value
+     * @throws IllegalArgumentException If the String value as a invalid format
+     * @throws NumberFormatException if the r/g/b/a values from the String value aren't valid float numbers
+     */
     @Override
     public final void fromConfigString( String stringValue ) {
         if ( StringUtils.isBlank( stringValue ) ) {
@@ -124,8 +158,14 @@ public final class RGBColor implements StringConfigurable {
         } else {
             a = -1;
         }
+        adjustValues();
     }
 
+    /** Use this to get a configuration String value that represents this RGBColor
+     *  and can be used to set the attributes of a RGBColor by using fromConfigString
+     *  The format is: [r],[g],[b](,[a]).
+     *  @return A configuration String value that represents this RGBColor
+     */
     @Override
     public final String toConfigString() {
         StringBuilder sb = new StringBuilder();
