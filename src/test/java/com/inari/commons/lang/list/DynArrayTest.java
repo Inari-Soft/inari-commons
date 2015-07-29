@@ -275,6 +275,9 @@ public class DynArrayTest {
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
             for( @SuppressWarnings( "unused" ) String value : dynArray ) {
+                if ( value != null ) {
+
+                }
             }
         }
         time = System.nanoTime() - startTime;
@@ -295,8 +298,8 @@ public class DynArrayTest {
         System.out.println( "DynArray listIt     :"  + time );
         
         startTime = System.nanoTime();
+        int length = dynArray.capacity();
         for ( int run = 0; run < runns; run++ ) {
-            int length = dynArray.capacity();
             for( int i = 0; i < length; i++ ) {
                 String value = dynArray.get( i );
                 if ( value != null ) {
