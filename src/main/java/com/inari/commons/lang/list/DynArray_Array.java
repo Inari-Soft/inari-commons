@@ -1,17 +1,20 @@
 package com.inari.commons.lang.list;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
 public class DynArray_Array<T> implements Iterable<T> {
 
+    private final Class<T> typeClass;
     private T[] array;
     private final int grow;
     private int size = 0;
 
     /** Creates a DynArray with no initial capacity */
-    public DynArray_Array() {
+    public DynArray_Array( Class<T> typeClass ) {
+        this.typeClass = typeClass;
         createList( 50 );
         grow = 1;
     }
@@ -20,16 +23,18 @@ public class DynArray_Array<T> implements Iterable<T> {
      *  initialCapacity + ( initialCapacity / 2 ) and filled up with null values for the indexes to initialCapacity.
      *  @param initialCapacity
      */
-    public DynArray_Array( int initialCapacity ) {
+    public DynArray_Array( Class<T> typeClass, int initialCapacity ) {
+        this.typeClass = typeClass;
         createList( initialCapacity );
-        grow = 1;
+        grow = 20;
     }
 
     /** Creates a DynArray with specified initial capacity. The internal ArrayList is initialized with
      *  initialCapacity + ( initialCapacity / 2 ) and filled up with null values for the indexes to initialCapacity.
      *  @param initialCapacity
      */
-    public DynArray_Array( int initialCapacity, int grow ) {
+    public DynArray_Array(Class<T> typeClass, int initialCapacity, int grow ) {
+        this.typeClass = typeClass;
         createList( initialCapacity );
         this.grow = grow;
     }
@@ -192,6 +197,10 @@ public class DynArray_Array<T> implements Iterable<T> {
     public final Iterator<T> iterator() {
         return new DynArrayIterator();
     }
+    
+    public final T[] getArray() {
+        return array;
+    }
 
     @Override
     public String toString() {
@@ -206,6 +215,7 @@ public class DynArray_Array<T> implements Iterable<T> {
         return builder.toString();
     }
 
+    @SuppressWarnings( "unchecked" )
     private final void ensureCapacity( int index ) {
         int size = array.length;
         int newSize = size;
@@ -213,12 +223,13 @@ public class DynArray_Array<T> implements Iterable<T> {
             newSize += grow;
         }
         T[] oldArray = array;
-        array = (T[]) new Object[ newSize ];
+        array = (T[]) Array.newInstance( typeClass, newSize );
         System.arraycopy( oldArray, 0, array, 0, oldArray.length );
     }
 
+    @SuppressWarnings( "unchecked" )
     private final void createList( int initialCapacity ) {
-        array = (T[]) new Object[ initialCapacity ];
+        array = (T[]) Array.newInstance( typeClass, initialCapacity );
     }
 
     private final class DynArrayIterator implements Iterator<T> {

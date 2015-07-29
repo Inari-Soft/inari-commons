@@ -16,7 +16,6 @@
 package com.inari.commons.lang.list;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -46,13 +45,13 @@ import java.util.Iterator;
  */
 public final class DynArray<T> implements Iterable<T> {
     
-    private T[] array;
+    private ArrayList<T> list;
     private final int grow;
     private int size = 0;
     
     /** Creates a DynArray with no initial capacity */
     public DynArray() {
-        createList( 50 );
+        list = new ArrayList<T>();
         grow = 1;
     }
     
@@ -95,8 +94,8 @@ public final class DynArray<T> implements Iterable<T> {
      */
     public final T set( int index, T value ) {
         ensureCapacity( index );
-        T old = array[ index ];
-        array[ index ] = value;
+        T old = list.get( index );
+        list.set( index, value );
         if ( value != null ) {
             size++;
         }
@@ -112,7 +111,7 @@ public final class DynArray<T> implements Iterable<T> {
      */
     public final int add( T value ) {
         int index = 0;
-        while( index < array.length && array[ index ] != null ) {
+        while( index < list.size() && list.get( index ) != null ) {
             index++;
         }
         set( index, value );
@@ -126,7 +125,7 @@ public final class DynArray<T> implements Iterable<T> {
      *  @throws IndexOutOfBoundsException if index is out of bounds ( 0 - capacity )
      */
     public final T get( int index ) {
-        return array[ index ];
+        return list.get( index );
     }
     
     /** Indicates if there is an object referenced by the specified id. If there is no object referenced
@@ -136,10 +135,10 @@ public final class DynArray<T> implements Iterable<T> {
      *  @return true if there is an object referenced by the specified id
      */
     public final boolean contains( int index ) {
-        if ( index < 0 || index >= array.length ) {
+        if ( index < 0 || index >= list.size() ) {
             return false;
         }
-        return array[ index ] != null;
+        return list.get( index ) != null;
     }
     
     /** Use this to get the index of a specified object in the DynArray. This inernally uses
@@ -148,15 +147,7 @@ public final class DynArray<T> implements Iterable<T> {
      *  @param value The object value to get the associated index 
      */
     public final int indexOf( T value ) {
-        if ( value == null ) {
-            return -1;
-        }
-        for ( int i = 0; i < array.length; i++ ) {
-           if ( value.equals( array[ i ] ) ) {
-               return i;
-           }
-        }
-        return -1;
+        return list.indexOf( value );
     }
     
     /** Removes the object on specified index of DynArray and returns the objects that was set before.
@@ -166,11 +157,8 @@ public final class DynArray<T> implements Iterable<T> {
      *  @throws IndexOutOfBoundsException if index is out of bounds ( 0 - capacity )
      */
     public final T remove( int index ) {
-        if ( index < 0 || index >= array.length ) {
-            return null;
-        }
-        T result = array[ index ];
-        array[ index ] = null;
+        T result = list.get( index );
+        list.set( index, null );
         size--;
         return result;
     }
@@ -183,7 +171,7 @@ public final class DynArray<T> implements Iterable<T> {
      *  @return the index of the value that was removed or -1 if there was no such value.
      */
     public final int remove( T value ) {
-        int indexOf = indexOf( value );
+        int indexOf = list.indexOf( value );
         if ( indexOf >= 0 ) {
             remove( indexOf );
         }
@@ -191,10 +179,10 @@ public final class DynArray<T> implements Iterable<T> {
     }
     
     /** Sorts the list within the given comparator.
-     *  @param comparator
+     *  @param coparator
      */
-    public final void sort( Comparator<T> comparator ) {
-        Arrays.sort( array, comparator );
+    public final void sort( Comparator<T> coparator ) {
+        Collections.sort( list, coparator );
     }
     
     /** Get the size of the DynArray. The size is defined by the number of objects that
@@ -209,15 +197,13 @@ public final class DynArray<T> implements Iterable<T> {
      *  according to the length of an array.
      */
     public final int capacity() {
-        return array.length;
+        return list.size();
     }
 
     /** Clears the whole list, removes all objects and sets the capacity to 0.
      */
     public final void clear() {
-        for ( int i = 0; i < array.length; i++ ) {
-            array[ i ] = null;
-        }
+        list.clear();
         size = 0;
     }
     
@@ -227,7 +213,7 @@ public final class DynArray<T> implements Iterable<T> {
      *  @return the iterator from internal list
      */
     public final Iterator<T> listIterator() {
-        return Arrays.asList( array ).iterator();
+        return list.iterator();
     }
 
     /** Gets an Iterator of specified type to iterate over all objects in the DynArray
@@ -246,7 +232,7 @@ public final class DynArray<T> implements Iterable<T> {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "DynArray [list=" );
-        builder.append( Arrays.toString( array ) );
+        builder.append( list );
         builder.append( ", size()=" );
         builder.append( size() );
         builder.append( ", capacity()=" );
@@ -256,37 +242,55 @@ public final class DynArray<T> implements Iterable<T> {
     }
     
     private final void ensureCapacity( int index ) {
-        int size = array.length;
+        int size = list.size();
         int newSize = size;
         while ( index >= newSize ) {
             newSize += grow;
         }
-        T[] oldArray = array;
-        array = (T[]) new Object[ newSize ];
-        System.arraycopy( oldArray, 0, array, 0, oldArray.length );
+        while( size < newSize ) {
+            list.add( null );
+            size++;
+        }
     }
     
     private final void createList( int initialCapacity ) {
-        array = (T[]) new Object[ initialCapacity ];
+        list = new ArrayList<T>( initialCapacity + ( initialCapacity / 2 ) );
+        for ( int i = 0; i < initialCapacity; i++ ) {
+            list.add( null );
+        }
     }
 
     private final class DynArrayIterator implements Iterator<T> {
         
         private int index = 0;
+        private final int size = list.size();
+        
+        private DynArrayIterator() {
+            findNext();
+        }
 
         @Override
         public final boolean hasNext() {
-            return index < array.length;
+            return index < list.size();
         }
 
         @Override
         public final T next() {
-            return array[ index++ ];
+            T result = list.get( index );
+            index++;
+            findNext();
+            return result;
         }
 
         @Override
         public final void remove() {
-            array[ index ] = null;
+            list.set( index, null );
+        }
+        
+        private final void findNext() {
+            while( index < size && list.get( index ) == null ) {
+                index++;
+            }
         }
     }
 

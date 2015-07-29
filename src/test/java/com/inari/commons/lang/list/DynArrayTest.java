@@ -254,11 +254,14 @@ public class DynArrayTest {
         
         ArrayList<String> arrayList = new ArrayList<String>( operations );
         DynArray<String> dynArray = new DynArray<String>( operations );
+        DynArray_Array<String> dynArrayArray = new DynArray_Array<String>( String.class, operations );
+        
         String[] array = new String[ operations ];
         for ( int i = 0; i < operations; i++ ) {
             arrayList.add( i, entry );
             dynArray.set( i, entry );
             array[ i ] = entry;
+            dynArrayArray.set( i, entry );
         }
         
         long startTime = System.nanoTime();
@@ -274,7 +277,7 @@ public class DynArrayTest {
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            for( @SuppressWarnings( "unused" ) String value : dynArray ) {
+            for( String value : dynArray ) {
                 if ( value != null ) {
 
                 }
@@ -310,6 +313,31 @@ public class DynArrayTest {
         time = System.nanoTime() - startTime;
         
         System.out.println( "DynArray capacityIt :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            for( String value : dynArrayArray ) {
+                if ( value != null ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArrayArray iterator :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            String[] arrayArray = dynArrayArray.getArray();
+            for( int i = 0; i < arrayArray.length; i++ ) {
+                if ( arrayArray[ i ] != null ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArrayArray     :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
