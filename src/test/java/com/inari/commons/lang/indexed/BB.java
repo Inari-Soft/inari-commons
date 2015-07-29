@@ -1,11 +1,11 @@
 package com.inari.commons.lang.indexed;
 
-public class BB implements B, IndexedType {
+public class BB implements B {
     
     private final int index;
     
     public BB() {
-        index = Indexer.getIndexForType( this.getClass() );
+        index = Indexer.getIndexForType( this );
     }
 
     @Override

@@ -38,7 +38,7 @@ public class IndexerTest {
     //       if it would give -1 or the next ( not already allocated bit ) index.
     //       conclusion: the next ( not already allocated bit ) index
     @Test
-    public void testnextClearBitOnFullBitSet() {
+    public void testNextClearBitOnFullBitSet() {
         BitSet bitset = new BitSet();
         
         assertEquals( 64, bitset.size() );
@@ -601,55 +601,6 @@ public class IndexerTest {
         } catch ( IllegalArgumentException e ) {
             assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedBaseType:class com.inari.commons.lang.indexed.A", e.getMessage() );
         } 
-    }
-    
-    @Test
-    public void testUnknownTypes() {
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( String.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            " * Unknown Indexed Types : {\n" + 
-            "    0:java.lang.String\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( Integer.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            " * Unknown Indexed Types : {\n" + 
-            "    0:java.lang.String\n" + 
-            "    1:java.lang.Integer\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( String.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            " * Unknown Indexed Types : {\n" + 
-            "    0:java.lang.String\n" + 
-            "    1:java.lang.Integer\n" + 
-            "}", 
-            Indexer.dump() 
-        );
     }
     
     @Test

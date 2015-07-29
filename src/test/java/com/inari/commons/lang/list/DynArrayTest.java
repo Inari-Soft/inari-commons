@@ -270,7 +270,7 @@ public class DynArrayTest {
         }
         long time = System.nanoTime() - startTime;
         
-        System.out.println( "ArrayList:"  + time ); 
+        System.out.println( "ArrayList           :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -279,7 +279,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray :"  + time ); 
+        System.out.println( "DynArray            :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -292,11 +292,12 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray :"  + time ); 
+        System.out.println( "DynArray listIt     :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            for( int i = 0; i < dynArray.capacity(); i++ ) {
+            int length = dynArray.capacity();
+            for( int i = 0; i < length; i++ ) {
                 String value = dynArray.get( i );
                 if ( value != null ) {
                     
@@ -305,7 +306,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray :"  + time ); 
+        System.out.println( "DynArray capacityIt :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -317,7 +318,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "Array    :"  + time ); 
+        System.out.println( "Array               :"  + time );
     }
 
 }

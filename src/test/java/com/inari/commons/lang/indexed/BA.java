@@ -5,7 +5,7 @@ public class BA implements B {
     private final int index;
     
     public BA() {
-        index = Indexer.getIndexForType( this.getClass() );
+        index = Indexer.getIndexForType( this );
     }
 
     @Override
