@@ -311,24 +311,4 @@ public abstract class Indexer {
         return builder.toString();
     }
 
-    
-    private static final class IndexedTypeList {
-        
-        private final Class<? extends IndexedBaseType> indexedBaseType;
-        private final List<Class<? extends IndexedType>> indexedTypes;
-        
-        IndexedTypeList( Class<? extends IndexedBaseType> indexedBaseType ) {
-            this.indexedBaseType = indexedBaseType;
-            this.indexedTypes = Indexer.indexedTypeList( indexedBaseType );
-        }
-
-        public Class<? extends IndexedBaseType> getIndexedBaseType() {
-            return indexedBaseType;
-        }
-
-        public int getTypeIndex( Class<? extends IndexedType> indexType ) {
-            return indexedTypes.indexOf( indexType );
-        }
-    }
-
 }
