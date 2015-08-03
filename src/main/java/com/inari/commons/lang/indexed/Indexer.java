@@ -101,6 +101,10 @@ public abstract class Indexer {
     final static void setIndexedObjectIndex( IndexedObject indexedObject ) {
         Class<? extends IndexedObject> indexedObjectType = indexedObject.indexedObjectType();
         int index = indexedObject.index();
+        registerIndex( indexedObjectType, index );
+    }
+
+    public final static void registerIndex( Class<? extends IndexedObject> indexedObjectType, int index ) {
         BitSet indexSet = indexedObjectTypes.get( indexedObjectType );
         if ( indexSet == null ) {
             indexSet = new BitSet();
@@ -160,7 +164,6 @@ public abstract class Indexer {
      * @param indexedType The IndexedType class
      * @return the index for specified IndexedType class
      */
-    @SuppressWarnings( "unchecked" )
     public final static int getIndexForType( Class<? extends IndexedType> indexedType ) {
         Class<? extends IndexedBaseType> indexedBaseType = findIndexedType( indexedType );
         return getIndexForType( indexedType, indexedBaseType );
