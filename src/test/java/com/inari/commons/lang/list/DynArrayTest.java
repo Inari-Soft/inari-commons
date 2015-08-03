@@ -273,7 +273,7 @@ public class DynArrayTest {
         }
         long time = System.nanoTime() - startTime;
         
-        System.out.println( "ArrayList           :"  + time );
+        System.out.println( "ArrayList              :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -282,7 +282,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray            :"  + time );
+        System.out.println( "DynArray               :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -295,7 +295,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray listIt     :"  + time );
+        System.out.println( "DynArray listIt        :"  + time );
         
         startTime = System.nanoTime();
         int length = dynArray.capacity();
@@ -309,14 +309,11 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray capacityIt :"  + time );
+        System.out.println( "DynArray capacityIt    :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
             for( String value : dynArrayArray ) {
-                if ( value != null ) {
-                    
-                }
             }
         }
         time = System.nanoTime() - startTime;
@@ -334,7 +331,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArrayArray     :"  + time );
+        System.out.println( "DynArrayArray          :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -346,7 +343,7 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "Array               :"  + time );
+        System.out.println( "Array                  :"  + time );
     }
 
 }
