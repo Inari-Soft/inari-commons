@@ -33,7 +33,7 @@ import java.util.Iterator;
  *  The remove( index ) method use first a get of the already referenced object and then set a null value at the 
  *  specified position to avoid index shifting.
  *  
- *  DynArray uses an Iterator implementation using index without concurrent modification checks and is as fast as 
+ *  DynArray uses an Iterator implementation using index without concurrent modification checks and should be as fast as 
  *  an array iteration. But DynArray is not synchronized and do not check concurrent modifications in any case.
  *  
  *  If the index to set is higher then the current capacity of the internal ArrayList the internal ArrayList is 
@@ -260,6 +260,7 @@ public final class DynArray<T> implements Iterable<T> {
         }
     }
 
+    // TODO optimization: get rid of list.get in next or findNext.
     private final class DynArrayIterator implements Iterator<T> {
         
         private int index = 0;
