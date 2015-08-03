@@ -40,7 +40,10 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     }
 
     @Override
-    public final void dispose() {
+    public void dispose() {
+        if ( indexedId < 0 ) {
+            return;
+        }
         Indexer.disposeIndexedObject( this );
         indexedId = -1;
     }
@@ -52,7 +55,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + indexedId;
@@ -61,7 +64,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     }
 
     @Override
-    public boolean equals( Object obj ) {
+    public final boolean equals( Object obj ) {
         if ( this == obj )
             return true;
         if ( obj == null )

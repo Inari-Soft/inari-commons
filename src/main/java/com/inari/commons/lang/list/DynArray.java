@@ -241,7 +241,7 @@ public final class DynArray<T> implements Iterable<T> {
         return builder.toString();
     }
     
-    private final void ensureCapacity( int index ) {
+    public final void ensureCapacity( int index ) {
         int size = list.size();
         int newSize = size;
         while ( index >= newSize ) {
