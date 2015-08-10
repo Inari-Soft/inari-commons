@@ -175,13 +175,14 @@ public abstract class Indexer {
      * @param index the index
      * @return the class type of an registered IndexedType for specified index and IndexedBaseType.
      */
-    public final static Class<? extends IndexedType> getTypeForIndex( Class<? extends IndexedBaseType> indexedBaseType, int index ) {
+    @SuppressWarnings( "unchecked" )
+    public final static <T extends IndexedType> Class<T> getTypeForIndex( Class<? extends IndexedBaseType> indexedBaseType, int index ) {
         List<Class<? extends IndexedType>> indexedBaseTypeList = indexedTypeList( indexedBaseType );
         if ( indexedBaseTypeList != null ) {
             if ( index < 0 || index >= indexedBaseTypeList.size() ) {
                 return null;
             }
-            return indexedBaseTypeList.get( index );
+            return (Class<T>) indexedBaseTypeList.get( index );
         }
         return null;
     }
