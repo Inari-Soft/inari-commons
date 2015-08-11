@@ -17,5 +17,5 @@ package com.inari.commons.lang.functional;
 
 public interface Operation<T> {
 
-    public void op( T t );
+    void op( T t );
 }
