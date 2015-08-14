@@ -313,7 +313,7 @@ public class DynArrayTest {
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            for( String value : dynArrayArray ) {
+            for( @SuppressWarnings( "unused" ) String value : dynArrayArray ) {
             }
         }
         time = System.nanoTime() - startTime;

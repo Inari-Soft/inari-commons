@@ -185,6 +185,15 @@ public final class DynArray<T> implements Iterable<T> {
         Collections.sort( list, coparator );
     }
     
+    /**
+     * Returns <tt>true</tt> if this collection contains no elements.
+     *
+     * @return <tt>true</tt> if this collection contains no elements
+     */
+    public final boolean isEmpty() {
+        return size <= 0;
+    }
+    
     /** Get the size of the DynArray. The size is defined by the number of objects that
      *  the DynArray contains. 
      *  NOTE: this is not the same like length of an array which also counts the null/empty values
@@ -294,5 +303,7 @@ public final class DynArray<T> implements Iterable<T> {
             }
         }
     }
+
+    
 
 }

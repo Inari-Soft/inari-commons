@@ -34,7 +34,7 @@ public class IndexedAspect implements Aspect<IndexedAspect> {
     
     @Override
     public boolean valid() {
-        return ( bitset == null || bitset.isEmpty() );
+        return ( bitset != null && !bitset.isEmpty() );
     }
     
     @Override

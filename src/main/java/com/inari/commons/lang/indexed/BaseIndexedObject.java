@@ -22,10 +22,26 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     protected int indexedId;
     
     protected BaseIndexedObject() {
-        indexedId = Indexer.nextObjectIndex( indexedObjectType() );
+        setIndex( -1 );
     }
     
     protected BaseIndexedObject( int indexedId ) {
+        setIndex( indexedId );
+    }
+    
+    protected BaseIndexedObject( boolean skipAutoInit ) {
+        if ( skipAutoInit ) {
+            indexedId = -1;
+        } else {
+            setIndex( -1 );
+        }
+    }
+    
+    protected final void setIndex( int indexedId ) {
+        if ( this.indexedId >= 0 ) {
+            Indexer.disposeIndexedObject( this );
+        }
+        
         if ( indexedId < 0 ) {
             this.indexedId = Indexer.nextObjectIndex( indexedObjectType() );
         } else {
