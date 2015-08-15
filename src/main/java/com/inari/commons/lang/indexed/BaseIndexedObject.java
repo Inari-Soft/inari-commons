@@ -19,10 +19,10 @@ import com.inari.commons.lang.functional.Disposable;
 
 public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     
-    protected int indexedId;
+    protected int indexedId = -1;
     
     protected BaseIndexedObject() {
-        setIndex( -1 );
+        this( -1 );
     }
     
     protected BaseIndexedObject( int indexedId ) {
