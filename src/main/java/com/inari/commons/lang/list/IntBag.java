@@ -76,11 +76,11 @@ public final class IntBag implements StringConfigurable {
         return array.length;
     }
     
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return size > 0;
     }
     
-    public void clear() {
+    public final void clear() {
         for ( int i = 0; i < array.length; i++ ) {
             array[ i ] = nullValue;
         }

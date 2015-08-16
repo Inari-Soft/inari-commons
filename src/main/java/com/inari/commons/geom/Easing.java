@@ -50,12 +50,12 @@ public interface Easing {
             this.easing = easing;
         }
         
-        public final float calc( long t, float b, float c, long d ) {
-            return easing.calc( t, b, c, d ); 
+        public final float calc( long time, float startValue, float changeInValue, long duration ) {
+            return easing.calc( time, time, changeInValue, duration ); 
         }
     }
     
-    /** Calculate easing for current time (t) for specified start value (b) and current value (c) for a given duration of the Easing (d)
+    /** Calculate easing for current time (t) for specified start value (b) and change in value (c) for a given duration of the Easing (d)
      * @param t current time
      * @param b start value
      * @param c change in value
