@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -137,6 +138,27 @@ public abstract class StringUtils {
         }
         sb.append( "]" );
         return sb.toString();
+    }
+
+    public static String join( Collection<?> collection, String separatorString ) {
+        if ( collection == null ) {
+            return null;
+        }
+        StringBuilder result = new StringBuilder();
+        
+        Iterator<?> iterator = collection.iterator();
+        while( iterator.hasNext() ) {
+            Object next = iterator.next();
+            String strValue = ( next != null )? next.toString(): "";
+            // TODO escape separator character
+            
+            result.append( strValue );
+            if ( iterator.hasNext() ) {
+                result.append( separatorString );
+            }
+        }
+        
+        return result.toString();
     }
 
 }
