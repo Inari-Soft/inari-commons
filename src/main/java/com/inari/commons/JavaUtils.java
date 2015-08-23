@@ -17,7 +17,9 @@ package com.inari.commons;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import com.inari.commons.lang.functional.Operation;
 
@@ -38,6 +40,15 @@ public abstract class JavaUtils {
         for ( T value : values ) {
             op.op( value );
         }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static final <T> Set<T> createHashSet( final Object... values ) {
+        Set<T> result = new HashSet<T>();
+        for ( Object value : values ) {
+            result.add( (T) value );
+        }
+        return result;
     }
 
 }
