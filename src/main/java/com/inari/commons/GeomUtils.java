@@ -302,5 +302,18 @@ public abstract class GeomUtils {
         }
     }
 
+    public final static void movePositionOnDirection( Position position, Direction d, int distance, boolean originUpperCorner ) {
+        switch ( d.xDir ) {
+            case LEFT: position.x -= distance; break;
+            case RIGHT: position.x += distance; break;
+            default : 
+        }
+    
+        switch ( d.yDir ) {
+            case UP: position.y = ( originUpperCorner )? position.y - distance: position.y + distance; break;
+            case DOWN: position.y = ( originUpperCorner )? position.y + distance: position.y - distance; break;
+            default : 
+        }
+    }
 
 }
