@@ -27,6 +27,9 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     
     protected BaseIndexedObject( int indexedId ) {
         setIndex( indexedId );
+        if ( indexedId >= 0 ) {
+            Indexer.setIndexedObjectIndex( this );
+        }
     }
     
     protected BaseIndexedObject( boolean skipAutoInit ) {
@@ -46,7 +49,6 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
             this.indexedId = Indexer.nextObjectIndex( indexedObjectType() );
         } else {
             this.indexedId = indexedId;
-            Indexer.setIndexedObjectIndex( this );
         }
     }
 
