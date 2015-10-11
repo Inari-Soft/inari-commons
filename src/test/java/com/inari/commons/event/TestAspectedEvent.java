@@ -1,18 +1,18 @@
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.IndexedAspect;
+import com.inari.commons.lang.aspect.AspectBitSet;
 
 public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> {
     
-    private final IndexedAspect aspect;
+    private final AspectBitSet aspect;
 
-    public TestAspectedEvent( IndexedAspect aspect ) {
+    public TestAspectedEvent( AspectBitSet aspect ) {
         super();
         this.aspect = aspect;
     }
     
     @Override
-    public IndexedAspect getAspect() {
+    public AspectBitSet getAspect() {
         return aspect;
     }
 

@@ -1,6 +1,6 @@
 package com.inari.commons.lang.aspect;
 
-public class AspectBuilderTest {
+public class AspectSetBuilderTest {
     
     public void testBuild() {
         // TODO

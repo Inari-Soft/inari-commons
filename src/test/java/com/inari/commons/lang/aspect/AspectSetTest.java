@@ -6,13 +6,13 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class AspectTest {
+public class AspectSetTest {
     
     @Test
     public void testAspects() {
-        IndexedAspect aspect1 = new IndexedAspect( 5 );
-        IndexedAspect aspect2 = new IndexedAspect( 10 );
-        IndexedAspect aspect3 = new IndexedAspect( 100 );
+        AspectBitSet aspect1 = new AspectBitSet( 5 );
+        AspectBitSet aspect2 = new AspectBitSet( 10 );
+        AspectBitSet aspect3 = new AspectBitSet( 100 );
         
         assertEquals( "Aspect [ size=64 bitset={} ]", aspect1.toString() );
         assertEquals( "Aspect [ size=64 bitset={} ]", aspect2.toString() );
@@ -38,10 +38,10 @@ public class AspectTest {
     
     @Test
     public void testInclude() {
-        IndexedAspect aspect1 = new IndexedAspect( 5 );
-        IndexedAspect aspect2 = new IndexedAspect( 5 );
-        IndexedAspect aspect3 = new IndexedAspect( 10 );
-        IndexedAspect aspect4 = new IndexedAspect( 10 );
+        AspectBitSet aspect1 = new AspectBitSet( 5 );
+        AspectBitSet aspect2 = new AspectBitSet( 5 );
+        AspectBitSet aspect3 = new AspectBitSet( 10 );
+        AspectBitSet aspect4 = new AspectBitSet( 10 );
         
         assertFalse( aspect1.include( aspect2 ) );
         assertFalse( aspect2.include( aspect3 ) );
@@ -76,10 +76,10 @@ public class AspectTest {
     
     @Test
     public void testExclude() {
-        IndexedAspect aspect1 = new IndexedAspect( 5 );
-        IndexedAspect aspect2 = new IndexedAspect( 5 );
-        IndexedAspect aspect3 = new IndexedAspect( 10 );
-        IndexedAspect aspect4 = new IndexedAspect( 10 );
+        AspectBitSet aspect1 = new AspectBitSet( 5 );
+        AspectBitSet aspect2 = new AspectBitSet( 5 );
+        AspectBitSet aspect3 = new AspectBitSet( 10 );
+        AspectBitSet aspect4 = new AspectBitSet( 10 );
         
         assertFalse( aspect1.exclude( aspect2 ) );
         assertFalse( aspect2.exclude( aspect3 ) );

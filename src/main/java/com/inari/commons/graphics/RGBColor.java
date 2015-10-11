@@ -64,11 +64,11 @@ public final class RGBColor implements StringConfigurable {
         this.b = 0.0f;
         this.a = 1.0f;
     }
-    
+
     /** Create new RGBColor with specified r/g/b ratio values and no alpha (-1.0f) 
-     * @param r The red ratio value of the color
-     * @param g The green ratio value of the color
-     * @param b The blue ratio value of the color
+     * @param r The red ratio value of the color: 0 - 1
+     * @param g The green ratio value of the color: 0 - 1
+     * @param b The blue ratio value of the color: 0 - 1
      */
     public RGBColor( float r, float g, float b ) {
         this.r = r;
@@ -79,10 +79,10 @@ public final class RGBColor implements StringConfigurable {
     }
     
     /** Create new RGBColor with specified r/g/b/a ratio values
-     * @param r The red ratio value of the color
-     * @param g The green ratio value of the color
-     * @param b The blue ratio value of the color
-     * @param a The alpha ratio value of the color
+     * @param r The red ratio value of the color: 0 - 1
+     * @param g The green ratio value of the color: 0 - 1
+     * @param b The blue ratio value of the color: 0 - 1
+     * @param a The alpha ratio value of the color: 0 - 1
      */
     public RGBColor( float r, float g, float b, float a ) {
         this.r = r;
@@ -133,6 +133,14 @@ public final class RGBColor implements StringConfigurable {
             b = 1.0f;
         if ( a > 1.0f )
             a = 1.0f;
+    }
+    
+    public final int getRGBA8888() {
+        return ( (int) ( r * 255 ) << 24 ) | ( (int) ( g * 255 ) << 16 ) | ( (int) ( b * 255 ) << 8 ) | (int) ( a * 255 );
+    }
+    
+    public final int getRGB8888() {
+        return ( (int) ( r * 255 ) << 24 ) | ( (int) ( g * 255 ) << 16 ) | ( (int) ( b * 255 ) << 8 ) | 255;
     }
 
     /** Use this to set the RBColor attributes from specified configuration String value with the
@@ -191,6 +199,25 @@ public final class RGBColor implements StringConfigurable {
         builder.append( a );
         builder.append( "]" );
         return builder.toString();
+    }
+    
+    /** Create new RGBColor with specified r/g/b ratio values and no alpha (-1.0f) 
+     * @param r The red ratio value of the color: 0 - 255
+     * @param g The green ratio value of the color: 0 - 255
+     * @param b The blue ratio value of the color: 0 - 255
+     */
+    public static final RGBColor create( int r, int g, int b ) {
+        return new RGBColor( r / 255f, g / 255f, b / 255f );
+    }
+    
+    /** Create new RGBColor with specified r/g/b/a ratio values
+     * @param r The red ratio value of the color: 0 - 255
+     * @param g The green ratio value of the color: 0 - 255
+     * @param b The blue ratio value of the color: 0 - 255
+     * @param a The alpha ratio value of the color: 0 - 255
+     */
+    public static final RGBColor create( int r, int g, int b, int a ) {
+        return new RGBColor( r / 255f, g / 255f, b / 255f, a / 255f );
     }
 
 }

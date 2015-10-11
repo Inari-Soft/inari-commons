@@ -34,8 +34,8 @@ public class IndexedAspectTest {
     
     @Test
     public void testInclude() {
-        IndexedTypeAspect attrA1 = IndexedTypeAspectBuilder.build( A.class );
-        IndexedTypeAspect attrA2 = IndexedTypeAspectBuilder.build( A.class );
+        IndexedTypeAspectSet attrA1 = IndexedTypeAspectBuilder.build( A.class );
+        IndexedTypeAspectSet attrA2 = IndexedTypeAspectBuilder.build( A.class );
         
         assertFalse( attrA1.include( attrA2 ) );
         assertFalse( attrA2.include( attrA1 ) );

@@ -38,11 +38,9 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> void register( Class<? extends Event<L>> eventType, L listener ) {
-        synchronized( listeners ) {
-            final List<L> listenersOfType = getListenersOfType( eventType, true );
-            if ( !listenersOfType.contains( listener ) ) {
-                listenersOfType.add( listener );
-            }
+        final List<L> listenersOfType = getListenersOfType( eventType, true );
+        if ( !listenersOfType.contains( listener ) ) {
+            listenersOfType.add( listener );
         }
     }
     
@@ -51,10 +49,8 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> boolean unregister( Class<? extends Event<L>> eventType, L listener ) {
-        synchronized( listeners ) {
-            final List<L> listenersOfType = getListenersOfType( eventType, false );
-            return listenersOfType.remove( listener );
-        }
+        final List<L> listenersOfType = getListenersOfType( eventType, false );
+        return listenersOfType.remove( listener );
     }
     
     /* (non-Javadoc)
@@ -62,10 +58,10 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> void notify( final Event<L> event ) {
-        synchronized( listeners ) {
-            for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                event.notify( listener );
-            }
+        List<L> listenersOfType = this.<L>getListenersOfType( event.index(), false );
+        for ( int i = 0; i < listenersOfType.size(); i++ ) {
+            L listener = listenersOfType.get( i );
+            event.notify( listener );
         }
     }
     
@@ -74,11 +70,9 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends AspectedEventListener> void notify( final AspectedEvent<L> event ) {
-        synchronized( listeners ) {
-            for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                if ( listener.match( event.getAspect() ) ) {
-                    event.notify( listener );
-                }
+        for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
+            if ( listener.match( event.getAspect() ) ) {
+                event.notify( listener );
             }
         }
     }
@@ -88,18 +82,18 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends PredicatedEventListener> void notify( final PredicatedEvent<L> event ) {
-        synchronized( listeners ) {
-            for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
-                Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
-                if( matcher == null ) {
-                    event.notify( listener );
-                    return;
-                }
-                
-                if ( matcher.apply( event ) ) {
-                    event.notify( listener );
-                } 
+        List<L> listenersOfType = this.<L>getListenersOfType( event.index(), false );
+        for ( int i = 0; i < listenersOfType.size(); i++ ) {
+            L listener = listenersOfType.get( i );
+            Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
+            if( matcher == null ) {
+                event.notify( listener );
+                return;
             }
+            
+            if ( matcher.apply( event ) ) {
+                event.notify( listener );
+            } 
         }
     }
 

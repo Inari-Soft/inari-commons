@@ -17,17 +17,17 @@ package com.inari.commons.lang.aspect;
 
 import java.util.BitSet;
 
-public class IndexedAspect implements Aspect<IndexedAspect> {
+public class AspectBitSet implements AspectSet<AspectBitSet> {
 
     protected final BitSet bitset;
     private final BitSet tempBitset;
     
-    protected IndexedAspect( int size ) {
+    protected AspectBitSet( int size ) {
         bitset = new BitSet( size );
         tempBitset = new BitSet( size );
     }
     
-    protected IndexedAspect( IndexedAspect source ) {
+    protected AspectBitSet( AspectBitSet source ) {
         this( source.bitset.size() );
         bitset.or( source.bitset );
     }
@@ -38,21 +38,21 @@ public class IndexedAspect implements Aspect<IndexedAspect> {
     }
     
     @Override
-    public final IndexedAspect add( IndexedAspect aspect ) {
-        IndexedAspect result = getCopy();
+    public final AspectBitSet add( AspectBitSet aspect ) {
+        AspectBitSet result = getCopy();
         result.bitset.or( aspect.bitset );
         return result;
     }
     
     @Override
-    public final IndexedAspect remove( IndexedAspect aspect ) {
-        IndexedAspect result = getCopy();
+    public final AspectBitSet remove( AspectBitSet aspect ) {
+        AspectBitSet result = getCopy();
         result.bitset.andNot( aspect.bitset );
         return result;
     }
 
     @Override
-    public final boolean include( IndexedAspect aspect ) {
+    public final boolean include( AspectBitSet aspect ) {
         if ( bitset.isEmpty() || aspect.bitset.isEmpty() ) {
             return false;
         }
@@ -68,7 +68,7 @@ public class IndexedAspect implements Aspect<IndexedAspect> {
     }
     
     @Override
-    public final boolean exclude( IndexedAspect aspect ) {
+    public final boolean exclude( AspectBitSet aspect ) {
         if ( bitset.isEmpty() || aspect.bitset.isEmpty() ) {
             return false;
         }
@@ -84,7 +84,7 @@ public class IndexedAspect implements Aspect<IndexedAspect> {
     }
     
     @Override
-    public final boolean intersects( IndexedAspect aspect ) {
+    public final boolean intersects( AspectBitSet aspect ) {
         return !exclude( aspect );
     }
     
@@ -107,8 +107,8 @@ public class IndexedAspect implements Aspect<IndexedAspect> {
     }
     
     @Override
-    public IndexedAspect getCopy() {
-        return new IndexedAspect( this );
+    public AspectBitSet getCopy() {
+        return new AspectBitSet( this );
     }
     
     @Override

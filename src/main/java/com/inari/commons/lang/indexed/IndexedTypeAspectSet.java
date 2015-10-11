@@ -15,18 +15,18 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
-import com.inari.commons.lang.aspect.IndexedAspect;
+import com.inari.commons.lang.aspect.AspectBitSet;
 
-public final class IndexedTypeAspect extends IndexedAspect {
+public final class IndexedTypeAspectSet extends AspectBitSet {
     
     final Class<? extends IndexedBaseType> indexedType;
 
-    IndexedTypeAspect( Class<? extends IndexedBaseType> indexedType, int length ) {
+    IndexedTypeAspectSet( Class<? extends IndexedBaseType> indexedType, int length ) {
         super( length );
         this.indexedType = indexedType;
     }
     
-    IndexedTypeAspect( IndexedTypeAspect source ) {
+    IndexedTypeAspectSet( IndexedTypeAspectSet source ) {
         super( source );
         indexedType = source.indexedType;
     }
@@ -52,8 +52,8 @@ public final class IndexedTypeAspect extends IndexedAspect {
     }
     
     @Override
-    public IndexedTypeAspect getCopy() {
-        return new IndexedTypeAspect( this );
+    public IndexedTypeAspectSet getCopy() {
+        return new IndexedTypeAspectSet( this );
     }
 
     @Override

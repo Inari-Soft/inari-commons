@@ -15,49 +15,67 @@
  ******************************************************************************/
 package com.inari.commons.lang.aspect;
 
-public final class AspectBuilder {
+public final class AspectSetBuilder {
     
-    private IndexedAspect toBuild;
+    private AspectBitSet toBuild;
     
-    public final AspectBuilder newAspect( int length ) {
-        toBuild = new IndexedAspect( length );
+    public final AspectSetBuilder newAspect( int length ) {
+        toBuild = new AspectBitSet( length );
         return this;
     }
     
-    public final AspectBuilder set( int index ) {
+    public final AspectSetBuilder set( int index ) {
         toBuild.bitset.set( index );
         return this;
     }
     
-    public final AspectBuilder reset( int index ) {
+    public final AspectSetBuilder reset( int index ) {
         toBuild.bitset.set( index, false );
         return this;
     }
     
-    public final AspectBuilder clear() {
+    public final AspectSetBuilder clear() {
         toBuild.clear();
         return this;
     }
     
-    public static final IndexedAspect create( int length ) {
-        return new IndexedAspect( length );
+    public static final AspectBitSet create() {
+        return new AspectBitSet( 10 );
     }
     
-    public static final IndexedAspect create( int length, int... toSet ) {
-        return set( create( length ), toSet );
+    public static final AspectBitSet createWithLength( int length ) {
+        return new AspectBitSet( length );
     }
     
-    public static final IndexedAspect set( IndexedAspect aspect, int index ) {
+    public static final AspectBitSet create( int... toSet ) {
+        return set( createWithLength( toSet.length ), toSet );
+    }
+
+    public static final AspectBitSet create( Aspect... toSet ) {
+        return set( createWithLength( toSet.length ), toSet );
+    }
+
+    
+    public static final AspectBitSet set( AspectBitSet aspect, int index ) {
         aspect.bitset.set( index );
         return aspect;
     }
     
-    public static final IndexedAspect reset( IndexedAspect aspect, int index ) {
+    public static final AspectBitSet reset( AspectBitSet aspect, int index ) {
         aspect.bitset.set( index, false );
         return aspect;
     }
     
-    public static final IndexedAspect set( IndexedAspect aspect, int... toSet ) {
+    public static final AspectBitSet set( AspectBitSet aspect, Aspect... toSet ) {
+        if ( toSet != null && toSet.length > 0 ) {
+            for ( int i = 0; i < toSet.length; i++ ) {
+                aspect.bitset.set( toSet[ i ].aspectId() );
+            }
+        }
+        return aspect;
+    }
+    
+    public static final AspectBitSet set( AspectBitSet aspect, int... toSet ) {
         if ( toSet != null && toSet.length > 0 ) {
             for ( int i = 0; i < toSet.length; i++ ) {
                 aspect.bitset.set( toSet[ i ] );
@@ -66,7 +84,7 @@ public final class AspectBuilder {
         return aspect;
     }
     
-    public static final IndexedAspect reset( IndexedAspect aspect, int... toReset ) {
+    public static final AspectBitSet reset( AspectBitSet aspect, int... toReset ) {
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {
                 aspect.bitset.set( toReset[ i ], false );
@@ -75,7 +93,7 @@ public final class AspectBuilder {
         return aspect;
     }
     
-    public static final IndexedAspect modify( IndexedAspect aspect, int[] toSet, int[] toReset ) {
+    public static final AspectBitSet modify( AspectBitSet aspect, int[] toSet, int[] toReset ) {
         set( aspect, toSet );
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {
