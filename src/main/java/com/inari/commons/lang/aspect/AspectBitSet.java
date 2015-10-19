@@ -38,33 +38,39 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
     }
     
     @Override
-    public final AspectBitSet add( AspectBitSet aspect ) {
+    public final AspectBitSet set( Aspect aspect ) {
+        bitset.set( aspect.aspectId() );
+        return this;
+    }
+    
+    @Override
+    public final AspectBitSet add( AspectBitSet aspects ) {
         AspectBitSet result = getCopy();
-        result.bitset.or( aspect.bitset );
+        result.bitset.or( aspects.bitset );
         return result;
     }
     
     @Override
-    public final AspectBitSet remove( AspectBitSet aspect ) {
+    public final AspectBitSet remove( AspectBitSet aspects ) {
         AspectBitSet result = getCopy();
-        result.bitset.andNot( aspect.bitset );
+        result.bitset.andNot( aspects.bitset );
         return result;
     }
 
     @Override
-    public final boolean include( AspectBitSet aspect ) {
-        if ( bitset.isEmpty() || aspect.bitset.isEmpty() ) {
+    public final boolean include( AspectBitSet aspects ) {
+        if ( bitset.isEmpty() || aspects.bitset.isEmpty() ) {
             return false;
         }
         
-        if ( this == aspect ) {
+        if ( this == aspects ) {
             return true;
         }
         
         tempBitset.clear();
         tempBitset.or( bitset );
-        tempBitset.and( aspect.bitset );
-        return tempBitset.equals( aspect.bitset );
+        tempBitset.and( aspects.bitset );
+        return tempBitset.equals( aspects.bitset );
     }
     
     @Override

@@ -4,15 +4,17 @@ public interface AspectSet<A extends AspectSet<A>> {
     
     public boolean valid();
     
-    public A add( A aspect );
+    public A set( Aspect aspect );
     
-    public A remove( A aspect );
+    public A add( A aspects );
     
-    public boolean include( A aspect );
+    public A remove( A aspects );
     
-    public boolean exclude( A aspect );
+    public boolean include( A aspects );
     
-    public boolean intersects( A aspect );
+    public boolean exclude( A aspects );
+    
+    public boolean intersects( A aspects );
     
     public A getCopy();
 

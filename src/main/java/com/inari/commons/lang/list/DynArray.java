@@ -157,6 +157,10 @@ public final class DynArray<T> implements Iterable<T> {
      *  @throws IndexOutOfBoundsException if index is out of bounds ( 0 - capacity )
      */
     public final T remove( int index ) {
+        if ( !contains( index ) ) {
+            return null;
+        }
+        
         T result = list.get( index );
         list.set( index, null );
         size--;
