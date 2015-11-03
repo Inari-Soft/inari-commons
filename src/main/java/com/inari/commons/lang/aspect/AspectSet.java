@@ -6,6 +6,8 @@ public interface AspectSet<A extends AspectSet<A>> {
     
     public A set( Aspect aspect );
     
+    public A reset( Aspect aspect );
+    
     public A add( A aspects );
     
     public A remove( A aspects );

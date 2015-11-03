@@ -44,6 +44,12 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
     }
     
     @Override
+    public final AspectBitSet reset( Aspect aspect ) {
+        bitset.set( aspect.aspectId(), false );
+        return this;
+    }
+
+    @Override
     public final AspectBitSet add( AspectBitSet aspects ) {
         AspectBitSet result = getCopy();
         result.bitset.or( aspects.bitset );
