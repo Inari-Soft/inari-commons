@@ -17,6 +17,8 @@ package com.inari.commons.lang.aspect;
 
 import java.util.BitSet;
 
+import com.inari.commons.lang.indexed.Indexed;
+
 public class AspectBitSet implements AspectSet<AspectBitSet> {
 
     protected final BitSet bitset;
@@ -105,6 +107,10 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
             return false;
         }  
         return bitset.get( index );
+    }
+    
+    public final boolean contains( Indexed indexed ) {
+        return contains( indexed.index() );
     }
     
     public final int nextSetBit( int fromIndex ) {

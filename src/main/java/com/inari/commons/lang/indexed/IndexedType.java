@@ -15,8 +15,12 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
-public interface IndexedType extends IndexedBaseType, Indexed {
+public interface IndexedType {
     
-    Class<? extends IndexedType> indexedType();
+    int typeIndex();
+    
+    IndexedTypeKey indexedTypeKey();
+    
+    
 
 }

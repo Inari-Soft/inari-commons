@@ -26,6 +26,10 @@ import com.inari.commons.lang.aspect.AspectBitSet;
  */
 public abstract class AspectedEvent<L extends AspectedEventListener> extends Event<L> {
     
+    protected AspectedEvent( EventTypeKey indexedTypeKey ) {
+        super( indexedTypeKey );
+    }
+
     /** Get the Aspect for this event. Only AspectedEventListener that are listening to the specified Event and Aspect are 
      *  going to be notified on this event.
      *  

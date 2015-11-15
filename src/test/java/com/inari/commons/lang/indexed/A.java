@@ -2,25 +2,31 @@ package com.inari.commons.lang.indexed;
 
 public abstract class A implements IndexedType {
     
-    private final int index;
+    public final AIndexedTypeKey indexedTypeKey;
     
-    protected A() {
-        index = Indexer.getIndexForType( this.getClass(), A.class );
+    protected A( AIndexedTypeKey indexedTypeKey ) {
+        this.indexedTypeKey = indexedTypeKey;
     }
 
     @Override
-    public final Class<A> indexedBaseType() {
-        return A.class;
+    public int typeIndex() {
+        return indexedTypeKey.index();
     }
 
     @Override
-    public final Class<? extends IndexedType> indexedType() {
-        return this.getClass();
+    public IndexedTypeKey indexedTypeKey() {
+        return indexedTypeKey;
     }
+    
+    public static final class AIndexedTypeKey extends IndexedTypeKey {
+        protected AIndexedTypeKey( Class<? extends A> indexedType ) {
+            super( indexedType );
+        }
 
-    @Override
-    public final int index() {
-        return index;
+        @Override
+        protected final Class<A> baseIndexedType() {
+            return A.class;
+        }
     }
 
 }

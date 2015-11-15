@@ -15,8 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.indexed.IndexedBaseType;
 import com.inari.commons.lang.indexed.IndexedType;
+import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;
 
 /** Base implementation of an Event handled by the IEventDispatcher.
@@ -54,32 +54,46 @@ import com.inari.commons.lang.indexed.Indexer;
  */
 public abstract class Event<L> implements IndexedType {
     
-    private final int index;
+    public final EventTypeKey indexedTypeKey;
     
-    protected Event() {
-        index = Indexer.getIndexForType( this );
-    }
-    
-    @Override
-    public final Class<? extends IndexedBaseType> indexedBaseType() {
-        return Event.class;
+    protected Event( EventTypeKey indexedTypeKey ) {
+        this.indexedTypeKey = indexedTypeKey;
     }
 
     @Override
-    public final Class<? extends IndexedType> indexedType() {
-        return this.getClass();
+    public final int typeIndex() {
+        return indexedTypeKey.index();
     }
 
     @Override
-    public final int index() {
-        return index;
+    public final IndexedTypeKey indexedTypeKey() {
+        return indexedTypeKey;
     }
-    
+
     /** Implements the notification of specified listener.
      *  For an implementation example have a look at the class documentation example
      *  
      *  @param listener the listener to notify.
      */
     public abstract void notify( final L listener );
+    
+    
+    
+    protected static final EventTypeKey createTypeKey( Class<? extends Event<?>> type ) {
+        return Indexer.getIndexedTypeKey( EventTypeKey.class, type );
+    }
+    
+    public static final class EventTypeKey extends IndexedTypeKey {
+        
+        EventTypeKey( Class<? extends Event<?>> indexedType ) {
+            super( indexedType );
+        }
+        
+        @Override
+        protected final Class<?> baseIndexedType() {
+            return Event.class;
+        }
+        
+    }
 
 }

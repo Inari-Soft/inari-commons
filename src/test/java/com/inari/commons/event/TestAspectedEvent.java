@@ -4,10 +4,12 @@ import com.inari.commons.lang.aspect.AspectBitSet;
 
 public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> {
     
+    public static final EventTypeKey TYPE_KEY = createTypeKey( TestAspectedEvent.class );
+    
     private final AspectBitSet aspect;
 
     public TestAspectedEvent( AspectBitSet aspect ) {
-        super();
+        super( TYPE_KEY );
         this.aspect = aspect;
     }
     
@@ -25,7 +27,5 @@ public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> 
     public String toString() {
         return "AspectedEvent [aspect=" + aspect + "]";
     }
-
-    
 
 }

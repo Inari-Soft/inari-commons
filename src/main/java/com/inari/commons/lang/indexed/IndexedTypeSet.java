@@ -22,21 +22,22 @@ import com.inari.commons.lang.functional.Clearable;
 
 public final class IndexedTypeSet {
     
-    private IndexedType[] indexedType;
-    protected final Class<? extends IndexedBaseType> indexedBaseType;
+    protected final Class<? extends IndexedTypeKey> indexedBaseType;
     protected final IndexedTypeAspectSet aspect;
+    
+    private IndexedType[] indexedType;
     protected int size = 0;
     
     
-    public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType ) {
-        this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
-        int size = Indexer.getIndexedTypeSize( this.indexedBaseType );
+    public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType ) {
+        this.indexedBaseType = indexedBaseType;
+        int size = Indexer.getIndexedObjectSize( indexedBaseType );
         aspect = new IndexedTypeAspectSet( indexedBaseType, size );
         this.indexedType = new IndexedType[ size ];
     }
     
-    public IndexedTypeSet( Class<? extends IndexedBaseType> indexedBaseType, int length ) {
-        this.indexedBaseType = Indexer.findIndexedType( indexedBaseType );
+    public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
+        this.indexedBaseType = indexedBaseType;
         aspect = new IndexedTypeAspectSet( indexedBaseType, length );
         this.indexedType = new IndexedType[ length ];
     }
@@ -49,7 +50,7 @@ public final class IndexedTypeSet {
         return aspect;
     }
     
-    public final Class<? extends IndexedBaseType> getIndexedBaseType() {
+    public final Class<? extends IndexedTypeKey> getIndexedBaseType() {
         return indexedBaseType;
     }
     
@@ -66,11 +67,11 @@ public final class IndexedTypeSet {
             return null;
         }
         
-        checkIndexedType( indexedType, indexedBaseType );
-        ensureCapacity( indexedType.index() );
+        int typeIndex = indexedType.typeIndex();
+        ensureCapacity( typeIndex );
         
-        IndexedType old = this.indexedType[ indexedType.index() ];
-        this.indexedType[ indexedType.index() ] = indexedType;
+        IndexedType old = this.indexedType[ typeIndex ];
+        this.indexedType[ typeIndex ] = indexedType;
         IndexedTypeAspectBuilder.set( aspect, indexedType );
         if ( old == null ) {
             size++;
@@ -87,13 +88,11 @@ public final class IndexedTypeSet {
     }
     
     public final IndexedType remove( IndexedType indexedType ) {
-        checkIndexedType( indexedType, indexedBaseType );
-        return this.remove( indexedType.index() );
+        return this.remove( indexedType.typeIndex() );
     }
     
-    public final <I extends IndexedType> I remove( Class<I> indexedType ) {
-        Indexer.checkIndexedType( indexedType, indexedBaseType );
-        return indexedType.cast( remove( Indexer.getIndexForType( indexedType, indexedBaseType ) ) );
+    public final IndexedType remove( IndexedTypeKey indexedTypeKey ) {
+        return remove( indexedTypeKey.index() );
     }
     
     public final IndexedType remove( int index ) {
@@ -106,8 +105,15 @@ public final class IndexedTypeSet {
         return result;
     }
     
+    @SuppressWarnings( "unchecked" )
+    public final <I extends IndexedType> I get( IndexedTypeKey indexedTypeKey ) {
+        int typeIndex = indexedTypeKey.index();
+        IndexedType indexedType = this.indexedType[ typeIndex ];
+        return (I) indexedType;
+    }
+    
     public final <I extends IndexedType> I get( Class<I> type ) {
-        int typeIndex = Indexer.getIndexForType( type, indexedBaseType );
+        int typeIndex = Indexer.getIndexedTypeKey( indexedBaseType, type ).index();
         IndexedType indexedType = this.indexedType[ typeIndex ];
         return type.cast( indexedType );
     }
@@ -168,13 +174,6 @@ public final class IndexedTypeSet {
         sb.append( "} ]" );
         return  sb.toString();
     }
-    
-    private final void checkIndexedType( IndexedType indexedType, Class<? extends IndexedBaseType> indexedBaseType ) {
-        if ( indexedType.indexedBaseType() != indexedBaseType ) {
-            throw new IllegalArgumentException( "IndexedType missmatch: indexedBaseType=" + indexedBaseType + " indexType=" + indexedType.indexedBaseType() );
-        }
-    }
-    
     
     private final class IndexedIterator<T extends IndexedType> implements Iterator<T> {
         

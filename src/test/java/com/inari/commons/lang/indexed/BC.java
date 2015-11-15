@@ -2,25 +2,20 @@ package com.inari.commons.lang.indexed;
 
 public class BC implements B {
     
-    private final int index;
+    public final static BIndexedTypeKey TYPE_KEY = Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BC.class );
     
     public BC() {
-        index = Indexer.getIndexForType( this );
+        typeIndex();
     }
 
     @Override
-    public Class<B> indexedBaseType() {
-        return B.class;
-    }
-    
-    @Override
-    public final Class<? extends IndexedType> indexedType() {
-        return this.getClass();
+    public int typeIndex() {
+        return TYPE_KEY.index();
     }
 
     @Override
-    public int index() {
-        return index;
+    public IndexedTypeKey indexedTypeKey() {
+        return TYPE_KEY;
     }
 
 }

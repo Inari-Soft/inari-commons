@@ -19,30 +19,28 @@ import com.inari.commons.lang.aspect.AspectBitSet;
 
 public final class IndexedTypeAspectSet extends AspectBitSet {
     
-    final Class<? extends IndexedBaseType> indexedType;
+    final Class<? extends IndexedTypeKey> indexedBaseType;
 
-    IndexedTypeAspectSet( Class<? extends IndexedBaseType> indexedType, int length ) {
+    IndexedTypeAspectSet( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
         super( length );
-        this.indexedType = indexedType;
+        this.indexedBaseType = indexedBaseType;
     }
     
     IndexedTypeAspectSet( IndexedTypeAspectSet source ) {
         super( source );
-        indexedType = source.indexedType;
+        indexedBaseType = source.indexedBaseType;
     }
 
-    public final Class<? extends IndexedBaseType> getIndexedType() {
-        return indexedType;
+    public final Class<? extends IndexedTypeKey> getIndexedBaseType() {
+        return indexedBaseType;
     }
 
-    public boolean contains( Class<? extends IndexedType> indexType ) {
-        Indexer.checkIndexedType( indexType, indexedType );
-        return contains( Indexer.getIndexForType( indexType, indexedType ) );
+    public boolean contains( IndexedTypeKey indexType ) {
+        return contains( indexType.index() );
     }
     
     public boolean contains( IndexedType indexedType ) {
-        Indexer.checkIndexedType( indexedType.getClass(), this.indexedType );
-        return contains( indexedType.index() );
+        return contains( indexedType.typeIndex() );
     }
 
     
@@ -59,14 +57,14 @@ public final class IndexedTypeAspectSet extends AspectBitSet {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append( "IndexedAspect [ indexedBaseType=" ).append( indexedType.getSimpleName() );
+        sb.append( "IndexedAspect [ indexedBaseType=" ).append( indexedBaseType.getSimpleName() );
         sb.append( ", bitset=" ).append( bitset );
         sb.append( ", types={" );
         boolean typeAdded = false;
         for ( int i = 0; i < bitset.size(); i++ ) {
             if ( bitset.get( i ) ) {
                 typeAdded = true;
-                sb.append( Indexer.getTypeForIndex( indexedType, i ).getSimpleName() ).append( "," );
+                sb.append( Indexer.getIndexedTypeKeyForIndex( indexedBaseType, i ).indexedType.getSimpleName() ).append( "," );
             }
         }
         if ( typeAdded ) {

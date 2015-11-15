@@ -10,10 +10,19 @@ import java.util.BitSet;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.inari.commons.lang.indexed.A.AIndexedTypeKey;
+import com.inari.commons.lang.indexed.B.BIndexedTypeKey;
+
 public class IndexerTest {
     
     @Before
     public void init() {
+        new AA();
+        new AB();
+        new AC();
+        new BA();
+        new BB();
+        new BC();
         Indexer.clear();
     }
     
@@ -65,7 +74,13 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -76,7 +91,13 @@ public class IndexerTest {
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0}\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -92,7 +113,13 @@ public class IndexerTest {
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 1, 2, 3, 4}\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -107,7 +134,13 @@ public class IndexerTest {
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 2, 3, 4}\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -119,7 +152,13 @@ public class IndexerTest {
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
             "  class com.inari.commons.lang.indexed.TestIndexedObject : {0, 1, 2, 3, 4}\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -133,7 +172,13 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -143,10 +188,14 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -155,29 +204,34 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
         AC ac1 = new AC();
         
-        assertEquals( 0, aa1.index() );
-        assertEquals( 1, ab1.index() );
-        assertEquals( 2, ac1.index() );
+        assertEquals( 0, aa1.typeIndex() );
+        assertEquals( 1, ab1.typeIndex() );
+        assertEquals( 2, ac1.typeIndex() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -186,18 +240,20 @@ public class IndexerTest {
         AB ab2 = new AB();
         AC ac2 = new AC();
         
-        assertEquals( 0, aa2.index() );
-        assertEquals( 1, ab2.index() );
-        assertEquals( 2, ac2.index() );
+        assertEquals( 0, aa2.typeIndex() );
+        assertEquals( 1, ab2.typeIndex() );
+        assertEquals( 2, ac2.typeIndex() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -207,15 +263,15 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -225,39 +281,36 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
         BC bc1 = new BC();
         
-        assertEquals( 0, ba1.index() );
-        assertEquals( 1, bb1.index() );
-        assertEquals( 2, bc1.index() );
+        assertEquals( 0, ba1.typeIndex() );
+        assertEquals( 1, bb1.typeIndex() );
+        assertEquals( 2, bc1.typeIndex() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=2]\n" + 
             "}", 
             Indexer.dump() 
         );
@@ -266,23 +319,21 @@ public class IndexerTest {
         BB bb2 = new BB();
         BC bc2 = new BC();
         
-        assertEquals( 0, ba2.index() );
-        assertEquals( 1, bb2.index() );
-        assertEquals( 2, bc2.index() );
+        assertEquals( 0, ba2.typeIndex() );
+        assertEquals( 1, bb2.typeIndex() );
+        assertEquals( 2, bc2.typeIndex() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=2]\n" + 
             "}",
             Indexer.dump() 
         );
@@ -293,295 +344,158 @@ public class IndexerTest {
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( AA.class, A.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AA.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=-1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( AB.class, A.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AB.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( AC.class, A.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( AA.class, A.class );
-        Indexer.getIndexForType( AB.class, A.class );
-        Indexer.getIndexForType( AC.class, A.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AA.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AB.class );
+        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( BA.class, B.class );
+        BA.TYPE_KEY.index();
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=-1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( BB.class, B.class );
+        BB.TYPE_KEY.index();
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=-1]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( BC.class, B.class );
+        BC.TYPE_KEY.index();
         
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=2]\n" + 
             "}", 
             Indexer.dump() 
         );
         
-        Indexer.getIndexForType( BA.class, B.class );
-        Indexer.getIndexForType( BB.class, B.class );
-        Indexer.getIndexForType( BC.class, B.class );
+        BA.TYPE_KEY.index();
+        BB.TYPE_KEY.index();
+        BC.TYPE_KEY.index();
 
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
-            "}",
-            Indexer.dump() 
-        );
-    }
-    
-    @Test
-    public void testPreDefinitionWithoutIndexedType() {
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
+            "  class com.inari.commons.lang.indexed.A$AIndexedTypeKey : {0, 1, 2}\n" + 
+            "  class com.inari.commons.lang.indexed.B$BIndexedTypeKey : {0, 1, 2}\n" + 
+            " * Indexed Type Keys :\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AA, index=0]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AB, index=1]\n" + 
+            "  AIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.AC, index=2]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BA, index=0]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BB, index=1]\n" + 
+            "  BIndexedTypeKey [indexedType=class com.inari.commons.lang.indexed.BC, index=2]\n" + 
             "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( AA.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( AB.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( AC.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( AA.class );
-        Indexer.getIndexForType( AB.class );
-        Indexer.getIndexForType( AC.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( BA.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( BB.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( BC.class );
-        
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
-            "}", 
-            Indexer.dump() 
-        );
-        
-        Indexer.getIndexForType( BA.class );
-        Indexer.getIndexForType( BB.class );
-        Indexer.getIndexForType( BC.class );
-
-        assertEquals( 
-            "IndexProvider : {\n" + 
-            " * Indexed Objects :\n" + 
-            " * Indexed Types :\n" + 
-            "  class com.inari.commons.lang.indexed.A : {\n" + 
-            "    0:com.inari.commons.lang.indexed.AA\n" + 
-            "    1:com.inari.commons.lang.indexed.AB\n" + 
-            "    2:com.inari.commons.lang.indexed.AC\n" + 
-            "  }\n" + 
-            "  interface com.inari.commons.lang.indexed.B : {\n" + 
-            "    0:com.inari.commons.lang.indexed.BA\n" + 
-            "    1:com.inari.commons.lang.indexed.BB\n" + 
-            "    2:com.inari.commons.lang.indexed.BC\n" + 
-            "  }\n" + 
-            "}",
             Indexer.dump() 
         );
     }
@@ -589,70 +503,17 @@ public class IndexerTest {
     @Test
     public void testWrongPreDefinition() {
         try {
-            Indexer.getIndexForType( AA.class, B.class );
+            Indexer.getIndexedTypeKey( AIndexedTypeKey.class, BA.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
-            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType:interface com.inari.commons.lang.indexed.B", e.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType: class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedBaseType: class com.inari.commons.lang.indexed.A", e.getMessage() );
         } 
         
         try {
-            Indexer.getIndexForType( BA.class, A.class );
+            Indexer.getIndexedTypeKey( BIndexedTypeKey.class, AA.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
-            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedBaseType:class com.inari.commons.lang.indexed.A", e.getMessage() );
+            assertEquals( "IndexedType missmatch: indexedType: class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType: interface com.inari.commons.lang.indexed.B", e.getMessage() );
         } 
-    }
-    
-    @Test
-    public void testCheckIndexedType() {
-        Indexer.checkIndexedType( AA.class, A.class );
-        Indexer.checkIndexedType( AA.class, AA.class );
-        
-        try {
-            Indexer.checkIndexedType( A.class, A.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexedType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
-        }
-        
-        try {
-            Indexer.checkIndexedType( A.class, AA.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexedType: class com.inari.commons.lang.indexed.A is not an instantiable class", iae.getMessage() );
-        }
-        
-        Indexer.checkIndexedType( BB.class, B.class );
-        Indexer.checkIndexedType( BB.class, BB.class );
-        
-        try {
-            Indexer.checkIndexedType( B.class, B.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexedType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
-        }
-        
-        try {
-            Indexer.checkIndexedType( B.class, BB.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "indexedType: interface com.inari.commons.lang.indexed.B is not an instantiable class", iae.getMessage() );
-        }
-        
-        
-        
-        try {
-            Indexer.checkIndexedType( AA.class, B.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType:interface com.inari.commons.lang.indexed.B", iae.getMessage() );
-        }
-        
-        try {
-            Indexer.checkIndexedType( BC.class, A.class );
-            fail( "Exception expected" );
-        } catch ( IllegalArgumentException iae ) {
-            assertEquals( "IndexedType missmatch: indexedType:class com.inari.commons.lang.indexed.BC is not a valid substitute of indexedBaseType:class com.inari.commons.lang.indexed.A", iae.getMessage() );
-        }
     }
 }

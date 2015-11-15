@@ -22,5 +22,8 @@ package com.inari.commons.event;
  * @param <L> The type of PredicatedEventListener to which the PredicatedEvent type is bound to.
  */
 public abstract class PredicatedEvent<L extends PredicatedEventListener> extends Event<L> {
-    // Just a marker class
+
+    protected PredicatedEvent( EventTypeKey indexedTypeKey ) {
+        super( indexedTypeKey );
+    }
 }

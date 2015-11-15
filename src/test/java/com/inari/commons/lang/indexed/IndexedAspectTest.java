@@ -34,8 +34,8 @@ public class IndexedAspectTest {
     
     @Test
     public void testInclude() {
-        IndexedTypeAspectSet attrA1 = IndexedTypeAspectBuilder.build( A.class );
-        IndexedTypeAspectSet attrA2 = IndexedTypeAspectBuilder.build( A.class );
+        IndexedTypeAspectSet attrA1 = IndexedTypeAspectBuilder.build( A.AIndexedTypeKey.class );
+        IndexedTypeAspectSet attrA2 = IndexedTypeAspectBuilder.build( A.AIndexedTypeKey.class );
         
         assertFalse( attrA1.include( attrA2 ) );
         assertFalse( attrA2.include( attrA1 ) );
@@ -52,8 +52,8 @@ public class IndexedAspectTest {
         
         // A1=AA,AB : A2=AA
         IndexedTypeAspectBuilder.set( attrA1, AB.class );
-        assertEquals( "IndexedAspect [ indexedBaseType=A, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
-        assertEquals( "IndexedAspect [ indexedBaseType=A, bitset={0}, types={AA} ]", attrA2.toString() );
+        assertEquals( "IndexedAspect [ indexedBaseType=AIndexedTypeKey, bitset={0, 1}, types={AA,AB} ]", attrA1.toString() );
+        assertEquals( "IndexedAspect [ indexedBaseType=AIndexedTypeKey, bitset={0}, types={AA} ]", attrA2.toString() );
         assertTrue( attrA1.include( attrA2 ) );
         assertFalse( attrA2.include( attrA1 ) );
         

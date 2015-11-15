@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.inari.commons.event.Event.EventTypeKey;
 import com.inari.commons.lang.functional.Predicate;
+import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.list.DynArray;
 
@@ -58,7 +60,7 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> void notify( final Event<L> event ) {
-        List<L> listenersOfType = this.<L>getListenersOfType( event.index(), false );
+        List<L> listenersOfType = this.<L>getListenersOfType( event.typeIndex(), false );
         for ( int i = 0; i < listenersOfType.size(); i++ ) {
             L listener = listenersOfType.get( i );
             event.notify( listener );
@@ -70,7 +72,7 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends AspectedEventListener> void notify( final AspectedEvent<L> event ) {
-        for ( L listener : this.<L>getListenersOfType( event.index(), false ) ) {
+        for ( L listener : this.<L>getListenersOfType( event.typeIndex(), false ) ) {
             if ( listener.match( event.getAspect() ) ) {
                 event.notify( listener );
             }
@@ -82,7 +84,7 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends PredicatedEventListener> void notify( final PredicatedEvent<L> event ) {
-        List<L> listenersOfType = this.<L>getListenersOfType( event.index(), false );
+        List<L> listenersOfType = this.<L>getListenersOfType( event.typeIndex(), false );
         for ( int i = 0; i < listenersOfType.size(); i++ ) {
             L listener = listenersOfType.get( i );
             Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
@@ -103,9 +105,8 @@ public final class EventDispatcher implements IEventDispatcher {
     }
 
     private final <L> List<L> getListenersOfType( Class<? extends Event<L>> eventType, boolean create ) {
-        return getListenersOfType( 
-            Indexer.getIndexForType( eventType, Event.class ), create 
-        );
+        IndexedTypeKey indexedTypeKey = Indexer.getIndexedTypeKey( EventTypeKey.class, eventType );
+        return getListenersOfType( indexedTypeKey.index(), create );
     }
     
     @SuppressWarnings( "unchecked" )

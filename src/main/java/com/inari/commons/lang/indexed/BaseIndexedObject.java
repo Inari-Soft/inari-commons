@@ -19,7 +19,7 @@ import com.inari.commons.lang.functional.Disposable;
 
 public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     
-    protected int indexedId = -1;
+    protected int index = -1;
     
     protected BaseIndexedObject() {
         this( -1 );
@@ -34,36 +34,36 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     
     protected BaseIndexedObject( boolean skipAutoInit ) {
         if ( skipAutoInit ) {
-            indexedId = -1;
+            index = -1;
         } else {
             setIndex( -1 );
         }
     }
     
     protected final void setIndex( int indexedId ) {
-        if ( this.indexedId >= 0 ) {
+        if ( this.index >= 0 ) {
             Indexer.disposeIndexedObject( this );
         }
         
         if ( indexedId < 0 ) {
-            this.indexedId = Indexer.nextObjectIndex( indexedObjectType() );
+            this.index = Indexer.nextObjectIndex( indexedObjectType() );
         } else {
-            this.indexedId = indexedId;
+            this.index = indexedId;
         }
     }
 
     @Override
-    public final int index() {
-        return indexedId;
+    public int index() {
+        return index;
     }
 
     @Override
     public void dispose() {
-        if ( indexedId < 0 ) {
+        if ( index < 0 ) {
             return;
         }
         Indexer.disposeIndexedObject( this );
-        indexedId = -1;
+        index = -1;
     }
 
     @Override
@@ -76,7 +76,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + indexedId;
+        result = prime * result + index;
         result = prime * result + indexedObjectType().hashCode();
         return result;
     }
@@ -90,12 +90,12 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
         if ( getClass() != obj.getClass() )
             return false;
         BaseIndexedObject other = (BaseIndexedObject) obj;
-        if ( indexedId != other.indexedId )
+        if ( index != other.index )
             return false;
         if ( indexedObjectType() == null ) {
             if ( other.indexedObjectType() != null )
                 return false;
-        } else if ( !indexedObjectType().equals( other.indexedObjectType() ) )
+        } else if ( indexedObjectType() != other.indexedObjectType() )
             return false;
         return true;
     }
