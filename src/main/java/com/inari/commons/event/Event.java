@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
+import com.inari.commons.lang.indexed.Indexed;
 import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;
@@ -52,7 +53,7 @@ import com.inari.commons.lang.indexed.Indexer;
  *
  * @param <L> The type of EventListener the is interested in the specified Event.
  */
-public abstract class Event<L> implements IndexedType {
+public abstract class Event<L> implements IndexedType, Indexed {
     
     public final EventTypeKey indexedTypeKey;
     
@@ -61,7 +62,7 @@ public abstract class Event<L> implements IndexedType {
     }
 
     @Override
-    public final int typeIndex() {
+    public final int index() {
         return indexedTypeKey.index();
     }
 

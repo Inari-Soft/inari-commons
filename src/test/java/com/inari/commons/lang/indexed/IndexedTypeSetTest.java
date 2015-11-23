@@ -44,9 +44,9 @@ public class IndexedTypeSetTest {
         AB ab = new AB();
         AC ac = new AC();
         
-        assertTrue( aa.typeIndex() == 0 );
-        assertTrue( ab.typeIndex() == 1 );
-        assertTrue( ac.typeIndex() == 2 );
+        assertTrue( aa.indexedTypeKey().index() == 0 );
+        assertTrue( ab.indexedTypeKey().index() == 1 );
+        assertTrue( ac.indexedTypeKey().index() == 2 );
         
         aSet1.set( aa );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=1 size:1, indexed={AA} ]", aSet1.toString() );
@@ -71,9 +71,9 @@ public class IndexedTypeSetTest {
         AC ac = new AC();
         AB ab = new AB();
         
-        assertTrue( aa.typeIndex() == 0 );
-        assertTrue( ab.typeIndex() == 2 );
-        assertTrue( ac.typeIndex() == 1 );
+        assertTrue( aa.indexedTypeKey().index() == 0 );
+        assertTrue( ab.indexedTypeKey().index() == 2 );
+        assertTrue( ac.indexedTypeKey().index() == 1 );
         
         aSet1.set( aa );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=1 size:1, indexed={AA} ]", aSet1.toString() );
@@ -92,9 +92,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.typeIndex() == 0 );
-        assertTrue( bb.typeIndex() == 1 );
-        assertTrue( bc.typeIndex() == 2 );
+        assertTrue( ba.indexedTypeKey().index() == 0 );
+        assertTrue( bb.indexedTypeKey().index() == 1 );
+        assertTrue( bc.indexedTypeKey().index() == 2 );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
@@ -119,9 +119,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.typeIndex() == 0 );
-        assertTrue( bb.typeIndex() == 1 );
-        assertTrue( bc.typeIndex() == 2 );
+        assertTrue( ba.indexedTypeKey().index() == 0 );
+        assertTrue( bb.indexedTypeKey().index() == 1 );
+        assertTrue( bc.indexedTypeKey().index() == 2 );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
@@ -201,9 +201,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.typeIndex() == 0 );
-        assertTrue( bb.typeIndex() == 1 );
-        assertTrue( bc.typeIndex() == 2 );
+        assertTrue( ba.indexedTypeKey().index() == 0 );
+        assertTrue( bb.indexedTypeKey().index() == 1 );
+        assertTrue( bc.indexedTypeKey().index() == 2 );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         bSet1.set( ba );
@@ -230,9 +230,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.typeIndex() == 0 );
-        assertTrue( bb.typeIndex() == 1 );
-        assertTrue( bc.typeIndex() == 2 );
+        assertTrue( ba.indexedTypeKey().index() == 0 );
+        assertTrue( bb.indexedTypeKey().index() == 1 );
+        assertTrue( bc.indexedTypeKey().index() == 2 );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         bSet1.set( ba );

@@ -97,7 +97,7 @@ public final class IndexedTypeAspectBuilder {
         if ( indexedType == null ) {
             return aspect;
         }
-        AspectSetBuilder.set( aspect, indexedType.typeIndex() );
+        AspectSetBuilder.set( aspect, indexedType.indexedTypeKey().index );
         return aspect;
     }
     
@@ -113,7 +113,7 @@ public final class IndexedTypeAspectBuilder {
         if ( indexedType == null ) {
             return aspect;
         }
-        AspectSetBuilder.reset( aspect, indexedType.typeIndex() );
+        AspectSetBuilder.reset( aspect, indexedType.indexedTypeKey().index );
         return aspect;
     }
 

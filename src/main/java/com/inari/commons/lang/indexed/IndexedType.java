@@ -17,10 +17,6 @@ package com.inari.commons.lang.indexed;
 
 public interface IndexedType {
     
-    int typeIndex();
-    
     IndexedTypeKey indexedTypeKey();
-    
-    
 
 }

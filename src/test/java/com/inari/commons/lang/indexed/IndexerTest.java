@@ -218,9 +218,9 @@ public class IndexerTest {
         
         AC ac1 = new AC();
         
-        assertEquals( 0, aa1.typeIndex() );
-        assertEquals( 1, ab1.typeIndex() );
-        assertEquals( 2, ac1.typeIndex() );
+        assertEquals( 0, aa1.indexedTypeKey().index() );
+        assertEquals( 1, ab1.indexedTypeKey().index() );
+        assertEquals( 2, ac1.indexedTypeKey().index() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
@@ -240,9 +240,9 @@ public class IndexerTest {
         AB ab2 = new AB();
         AC ac2 = new AC();
         
-        assertEquals( 0, aa2.typeIndex() );
-        assertEquals( 1, ab2.typeIndex() );
-        assertEquals( 2, ac2.typeIndex() );
+        assertEquals( 0, aa2.indexedTypeKey().index() );
+        assertEquals( 1, ab2.indexedTypeKey().index() );
+        assertEquals( 2, ac2.indexedTypeKey().index() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
@@ -296,9 +296,9 @@ public class IndexerTest {
         
         BC bc1 = new BC();
         
-        assertEquals( 0, ba1.typeIndex() );
-        assertEquals( 1, bb1.typeIndex() );
-        assertEquals( 2, bc1.typeIndex() );
+        assertEquals( 0, ba1.indexedTypeKey().index() );
+        assertEquals( 1, bb1.indexedTypeKey().index() );
+        assertEquals( 2, bc1.indexedTypeKey().index() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 
@@ -319,9 +319,9 @@ public class IndexerTest {
         BB bb2 = new BB();
         BC bc2 = new BC();
         
-        assertEquals( 0, ba2.typeIndex() );
-        assertEquals( 1, bb2.typeIndex() );
-        assertEquals( 2, bc2.typeIndex() );
+        assertEquals( 0, ba2.indexedTypeKey().index() );
+        assertEquals( 1, bb2.indexedTypeKey().index() );
+        assertEquals( 2, bc2.indexedTypeKey().index() );
         assertEquals( 
             "IndexProvider : {\n" + 
             " * Indexed Objects :\n" + 

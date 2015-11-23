@@ -87,18 +87,27 @@ public final class IntBag implements StringConfigurable {
         size = 0;
     }
     
-    public final void add( int value ) {
+    public final void set( int index, int value ) {
+        ensureCapacity( index );
+        if ( array[ index ] == nullValue ) {
+            size++;
+        }
+        array[ index ] = value;
+    }
+    
+    public final int add( int value ) {
         int firstEmptyIndex = firstEmptyIndex();
         if ( firstEmptyIndex >= 0 ) {
             array[ firstEmptyIndex ] = value;
             size++;
-            return;
+            return firstEmptyIndex;
         }
         
         int oldLength = array.length;
-        expand();
+        expand( expand );
         array[ oldLength ] = value;
         size++;
+        return oldLength;
     }
     
     public final boolean isEmpty( int index ) {
@@ -114,6 +123,12 @@ public final class IntBag implements StringConfigurable {
         }
         
         return false;
+    }
+    
+    public final void swap( int index1, int index2 ) {
+        int tmp = array[ index1 ];
+        array[ index1 ] = array[ index2 ];
+        array[ index2 ] = tmp;
     }
     
     public final int get( int index ) {
@@ -183,7 +198,7 @@ public final class IntBag implements StringConfigurable {
         return builder.toString();
     }
 
-    private int indexOf( int value ) {
+    public final int indexOf( int value ) {
         for ( int i = 0; i < array.length; i++ ) {
             if ( array[ i ] == value ) {
                 return i;
@@ -191,6 +206,12 @@ public final class IntBag implements StringConfigurable {
         }
         
         return -1;
+    }
+    
+    private void ensureCapacity( int size ) {
+        if ( array.length < size ) {
+            expand( size - array.length  );
+        }
     }
 
     private void initArray( int size ) {
@@ -200,9 +221,9 @@ public final class IntBag implements StringConfigurable {
         }
     }
     
-    private void expand() {
+    private void expand( int expandSize ) {
         int[] temp = array;
-        initArray( temp.length + expand );
+        initArray( temp.length + expandSize );
         System.arraycopy( temp, 0, array, 0, temp.length );
     }
     

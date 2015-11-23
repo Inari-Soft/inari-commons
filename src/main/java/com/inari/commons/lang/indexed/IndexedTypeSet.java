@@ -67,7 +67,7 @@ public final class IndexedTypeSet {
             return null;
         }
         
-        int typeIndex = indexedType.typeIndex();
+        int typeIndex = indexedType.indexedTypeKey().index;
         ensureCapacity( typeIndex );
         
         IndexedType old = this.indexedType[ typeIndex ];
@@ -88,7 +88,7 @@ public final class IndexedTypeSet {
     }
     
     public final IndexedType remove( IndexedType indexedType ) {
-        return this.remove( indexedType.typeIndex() );
+        return this.remove( indexedType.indexedTypeKey().index );
     }
     
     public final IndexedType remove( IndexedTypeKey indexedTypeKey ) {

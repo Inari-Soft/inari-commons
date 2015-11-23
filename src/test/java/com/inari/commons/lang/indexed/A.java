@@ -9,11 +9,6 @@ public abstract class A implements IndexedType {
     }
 
     @Override
-    public int typeIndex() {
-        return indexedTypeKey.index();
-    }
-
-    @Override
     public IndexedTypeKey indexedTypeKey() {
         return indexedTypeKey;
     }

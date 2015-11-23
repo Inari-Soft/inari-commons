@@ -40,7 +40,7 @@ public final class IndexedTypeAspectSet extends AspectBitSet {
     }
     
     public boolean contains( IndexedType indexedType ) {
-        return contains( indexedType.typeIndex() );
+        return contains( indexedType.indexedTypeKey().index );
     }
 
     
