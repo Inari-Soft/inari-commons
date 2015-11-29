@@ -209,8 +209,8 @@ public final class IntBag implements StringConfigurable {
     }
     
     private void ensureCapacity( int size ) {
-        if ( array.length < size ) {
-            expand( size - array.length  );
+        if ( array.length <= size ) {
+            expand( size - array.length + 1 );
         }
     }
 
