@@ -121,6 +121,47 @@ public class IntBagTest {
     }
     
     @Test
+    public void testSetWithExpand() {
+        IntBag array = new IntBag( 3, -1 );
+        array.setExpand( 4 );
+        
+        assertEquals( 
+            "IntBag [nullValue=-1, expand=4, size=0, length=3, array=[-1, -1, -1]]", 
+            array.toString() 
+        );
+        
+        array.set( 0, 11 );
+        array.set( 1, 22 );
+        array.set( 2, 33 );
+        
+        assertEquals( 
+            "IntBag [nullValue=-1, expand=4, size=3, length=3, array=[11, 22, 33]]", 
+            array.toString() 
+        );
+        
+        array.set( 3, 44 );
+        
+        assertEquals( 
+            "IntBag [nullValue=-1, expand=4, size=4, length=8, array=[11, 22, 33, 44, -1, -1, -1, -1]]", 
+            array.toString() 
+        );
+        
+        array.set( 7, 88 );
+        
+        assertEquals( 
+            "IntBag [nullValue=-1, expand=4, size=5, length=8, array=[11, 22, 33, 44, -1, -1, -1, 88]]", 
+            array.toString() 
+        );
+        
+        array.set( 20, 100 );
+        
+        assertEquals( 
+            "IntBag [nullValue=-1, expand=4, size=6, length=25, array=[11, 22, 33, 44, -1, -1, -1, 88, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, -1, -1, -1, -1]]", 
+            array.toString() 
+        );
+    }
+    
+    @Test
     public void testTrim() {
         IntBag array = new IntBag( 3, -1 );
         array.add( 11 );

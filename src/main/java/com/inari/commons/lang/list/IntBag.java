@@ -223,7 +223,7 @@ public final class IntBag implements StringConfigurable {
     
     private void expand( int expandSize ) {
         int[] temp = array;
-        initArray( temp.length + expandSize );
+        initArray( temp.length + expandSize + expand );
         System.arraycopy( temp, 0, array, 0, temp.length );
     }
     
