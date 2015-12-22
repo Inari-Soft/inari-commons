@@ -1,6 +1,6 @@
 package com.inari.commons.lang.indexed;
 
-public abstract class IndexedTypeKey extends BaseIndexedObject {
+public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndexedTypeKey {
     
     public final Class<? extends IndexedType> indexedType;
 
@@ -13,7 +13,18 @@ public abstract class IndexedTypeKey extends BaseIndexedObject {
     public final Class<? extends IndexedTypeKey> indexedObjectType() {
         return this.getClass();
     }
-    
+
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public final <T> Class<T> type() {
+        return (Class<T>) indexedType;
+    }
+
+    @Override
+    public final int typeIndex() {
+        return index();
+    }
+
     protected abstract Class<?> baseIndexedType();
 
     @Override
@@ -25,7 +36,7 @@ public abstract class IndexedTypeKey extends BaseIndexedObject {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return indexedObjectType().getSimpleName() + " [indexedType=" + indexedType + ", index=" + index + "]";
     }
 
