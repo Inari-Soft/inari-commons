@@ -114,6 +114,15 @@ public final class IntBag implements StringConfigurable {
         return array[ index ] == nullValue;
     }
     
+    public final boolean contains( int value ) {
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( array[ i ] == value ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public final boolean remove( int value ) {
         int indexOf = indexOf( value );
         if ( indexOf >= 0 ) {
