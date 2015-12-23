@@ -81,7 +81,7 @@ public class DynArrayTest {
         
         array.set(  10, "next" );
         assertEquals( 
-            "DynArray [list=[null, one, null, two, null, null, tree, null, four, last, next], size()=6, capacity()=11]", 
+            "DynArray [list=[null, one, null, two, null, null, tree, null, four, last, next, null, null, null, null, null, null, null, null, null], size()=6, capacity()=20]", 
             array.toString() 
         );
     }

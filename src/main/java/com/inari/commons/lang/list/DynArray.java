@@ -52,7 +52,7 @@ public final class DynArray<T> implements Iterable<T> {
     /** Creates a DynArray with no initial capacity */
     public DynArray() {
         list = new ArrayList<T>();
-        grow = 1;
+        grow = 10;
     }
     
     /** Creates a DynArray with specified initial capacity. The internal ArrayList is initialized with 
@@ -61,7 +61,7 @@ public final class DynArray<T> implements Iterable<T> {
      */
     public DynArray( int initialCapacity ) {
         createList( initialCapacity );
-        grow = 1;
+        grow = 10;
     }
 
     /** Creates a DynArray with specified initial capacity. The internal ArrayList is initialized with 

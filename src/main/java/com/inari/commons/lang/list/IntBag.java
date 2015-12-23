@@ -104,10 +104,21 @@ public final class IntBag implements StringConfigurable {
         }
         
         int oldLength = array.length;
-        expand( expand );
+        expand( 0 );
         array[ oldLength ] = value;
         size++;
         return oldLength;
+    }
+    
+    public final void addAll( IntBag toAdd ) {
+        if ( toAdd == null ) {
+            return;
+        }
+        
+        IntIterator iterator = toAdd.iterator();
+        while( iterator.hasNext() ) {
+            add( iterator.next() );
+        }
     }
     
     public final boolean isEmpty( int index ) {

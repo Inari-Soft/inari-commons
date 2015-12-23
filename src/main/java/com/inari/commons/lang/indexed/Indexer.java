@@ -89,6 +89,13 @@ public abstract class Indexer {
             indexSet.clear( indexedObject.index() );
         }
     }
+    
+    public final static void disposeObjectIndex( Class<? extends IndexedObject> indexedObjectType, int index ) {
+        BitSet indexSet = indexedObjectTypes.get( indexedObjectType );
+        if ( indexSet != null ) {
+            indexSet.clear( index );
+        }
+    }
 
     /** This is used by BaseIndexedObject on new instance that has already a index assigned to
      *  register this index to the Indexer.
