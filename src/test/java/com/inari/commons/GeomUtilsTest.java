@@ -141,6 +141,12 @@ public class GeomUtilsTest {
         intersection = GeomUtils.intersection( r1, r2 );
         assertEquals( "[x=99,y=99,width=1,height=1]", intersection.toString() );
         assertTrue( intersection.area() > 0 );
+        
+        r2 = new Rectangle( -10, -10, 50, 50 );
+        intersection = GeomUtils.intersection( r1, r2 );
+        assertEquals( "[x=0,y=0,width=40,height=40]", intersection.toString() );
+        assertTrue( intersection.area() > 0 );
+        
     }
 
 }

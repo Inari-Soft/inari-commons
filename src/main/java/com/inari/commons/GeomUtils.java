@@ -103,6 +103,14 @@ public abstract class GeomUtils {
         return new Rectangle( x1, y1, Math.max( 0, x2 - x1 + 1 ), Math.max( 0, y2 - y1 + 1 ) );
     }
     
+    public final static Rectangle intersection( Rectangle r, Rectangle r1, Rectangle result ) {
+        result.x = Math.max( r.x, r1.x );
+        result.y = Math.max( r.y, r1.y );
+        result.width = Math.max( 0, Math.min( r.x + r.width - 1, r1.x + r1.width - 1 ) - result.x + 1 );
+        result.height = Math.max( 0, Math.min( r.y + r.height - 1, r1.y + r1.height - 1 ) - result.y + 1 );
+        return result;
+    }
+    
     public final static Rectangle union( Rectangle r, Rectangle r1 ) {
         int x1 = Math.min( r.x, r1.x );
         int y1 = Math.min( r.y, r1.y );
