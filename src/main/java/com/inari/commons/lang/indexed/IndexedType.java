@@ -15,8 +15,17 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
+/** Defines the interface for a type that can be indexed by sub-type.
+ * 
+ *  If there should be a base type for that base type all sub types should have a unique index id
+ *  this can be implemented by the base type.
+ *  
+ * @author andreashefti
+ *
+ */
 public interface IndexedType {
     
+    /** Gets the IIndexedTypeKey that defines the key and base type of the IndexedType */
     IIndexedTypeKey indexedTypeKey();
 
 }
