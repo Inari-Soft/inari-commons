@@ -144,6 +144,10 @@ public abstract class Indexer {
         return key;
         
     }
+    
+    final static void removeIndexedTypeKey( IndexedTypeKey key ) {
+        indexedTypeKeys.remove( key );
+    }
 
     public static final <K extends IndexedTypeKey> K getIndexedTypeKeyForIndex( Class<K> baseType, int index ) {
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
@@ -198,7 +202,9 @@ public abstract class Indexer {
         }
         builder.append( "\n * Indexed Type Keys :" );
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
-            builder.append( "\n  " ).append( indexedTypeKey );
+            if ( indexedTypeKey.index >= 0 ) {
+                builder.append( "\n  " ).append( indexedTypeKey );
+            }
         }
         builder.append( "\n}" );
         return builder.toString();

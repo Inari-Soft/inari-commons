@@ -17,6 +17,7 @@ package com.inari.commons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -159,6 +160,25 @@ public abstract class StringUtils {
         }
         
         return result.toString();
+    }
+    
+    public static final BitSet bitsetFromString( String pixelsString ) {
+        BitSet pixels = new BitSet( pixelsString.length() );
+        for ( int i = 0; i < pixelsString.length(); i++ ) {
+            pixels.set( i, pixelsString.charAt( i ) != '0' );
+        }
+        return pixels;
+    }
+
+    public static final String bitsetToString( BitSet bitset, int width, int height ) {
+        StringBuilder builder = new StringBuilder();
+        for ( int y = 0; y < height; y++ ) {
+            builder.append( "\n" );
+            for ( int x = 0; x < width; x++ ) {
+                builder.append( ( bitset.get( y * width + x ) )? 1 : 0 ); 
+            }
+        }
+        return builder.toString();
     }
 
 }

@@ -145,6 +145,12 @@ public final class IntBag implements StringConfigurable {
         return false;
     }
     
+    public final int removeAt( int index ) {
+        int result = array[ index ];
+        array[ index ] = nullValue;
+        return result;
+    }
+    
     public final void swap( int index1, int index2 ) {
         int tmp = array[ index1 ];
         array[ index1 ] = array[ index2 ];
@@ -159,8 +165,18 @@ public final class IntBag implements StringConfigurable {
         return new IntBagIterator();
     }
     
-    private int firstEmptyIndex() {
+    private final int firstEmptyIndex() {
         return indexOf( nullValue );
+    }
+    
+    public final int indexOf( int value ) {
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( array[ i ] == value ) {
+                return i;
+            }
+        }
+        
+        return -1;
     }
     
     public final void trim() {
@@ -184,7 +200,7 @@ public final class IntBag implements StringConfigurable {
     }
 
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         if ( StringUtils.isBlank( stringValue ) ) {
             return;
         }
@@ -197,7 +213,7 @@ public final class IntBag implements StringConfigurable {
     }
 
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         StringBuilder sb = new StringBuilder();
         for ( int i = 0; i < array.length; i++ ) {
             sb.append( array[ i ] );
@@ -209,7 +225,7 @@ public final class IntBag implements StringConfigurable {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "IntBag [nullValue=" ).append( nullValue )
                 .append( ", expand=" ).append( expand ).append( ", size=" ).append( size )
@@ -218,16 +234,6 @@ public final class IntBag implements StringConfigurable {
         return builder.toString();
     }
 
-    public final int indexOf( int value ) {
-        for ( int i = 0; i < array.length; i++ ) {
-            if ( array[ i ] == value ) {
-                return i;
-            }
-        }
-        
-        return -1;
-    }
-    
     private void ensureCapacity( int size ) {
         if ( array.length <= size ) {
             expand( size - array.length + 1 );
