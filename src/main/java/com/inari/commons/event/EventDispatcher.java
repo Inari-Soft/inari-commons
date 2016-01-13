@@ -33,14 +33,22 @@ import com.inari.commons.lang.list.DynArray;
  */
 public final class EventDispatcher implements IEventDispatcher {
     
-
+    private final IEventLog eventLog;
     private final DynArray<List<?>> listeners = new DynArray<List<?>>();
     
+    public EventDispatcher() {
+        eventLog = null;
+    }
+    
+    public EventDispatcher( IEventLog eventLog ) {
+        this.eventLog = eventLog;
+    }
+
     /* (non-Javadoc)
      * @see com.inari.commons.event.IEventDispatcher#register(java.lang.Class, L)
      */
     @Override
-    public final <L> void register( Class<? extends Event<L>> eventType, L listener ) {
+    public final <L> void register( final Class<? extends Event<L>> eventType, final L listener ) {
         final List<L> listenersOfType = getListenersOfType( eventType, true );
         if ( !listenersOfType.contains( listener ) ) {
             listenersOfType.add( listener );
@@ -51,7 +59,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#unregister(java.lang.Class, L)
      */
     @Override
-    public final <L> boolean unregister( Class<? extends Event<L>> eventType, L listener ) {
+    public final <L> boolean unregister( final Class<? extends Event<L>> eventType, final L listener ) {
         final List<L> listenersOfType = getListenersOfType( eventType, false );
         return listenersOfType.remove( listener );
     }
@@ -61,6 +69,9 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> void notify( final Event<L> event ) {
+        if ( eventLog != null ) {
+            eventLog.log( event );
+        }
         List<L> listenersOfType = this.<L>getListenersOfType( event, false );
         for ( int i = 0; i < listenersOfType.size(); i++ ) {
             L listener = listenersOfType.get( i );
@@ -73,6 +84,9 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends AspectedEventListener> void notify( final AspectedEvent<L> event ) {
+        if ( eventLog != null ) {
+            eventLog.log( event );
+        }
         for ( L listener : this.<L>getListenersOfType( event.indexedTypeKey(), false ) ) {
             if ( listener.match( event.getAspect() ) ) {
                 event.notify( listener );
@@ -85,6 +99,9 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L extends PredicatedEventListener> void notify( final PredicatedEvent<L> event ) {
+        if ( eventLog != null ) {
+            eventLog.log( event );
+        }
         List<L> listenersOfType = this.<L>getListenersOfType( event, false );
         for ( int i = 0; i < listenersOfType.size(); i++ ) {
             L listener = listenersOfType.get( i );
@@ -105,13 +122,13 @@ public final class EventDispatcher implements IEventDispatcher {
         return "EventDispatcher [listeners=" + listeners + "]";
     }
 
-    private final <L> List<L> getListenersOfType( Class<? extends Event<L>> eventType, boolean create ) {
+    private final <L> List<L> getListenersOfType( final Class<? extends Event<L>> eventType, final boolean create ) {
         IndexedTypeKey indexedTypeKey = Indexer.getIndexedTypeKey( EventTypeKey.class, eventType );
         return getListenersOfType( indexedTypeKey, create );
     }
     
     @SuppressWarnings( "unchecked" )
-    private final <L> List<L> getListenersOfType( Indexed indexed, boolean create ) {
+    private final <L> List<L> getListenersOfType( final Indexed indexed, final boolean create ) {
         int eventIndex = indexed.index();
         List<L> listenersOfType;
         if ( listeners.contains( eventIndex ) ) {
