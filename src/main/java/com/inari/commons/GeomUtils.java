@@ -291,9 +291,9 @@ public abstract class GeomUtils {
     }
     
     public static final int getTranslatedXPos( Position p, Direction d, int dx ) {
-        switch ( d.xDir ) {
-            case LEFT: return p.x - dx;
-            case RIGHT: return p.x + dx;
+        switch ( d.horizontal ) {
+            case WEST: return p.x - dx;
+            case EAST: return p.x + dx;
             default : return p.x;
         }
     }
@@ -303,23 +303,23 @@ public abstract class GeomUtils {
     }
     
     public final static int getTranslatedYPos( Position p, Direction d, int dy ) {
-        switch ( d.yDir ) {
-            case DOWN: return p.y + dy;
-            case UP: return p.y - dy;
+        switch ( d.vertical ) {
+            case SOUTH: return p.y + dy;
+            case NORTH: return p.y - dy;
             default : return p.y;
         }
     }
 
-    public final static void movePositionOnDirection( Position position, Direction d, int distance, boolean originUpperCorner ) {
-        switch ( d.xDir ) {
-            case LEFT: position.x -= distance; break;
-            case RIGHT: position.x += distance; break;
+    public final static void movePosition( Position position, Direction d, int distance, boolean originUpperCorner ) {
+        switch ( d.horizontal ) {
+            case WEST: position.x -= distance; break;
+            case EAST: position.x += distance; break;
             default : 
         }
     
-        switch ( d.yDir ) {
-            case UP: position.y = ( originUpperCorner )? position.y - distance: position.y + distance; break;
-            case DOWN: position.y = ( originUpperCorner )? position.y + distance: position.y - distance; break;
+        switch ( d.vertical ) {
+            case NORTH: position.y = ( originUpperCorner )? position.y - distance: position.y + distance; break;
+            case SOUTH: position.y = ( originUpperCorner )? position.y + distance: position.y - distance; break;
             default : 
         }
     }

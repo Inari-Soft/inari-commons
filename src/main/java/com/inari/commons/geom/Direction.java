@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.geom;
 
-/** Enum for discrete direction with eight directions and a NONE constant
+/** Eight directions, build of four Orientations, and a NONE constant
  *  containing also a Horizontal and Vertical enum value that divides the
  *  Direction into a horizontal and vertical part.
  *
@@ -25,37 +25,33 @@ package com.inari.commons.geom;
 public enum Direction {
 
     /** No Direction with also Horizontal.NONE and Vertical.NONE */
-    NONE ( Horizontal.NONE, Vertical.NONE ),                    // No Direction     : NONE
+    NONE ( Orientation.NONE, Orientation.NONE ),
     /** North Direction with Horizontal.NONE and Vertical.UP */
-    NORTH ( Horizontal.NONE, Vertical.UP ),                     // North            : UP
+    NORTH ( Orientation.NONE, Orientation.NORTH ),
     /** North East Direction with Horizontal.RIGHT and Vertical.UP */
-    NORTH_EAST ( Horizontal.RIGHT, Vertical.UP ),               // North/East       : RIGHT/UP
+    NORTH_EAST ( Orientation.EAST, Orientation.NORTH ),
     /** East Direction with Horizontal.RIGHT and Vertical.NONE */
-    EAST ( Horizontal.RIGHT, Vertical.NONE ),                   // East             : RIGHT
+    EAST ( Orientation.EAST, Orientation.NONE ),
     /** South East Direction with Horizontal.RIGHT and Vertical.DOWN */
-    SOUTH_EAST ( Horizontal.RIGHT, Vertical.DOWN ),             // South/East       : RIGHT/DOWN
+    SOUTH_EAST ( Orientation.EAST, Orientation.SOUTH ),
     /** South Direction with Horizontal.NONE and Vertical.DOWN */
-    SOUTH ( Horizontal.NONE, Vertical.DOWN ),                   // South            : DOWN
+    SOUTH ( Orientation.NONE, Orientation.SOUTH ),
     /** South West Direction with Horizontal.LEFT and Vertical.DOWN */
-    SOUTH_WEST ( Horizontal.LEFT, Vertical.DOWN ),              // South/West       : LEFT/DOWN
+    SOUTH_WEST ( Orientation.WEST, Orientation.SOUTH ),
     /** West Direction with Horizontal.LEFT and Vertical.NONE */
-    WEST ( Horizontal.LEFT, Vertical.NONE ),                    // West             : LEFT
+    WEST ( Orientation.WEST, Orientation.NONE ),
     /** North West Direction with Horizontal.LEFT and Vertical.UP */
-    NORTH_WEST ( Horizontal.LEFT, Vertical.UP )                 // North/West       : LEFT/UP
+    NORTH_WEST ( Orientation.WEST, Orientation.NORTH )
     ; 
-
-
-    public enum Horizontal { NONE, RIGHT, LEFT };
-    public enum Vertical { NONE, UP, DOWN };
-
-    /** The horizontal direction NONE/RIGHT/LEFT */
-    public final Horizontal xDir;
-    /** The vertical direction NONE/UP/DOWN */
-    public final Vertical yDir;
     
-    Direction( Horizontal xDir, Vertical yDir ) {
-        this.xDir = xDir;
-        this.yDir = yDir;
+    /** The horizontal orientation NONE/EAST/WEST */
+    public final Orientation horizontal;
+    /** The vertical orientation NONE/NORTH/SOUTH */
+    public final Orientation vertical;
+    
+    Direction( Orientation horizontal, Orientation vertical ) {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
     }
 
 }
