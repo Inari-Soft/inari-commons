@@ -228,7 +228,9 @@ public final class DynArray<T> implements Iterable<T> {
     /** Clears the whole list, removes all objects and sets the capacity to 0.
      */
     public final void clear() {
-        list.clear();
+        for ( int i = 0; i < list.size(); i++ ) {
+            list.set( i, null );
+        }
         size = 0;
     }
     
