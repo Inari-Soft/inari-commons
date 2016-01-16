@@ -80,6 +80,20 @@ public final class IndexedTypeSet {
         return old;
     }
     
+    public final void setAll( IndexedTypeSet other ) {
+        if ( other == null ) {
+            return;
+        }
+        
+        ensureCapacity( other.length() );
+        for ( int i = 0; i < other.length(); i++ ) {
+            if ( other.indexedType[ i ] == null ) {
+                continue;
+            }
+            indexedType[ i ] = other.indexedType[ i ];
+        }
+    }
+    
     public final boolean contains( int index ) {
         if ( index < 0 || index >= indexedType.length ) {
             return false;
@@ -197,6 +211,5 @@ public final class IndexedTypeSet {
             throw new UnsupportedOperationException();
         }
     }
-
 
 }
