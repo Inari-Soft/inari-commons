@@ -173,9 +173,11 @@ public abstract class StringUtils {
     public static final String bitsetToString( BitSet bitset, int width, int height ) {
         StringBuilder builder = new StringBuilder();
         for ( int y = 0; y < height; y++ ) {
-            builder.append( "\n" );
             for ( int x = 0; x < width; x++ ) {
                 builder.append( ( bitset.get( y * width + x ) )? 1 : 0 ); 
+            }
+            if ( y < height - 1 ) {
+                builder.append( "\n" );
             }
         }
         return builder.toString();
