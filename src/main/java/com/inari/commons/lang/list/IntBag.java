@@ -77,7 +77,7 @@ public final class IntBag implements StringConfigurable {
     }
     
     public final boolean isEmpty() {
-        return size > 0;
+        return size <= 0;
     }
     
     public final void clear() {
