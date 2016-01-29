@@ -116,7 +116,7 @@ public abstract class Indexer {
         }
         
         if ( indexSet.get( index ) ) {
-            throw new IllegalArgumentException( "The Object index: " + index + " is already used by another Object!" );
+            throw new IllegalArgumentException( "The Object: " + indexedObjectType.getName() + " index: " + index + " is already used by another Object!" );
         }
         
         indexSet.set( index );
