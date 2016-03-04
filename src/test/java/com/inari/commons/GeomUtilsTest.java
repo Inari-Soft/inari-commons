@@ -148,5 +148,18 @@ public class GeomUtilsTest {
         assertTrue( intersection.area() > 0 );
         
     }
+    
+    @Test
+    public void testIntersectionAA() {
+        assertEquals( "0", String.valueOf( GeomUtils.intersection( 0, 10, 20, 10 ) ) );
+        assertEquals( "0", String.valueOf( GeomUtils.intersection( 100, 10, 20, 10 ) ) );
+        
+        assertEquals( "10", String.valueOf( GeomUtils.intersection( 0, 100, 20, 10 ) ) );
+        assertEquals( "10", String.valueOf( GeomUtils.intersection( 20, 10, 0, 100 ) ) );
+        
+        assertEquals( "20", String.valueOf( GeomUtils.intersection( 10, 100, 0, 30 ) ) );
+        assertEquals( "10", String.valueOf( GeomUtils.intersection( 0, 10, -10, 30 ) ) );
+        assertEquals( "5", String.valueOf( GeomUtils.intersection( 0, 10, -10, 15 ) ) );
+    }
 
 }

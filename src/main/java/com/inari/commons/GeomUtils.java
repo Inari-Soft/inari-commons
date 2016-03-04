@@ -25,6 +25,8 @@ import static com.inari.commons.geom.Direction.SOUTH_EAST;
 import static com.inari.commons.geom.Direction.SOUTH_WEST;
 import static com.inari.commons.geom.Direction.WEST;
 
+import java.util.BitSet;
+
 import com.inari.commons.geom.Direction;
 import com.inari.commons.geom.Position;
 import com.inari.commons.geom.Rectangle;
@@ -43,14 +45,14 @@ public abstract class GeomUtils {
     
     
     
-    public static final float getDistance( Position p1, Position p2 ) {
+    public static final float getDistance( final Position p1, final Position p2 ) {
         int dx = p2.x - p1.x;
         int dy = p2.y - p1.y;
         
         return (float) Math.sqrt( dx * dx + dy * dy );
     }
     
-    public final static boolean intersect( Rectangle r1, Rectangle r2 ) {
+    public final static boolean intersect( final Rectangle r1, final Rectangle r2 ) {
         int r1Right = r1.x + r1.width;
         int r1Bottom = r1.y + r1.height;
         int r2Right = r2.x + r2.width;
@@ -62,7 +64,7 @@ public abstract class GeomUtils {
                   r2Bottom < r1.y );
     }
     
-    public final static int getIntersectionCode( Rectangle r, Rectangle r1 ) {
+    public final static int getIntersectionCode( final Rectangle r, final Rectangle r1 ) {
         int ax1 = r.x;
         int ay1 = r.y;
         int ax2 = r.x + r.width - 1;
@@ -95,7 +97,7 @@ public abstract class GeomUtils {
         return code;
     }
     
-    public final static Rectangle intersection( Rectangle r, Rectangle r1 ) {
+    public final static Rectangle intersection( final Rectangle r, final Rectangle r1 ) {
         int x1 = Math.max( r.x, r1.x );
         int y1 = Math.max( r.y, r1.y );
         int x2 = Math.min( r.x + r.width - 1, r1.x + r1.width - 1 );
@@ -103,7 +105,11 @@ public abstract class GeomUtils {
         return new Rectangle( x1, y1, Math.max( 0, x2 - x1 + 1 ), Math.max( 0, y2 - y1 + 1 ) );
     }
     
-    public final static Rectangle intersection( Rectangle r, Rectangle r1, Rectangle result ) {
+    public final static int intersection( int x1, int width1, int x2, int width2 ) {
+        return Math.max( 0, Math.min( x1 + width1 - 1, x2 + width2 - 1 ) - Math.max( x1, x2 ) + 1 );
+    }
+    
+    public final static Rectangle intersection( final Rectangle r, final Rectangle r1, final Rectangle result ) {
         result.x = Math.max( r.x, r1.x );
         result.y = Math.max( r.y, r1.y );
         result.width = Math.max( 0, Math.min( r.x + r.width - 1, r1.x + r1.width - 1 ) - result.x + 1 );
@@ -111,7 +117,7 @@ public abstract class GeomUtils {
         return result;
     }
     
-    public final static Rectangle union( Rectangle r, Rectangle r1 ) {
+    public final static Rectangle union( final Rectangle r, final Rectangle r1 ) {
         int x1 = Math.min( r.x, r1.x );
         int y1 = Math.min( r.y, r1.y );
         int x2 = Math.max( r.x + r.width - 1, r1.x + r1.width - 1 );
@@ -119,7 +125,7 @@ public abstract class GeomUtils {
         return new Rectangle( x1, y1, x2 - x1 + 1, y2 - y1 + 1 );
     }
     
-    public final static int getBoundary( Rectangle r, int side ) {
+    public final static int getBoundary( final Rectangle r, int side ) {
         switch ( side ) {
             case LEFT_SIDE: return r.x; 
             case TOP_SIDE: return r.y;
@@ -129,25 +135,20 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static boolean contains( Rectangle r, int x, int y ) {
+    public final static boolean contains( final Rectangle r, final int x, final int y ) {
         return (
             ( x >= r.x ) &&
             ( y >= r.y ) && 
-            ( x < ( r.x + r.width ) ) && 
-            ( y < ( r.y + r.height ) )
+            ( x <= ( r.x + r.width ) ) && 
+            ( y <= ( r.y + r.height ) )
         );
     }
     
-    public final static boolean contains( Rectangle r, Position p ) {
-        return (
-            ( p.x >= r.x ) && 
-            ( p.y >= r.y ) && 
-            ( p.x < ( r.x + r.width ) ) && 
-            ( p.y < ( r.y + r.height ) )
-        );
+    public final static boolean contains( final Rectangle r, final Position p ) {
+        return contains( r, p.x, p.y );
     }
     
-    public final static boolean contains( Rectangle r, Rectangle r1 ) {
+    public final static boolean contains( final Rectangle r, final Rectangle r1 ) {
         return (
             ( r1.x >= r.x ) && 
             ( r1.y >= r.y ) && 
@@ -160,7 +161,7 @@ public abstract class GeomUtils {
         return ( ( side << 2 ) & 0xC ) | ( ( side >> 2 ) & 0x3 );
     }
     
-    public final static Rectangle setOutsideBoundary( Rectangle r, int side, int boundary ) {
+    public final static Rectangle setOutsideBoundary( final Rectangle r, int side, int boundary ) {
         switch ( side ) {
             case LEFT_SIDE: {
                 r.width += r.x - boundary - 1;
@@ -186,7 +187,7 @@ public abstract class GeomUtils {
         return r;
     }
     
-    public final static Rectangle setBoundary( Rectangle r, int side, int boundary ) {
+    public final static Rectangle setBoundary( final Rectangle r, final int side, final int boundary ) {
         switch ( side ) {
             case LEFT_SIDE: {
                 r.width += r.x - boundary;
@@ -212,7 +213,7 @@ public abstract class GeomUtils {
         return r;
     }
     
-    public final static Direction rotateLeft( Direction d ) {
+    public final static Direction rotateLeft( final Direction d ) {
         switch ( d ) {
         case NORTH: return NORTH_EAST;
         case NORTH_EAST: return EAST;
@@ -226,7 +227,7 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static Direction rotateLeft2( Direction d ) {
+    public final static Direction rotateLeft2( final Direction d ) {
         switch ( d ) {
             case NORTH: return EAST;
             case NORTH_EAST: return SOUTH_EAST;
@@ -240,7 +241,7 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static Direction rotateRight( Direction d ) {
+    public final static Direction rotateRight( final Direction d ) {
             switch ( d ) {
             case NORTH: return NORTH_WEST;
             case NORTH_WEST: return WEST;
@@ -254,7 +255,7 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static Direction rotateRight2( Direction d ) {
+    public final static Direction rotateRight2( final Direction d ) {
         switch ( d ) {
             case NORTH: return WEST;
             case NORTH_WEST: return SOUTH_WEST;
@@ -268,29 +269,29 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static boolean isHorizontal( Direction d ) {
+    public final static boolean isHorizontal( final Direction d ) {
         return ( ( d == EAST ) || ( d == WEST ) );
     }
     
-    public final static boolean isVertical( Direction d ) {
+    public final static boolean isVertical( final Direction d ) {
         return ( ( d == NORTH ) || ( d == SOUTH ) );
     }
     
-    public final static void translateTo( Position p, Position to ) {
+    public final static void translateTo( final Position p, final Position to ) {
         p.x = to.x;
         p.y = to.y;
     }
     
-    public final static void translate( Position p, Vector2i d ) {
+    public final static void translate( final Position p, final Vector2i d ) {
         p.x += d.dx;
         p.y += d.dy;
     }
     
-    public static final int getTranslatedXPos( Position p, Direction d ) {
+    public static final int getTranslatedXPos( final Position p, final Direction d ) {
         return getTranslatedXPos( p, d, 1 );
     }
     
-    public static final int getTranslatedXPos( Position p, Direction d, int dx ) {
+    public static final int getTranslatedXPos( final Position p, final Direction d, final int dx ) {
         switch ( d.horizontal ) {
             case WEST: return p.x - dx;
             case EAST: return p.x + dx;
@@ -298,11 +299,11 @@ public abstract class GeomUtils {
         }
     }
     
-    public final static int getTranslatedYPos( Position p, Direction d ) {
+    public final static int getTranslatedYPos( final Position p, final Direction d ) {
         return getTranslatedYPos( p, d, 1 );
     }
     
-    public final static int getTranslatedYPos( Position p, Direction d, int dy ) {
+    public final static int getTranslatedYPos( final Position p, final Direction d, final int dy ) {
         switch ( d.vertical ) {
             case SOUTH: return p.y + dy;
             case NORTH: return p.y - dy;
@@ -310,7 +311,7 @@ public abstract class GeomUtils {
         }
     }
 
-    public final static void movePosition( Position position, Direction d, int distance, boolean originUpperCorner ) {
+    public final static void movePosition( final Position position, final Direction d, final int distance, final boolean originUpperCorner ) {
         switch ( d.horizontal ) {
             case WEST: position.x -= distance; break;
             case EAST: position.x += distance; break;
@@ -321,6 +322,18 @@ public abstract class GeomUtils {
             case NORTH: position.y = ( originUpperCorner )? position.y - distance: position.y + distance; break;
             case SOUTH: position.y = ( originUpperCorner )? position.y + distance: position.y - distance; break;
             default : 
+        }
+    }
+    
+    public static final void bitMaskIntersection( final BitSet source, final Rectangle sourceRect, final Rectangle intersectionRect, final BitSet result ) {
+        result.clear();
+        for ( int y = 0; y < intersectionRect.height; y++ ) {
+            for ( int x = 0; x < intersectionRect.width; x++ ) {
+                result.set( 
+                    y * intersectionRect.width + x, 
+                    source.get( ( ( intersectionRect.y + y ) * sourceRect.width ) + intersectionRect.x + x ) 
+                );
+            }
         }
     }
 

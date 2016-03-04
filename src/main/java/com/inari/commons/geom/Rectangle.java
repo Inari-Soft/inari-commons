@@ -77,8 +77,15 @@ public final class Rectangle extends Position {
     /** Use this to get the area value (width * height) form this Rectangle.
      * @return the area value (width * height) form this Rectangle.
      */
-    public int area() {
+    public final int area() {
         return width * height;
+    }
+    
+    public final void set( int x, int y, int w, int h ) {
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
     }
 
     /** Use this to set the attributes of this Rectangle by another Rectangle.

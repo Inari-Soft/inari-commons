@@ -82,7 +82,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( long t, float b, float c, long d ) {
-            return c * (float)Math.pow( 2, 10 * (t/d - 1) ) + b;
+            return c * (float) Math.pow( 2.0f, 10.0f * ( (float) t/d - 1.0f ) ) + b;
         }
     }
     
@@ -92,9 +92,9 @@ public abstract class EasingImpls {
         public final float calc( long t, float b, float c, long d ) {
             t /= d/2;
             if (t < 1) 
-                return c/2 * (float)Math.pow( 2, 10 * (t - 1) ) + b;
+                return c/2 * (float)Math.pow( 2, 10 * ( t - 1 ) ) + b;
             t--;
-            return c/2 * (float)( -Math.pow( 2, -10 * t) + 2 ) + b;
+            return c/2 * (float)( -Math.pow( 2, -10 * t ) + 2 ) + b;
         }
     }
     
