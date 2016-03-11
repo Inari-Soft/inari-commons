@@ -40,25 +40,6 @@ public class EasingImplTest {
             "[5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5]", 
             values.toString() 
         );
-        
-        startValue = -5f;
-        changeInValue = 0f;
-        values.clear();
-        
-        inverse = changeInValue - startValue < 0;
-        float offset = 0.f - startValue;
-        for ( long time = 0; time < 10; time++ ) {
-            if ( inverse ) {
-                values.add( startValue - Easing.Type.LINEAR.calc( time, changeInValue, startValue, duration ) );
-            } else {
-                values.add( Easing.Type.LINEAR.calc( time, startValue, changeInValue, duration ) );
-            }
-        }
-        
-        assertEquals( 
-            "[5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5]", 
-            values.toString() 
-        );
     }
 
 }
