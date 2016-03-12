@@ -4,6 +4,28 @@
   <artifactId>commons</artifactId>
   <version>1.0-SNAPSHOT</version>
   
+  <developers>
+        <developer>
+            <name>Andreas Hefti</name>
+            <email>inarisoft@yahoo.de</email>
+            <organization>Inari-Soft</organization>
+            <organizationUrl>https://github.com/Inari-Soft/inari-commons</organizationUrl>
+        </developer>
+    </developers>
+    
+    <scm>
+        <connection>https://github.com/Inari-Soft/inari-commons.git</connection>
+        <developerConnection>https://github.com/Inari-Soft/inari-commons.git</developerConnection>
+        <url>https://github.com/Inari-Soft/inari-commons.git</url>
+    </scm>
+    
+    <licenses>
+      <license>
+        <name>The Apache License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      </license>
+    </licenses>
+  
   <distributionManagement>
    <snapshotRepository>
       <id>ossrh</id>
@@ -11,7 +33,7 @@
    </snapshotRepository>
    <repository>
     <id>ossrh</id>
-    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
   </repository>
   </distributionManagement>
   
@@ -37,6 +59,33 @@
          </execution>
         </executions>
       </plugin>
+<!--       <plugin> -->
+<!--         <groupId>org.apache.maven.plugins</groupId> -->
+<!--         <artifactId>maven-javadoc-plugin</artifactId> -->
+<!--         <version>2.9.1</version> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <id>attach-javadocs</id> -->
+<!--             <goals> -->
+<!--               <goal>jar</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.5</version>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.8.1</version>
