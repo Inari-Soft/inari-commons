@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
+
 public interface Indexed {
     
     int index();

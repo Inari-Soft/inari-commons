@@ -55,7 +55,8 @@ import com.inari.commons.lang.indexed.Indexer;
  */
 public abstract class Event<L> implements IndexedType, Indexed {
     
-    public final EventTypeKey indexedTypeKey;
+    /** The EventTypeKey that specified type type of event */
+    protected final EventTypeKey indexedTypeKey;
     
     protected Event( EventTypeKey indexedTypeKey ) {
         this.indexedTypeKey = indexedTypeKey;
@@ -79,11 +80,14 @@ public abstract class Event<L> implements IndexedType, Indexed {
     public abstract void notify( final L listener );
     
     
-    
+    /** This is internally used to create index for specified event type */
     protected static final EventTypeKey createTypeKey( Class<? extends Event<?>> type ) {
         return Indexer.getIndexedTypeKey( EventTypeKey.class, type );
     }
     
+    /** Defines a type key for a specified event.
+     *  This is used for indexing the event types.
+     */
     public static final class EventTypeKey extends IndexedTypeKey {
         
         EventTypeKey( Class<? extends Event<?>> indexedType ) {

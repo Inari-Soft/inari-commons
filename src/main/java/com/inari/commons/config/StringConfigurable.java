@@ -17,7 +17,7 @@ package com.inari.commons.config;
 
 /** Defines an object that is configurable within a String value, that can be write to a String phrase 
  *  and thats attributes can be set by a String phrase.
- *  This normaly is used from small data types like Point, Color or Rectangle that are itself used
+ *  This normally is used from small data types like Point, Color or Rectangle that are itself used
  *  as a property value in component objects and. Within this interface, they implement a way
  *  to convert the property value from and to String value.
  */
