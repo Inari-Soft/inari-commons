@@ -49,6 +49,10 @@ public enum Direction {
     /** The vertical orientation NONE/NORTH/SOUTH */
     public final Orientation vertical;
     
+    /** Use this to create a new Direction with specified horizontal and vertical Orientation.
+     * @param horizontal horizontal Orientation of the new Direction
+     * @param vertical vertical Orientation of the new Direction
+     */
     Direction( Orientation horizontal, Orientation vertical ) {
         this.horizontal = horizontal;
         this.vertical = vertical;
