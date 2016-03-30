@@ -45,5 +45,14 @@ public class JavaTests {
         assertEquals( "1.0", String.valueOf( Math.ceil( 1.0 ) ) );
         assertEquals( "2.0", String.valueOf( Math.ceil( 1.000001 ) ) );
     }
+    
+    @Test
+    public void indexIncrementTest() {
+        String[] array = new String[] { "one", "two", "three" };
+        int index = 0;
+        assertEquals( "one", array[ index++ ] );
+        assertEquals( "two", array[ index++ ] );
+        assertEquals( "three", array[ index++ ] );
+    }
 
 }

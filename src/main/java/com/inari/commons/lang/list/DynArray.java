@@ -102,18 +102,6 @@ public final class DynArray<T> implements Iterable<T> {
         return old;
     }
     
-    public final void setAll( DynArray<T> others ) {
-        if ( others == null ) {
-            return;
-        }
-        
-        for ( int i = 0; i < others.capacity(); i++ ) {
-            if ( others.contains( i ) ) {
-                set( i, others.get( i ) );
-            }
-        }
-    }
-    
     /** Add the specified value at the first empty (null) position that is found in the DynArray.
      *  If there is no empty position the list is growing by the grow value and the value is added
      *  to at the end of old list.
@@ -128,6 +116,13 @@ public final class DynArray<T> implements Iterable<T> {
         }
         set( index, value );
         return index;
+    }
+    
+    public final void addAll( DynArray<T> values ) {
+        ensureCapacity( this.size + values.size );
+        for ( T value : values ) {
+            add( value );
+        }
     }
     
     /** Get the object at specified index or null if there is no object referenced by specified index.
@@ -321,6 +316,5 @@ public final class DynArray<T> implements Iterable<T> {
             }
         }
     }
-
 
 }
