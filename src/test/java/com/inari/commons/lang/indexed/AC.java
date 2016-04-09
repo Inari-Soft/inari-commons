@@ -2,6 +2,6 @@ package com.inari.commons.lang.indexed;
 
 public class AC extends A {
     protected AC() {
-        super( Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AC.class ) );
+        super( Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AC.class ) );
     }
 }

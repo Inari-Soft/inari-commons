@@ -19,7 +19,7 @@ public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> 
     }
 
     @Override
-    public void notify( AspectedTestEventListener listener ) {
+    protected void notify( AspectedTestEventListener listener ) {
         listener.notifyAspectedEvent( this );
     }
 

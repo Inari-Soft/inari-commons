@@ -77,11 +77,16 @@ public abstract class Event<L> implements IndexedType, Indexed {
      *  
      *  @param listener the listener to notify.
      */
-    public abstract void notify( final L listener );
+    protected abstract void notify( final L listener );
     
     
     /** This is internally used to create index for specified event type */
     protected static final EventTypeKey createTypeKey( Class<? extends Event<?>> type ) {
+        return Indexer.createIndexedTypeKey( EventTypeKey.class, type );
+    }
+    
+    /** Use this to get the EventTypeKey for e given Event class type */
+    public static final EventTypeKey getTypeKey( Class<? extends Event<?>> type ) {
         return Indexer.getIndexedTypeKey( EventTypeKey.class, type );
     }
     

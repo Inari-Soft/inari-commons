@@ -9,7 +9,7 @@ public class SimpleTestEvent1 extends Event<GenericTestEventListener> {
     }
 
     @Override
-    public void notify( GenericTestEventListener listener ) {
+    protected void notify( GenericTestEventListener listener ) {
         listener.notifyEventCall( this );
     }
 

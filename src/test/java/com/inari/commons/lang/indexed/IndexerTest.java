@@ -296,7 +296,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AA.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AA.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -308,7 +308,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AB.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AB.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -321,7 +321,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AC.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -335,9 +335,9 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AA.class );
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AB.class );
-        Indexer.getIndexedTypeKey( AIndexedTypeKey.class, AC.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AA.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AB.class );
+        Indexer.createIndexedTypeKey( AIndexedTypeKey.class, AC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -426,14 +426,14 @@ public class IndexerTest {
     @Test
     public void testWrongPreDefinition() {
         try {
-            Indexer.getIndexedTypeKey( AIndexedTypeKey.class, BA.class );
+            Indexer.createIndexedTypeKey( AIndexedTypeKey.class, BA.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
             assertEquals( "IndexedType missmatch: indexedType: class com.inari.commons.lang.indexed.BA is not a valid substitute of indexedBaseType: class com.inari.commons.lang.indexed.A", e.getMessage() );
         } 
         
         try {
-            Indexer.getIndexedTypeKey( BIndexedTypeKey.class, AA.class );
+            Indexer.createIndexedTypeKey( BIndexedTypeKey.class, AA.class );
             fail( "IllegalArgumentException expected" );
         } catch ( IllegalArgumentException e ) {
             assertEquals( "IndexedType missmatch: indexedType: class com.inari.commons.lang.indexed.AA is not a valid substitute of indexedBaseType: interface com.inari.commons.lang.indexed.B", e.getMessage() );

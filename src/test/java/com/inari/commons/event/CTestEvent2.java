@@ -9,7 +9,7 @@ public class CTestEvent2 extends Event<CombinedTestEventListener> {
     }
     
     @Override
-    public void notify( CombinedTestEventListener listener ) {
+    protected void notify( CombinedTestEventListener listener ) {
         listener.notifyEvent( this );
     }
 

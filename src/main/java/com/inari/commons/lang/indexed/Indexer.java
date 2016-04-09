@@ -90,6 +90,10 @@ public abstract class Indexer {
         }
     }
     
+    /** Use this to dispose or free a given index for a specified object instance of specified type.
+     * @param indexedObjectType the indexed object type
+     * @param index the index to dispose/free
+     */
     public final static void disposeObjectIndex( Class<? extends IndexedObject> indexedObjectType, int index ) {
         BitSet indexSet = indexedObjectTypes.get( indexedObjectType );
         if ( indexSet != null ) {
@@ -122,6 +126,24 @@ public abstract class Indexer {
         indexSet.set( index );
     }
     
+    public final static <K extends IndexedTypeKey> K createIndexedTypeKey( Class<K> baseType, Class<? extends IndexedType> indexedType ) {
+        K key = getIndexedTypeKey( baseType, indexedType );
+        if ( key != null ) {
+            return key;
+        }
+        
+        key = createIndexedTypeKeyInstance( baseType, indexedType );
+        Class<?> baseIndexedType = key.baseIndexedType();
+        if ( baseIndexedType != null ) {
+            if ( !baseIndexedType.isAssignableFrom( indexedType ) ) {
+                throw new IllegalArgumentException( "IndexedType missmatch: indexedType: " + indexedType + " is not a valid substitute of indexedBaseType: " + baseIndexedType );
+            }
+        }
+
+        indexedTypeKeys.add( key );
+        return key;
+    }
+    
     public final static <K extends IndexedTypeKey> K getIndexedTypeKey( Class<K> baseType, Class<? extends IndexedType> indexedType ) {
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
             if ( indexedType == indexedTypeKey.indexedType && baseType == indexedTypeKey.indexedObjectType() ) {
@@ -132,17 +154,7 @@ public abstract class Indexer {
             }
         }
         
-        K key = createIndexedTypeKeyInstance( baseType, indexedType );
-        Class<?> baseIndexedType = key.baseIndexedType();
-        if ( baseIndexedType != null ) {
-            if ( !baseIndexedType.isAssignableFrom( indexedType ) ) {
-                throw new IllegalArgumentException( "IndexedType missmatch: indexedType: " + indexedType + " is not a valid substitute of indexedBaseType: " + baseIndexedType );
-            }
-        }
-
-        indexedTypeKeys.add( key );
-        return key;
-        
+        return null;
     }
     
     final static void removeIndexedTypeKey( IndexedTypeKey key ) {

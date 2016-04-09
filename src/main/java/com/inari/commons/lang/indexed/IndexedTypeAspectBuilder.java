@@ -89,7 +89,7 @@ public final class IndexedTypeAspectBuilder {
         if ( indexType == null ) {
             return aspect;
         }
-        AspectSetBuilder.set( aspect, Indexer.getIndexedTypeKey( aspect.indexedBaseType, indexType ).index() );
+        AspectSetBuilder.set( aspect, Indexer.createIndexedTypeKey( aspect.indexedBaseType, indexType ).index() );
         return aspect;
     }
     
@@ -105,7 +105,7 @@ public final class IndexedTypeAspectBuilder {
         if ( indexType == null ) {
             return aspect;
         }
-        AspectSetBuilder.reset( aspect, Indexer.getIndexedTypeKey( aspect.indexedBaseType, indexType ).index() );
+        AspectSetBuilder.reset( aspect, Indexer.createIndexedTypeKey( aspect.indexedBaseType, indexType ).index() );
         return aspect;
     }
     

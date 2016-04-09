@@ -127,7 +127,7 @@ public final class IndexedTypeSet {
     }
     
     public final <I extends IndexedType> I get( Class<I> type ) {
-        int typeIndex = Indexer.getIndexedTypeKey( indexedBaseType, type ).index();
+        int typeIndex = Indexer.createIndexedTypeKey( indexedBaseType, type ).index();
         IndexedType indexedType = this.indexedType[ typeIndex ];
         return type.cast( indexedType );
     }

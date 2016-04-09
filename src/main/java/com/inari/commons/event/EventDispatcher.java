@@ -123,7 +123,7 @@ public final class EventDispatcher implements IEventDispatcher {
     }
 
     private final <L> List<L> getListenersOfType( final Class<? extends Event<L>> eventType, final boolean create ) {
-        IndexedTypeKey indexedTypeKey = Indexer.getIndexedTypeKey( EventTypeKey.class, eventType );
+        IndexedTypeKey indexedTypeKey = Indexer.createIndexedTypeKey( EventTypeKey.class, eventType );
         return getListenersOfType( indexedTypeKey, create );
     }
     

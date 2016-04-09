@@ -2,7 +2,7 @@ package com.inari.commons.lang.indexed;
 
 public class BA implements B {
     
-    public final static BIndexedTypeKey TYPE_KEY = Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BA.class );
+    public final static BIndexedTypeKey TYPE_KEY = Indexer.createIndexedTypeKey( BIndexedTypeKey.class, BA.class );
     
     public BA() {
         TYPE_KEY.index();
