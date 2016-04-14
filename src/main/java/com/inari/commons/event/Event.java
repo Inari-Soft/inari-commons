@@ -100,7 +100,7 @@ public abstract class Event<L> implements IndexedType, Indexed {
         }
         
         @Override
-        protected final Class<?> baseIndexedType() {
+        public final Class<?> baseType() {
             return Event.class;
         }
         

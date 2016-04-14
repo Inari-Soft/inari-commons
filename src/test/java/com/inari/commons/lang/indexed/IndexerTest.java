@@ -351,7 +351,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        BA.TYPE_KEY.index();
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BA.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -367,7 +367,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        BB.TYPE_KEY.index();
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BB.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -384,7 +384,7 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        BC.TYPE_KEY.index();
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BC.class );
         
         assertEquals( 
             "IndexProvider : {\n" + 
@@ -402,9 +402,9 @@ public class IndexerTest {
             Indexer.dump() 
         );
         
-        BA.TYPE_KEY.index();
-        BB.TYPE_KEY.index();
-        BC.TYPE_KEY.index();
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BA.class );
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BB.class );
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BC.class );
 
         assertEquals( 
             "IndexProvider : {\n" + 

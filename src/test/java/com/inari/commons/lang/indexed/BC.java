@@ -5,7 +5,7 @@ public class BC implements B {
     public final static BIndexedTypeKey TYPE_KEY = Indexer.createIndexedTypeKey( BIndexedTypeKey.class, BC.class );
     
     public BC() {
-        TYPE_KEY.index();
+        Indexer.getIndexedTypeKey( BIndexedTypeKey.class, BC.class );
     }
 
     @Override

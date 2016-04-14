@@ -53,7 +53,7 @@ public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     }
 
     @Override
-    public int index() {
+    public final int index() {
         return index;
     }
 

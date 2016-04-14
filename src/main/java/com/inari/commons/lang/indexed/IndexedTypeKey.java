@@ -25,16 +25,6 @@ public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndex
         return index();
     }
 
-    protected abstract Class<?> baseIndexedType();
-
-    @Override
-    public final int index() {
-        if ( index < 0 ) {
-            index = Indexer.nextObjectIndex( indexedObjectType() );
-        }
-        return index;
-    }
-
     @Override
     public String toString() {
         return indexedObjectType().getSimpleName() + " [indexedType=" + indexedType + ", index=" + index + "]";

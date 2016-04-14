@@ -12,6 +12,8 @@ public interface IIndexedTypeKey {
     /** The specified subType or indexed type */
     <T> Class<T> type();
     
+    Class<?> baseType();
+    
     /** The index value for the specified subType or indexed type of this key */
     int typeIndex();
 

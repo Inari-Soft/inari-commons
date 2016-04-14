@@ -133,13 +133,16 @@ public abstract class Indexer {
         }
         
         key = createIndexedTypeKeyInstance( baseType, indexedType );
-        Class<?> baseIndexedType = key.baseIndexedType();
+        Class<?> baseIndexedType = key.baseType();
         if ( baseIndexedType != null ) {
             if ( !baseIndexedType.isAssignableFrom( indexedType ) ) {
                 throw new IllegalArgumentException( "IndexedType missmatch: indexedType: " + indexedType + " is not a valid substitute of indexedBaseType: " + baseIndexedType );
             }
         }
 
+        if ( key.index < 0 ) {
+            key.index = Indexer.nextObjectIndex( key.indexedObjectType() );
+        }
         indexedTypeKeys.add( key );
         return key;
     }
@@ -148,7 +151,7 @@ public abstract class Indexer {
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
             if ( indexedType == indexedTypeKey.indexedType && baseType == indexedTypeKey.indexedObjectType() ) {
                 if ( indexedTypeKey.index < 0 ) {
-                    indexedTypeKey.index();
+                    indexedTypeKey.index = Indexer.nextObjectIndex( indexedTypeKey.indexedObjectType() );
                 }
                 return baseType.cast( indexedTypeKey );
             }

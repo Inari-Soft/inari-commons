@@ -6,7 +6,7 @@ public interface B extends IndexedType {
             super( indexedType );
         }
         @Override
-        protected final Class<B> baseIndexedType() {
+        public final Class<B> baseType() {
             return B.class;
         }
     }

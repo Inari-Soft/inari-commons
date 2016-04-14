@@ -19,7 +19,7 @@ public abstract class A implements IndexedType {
         }
 
         @Override
-        protected final Class<A> baseIndexedType() {
+        public final Class<A> baseType() {
             return A.class;
         }
     }
