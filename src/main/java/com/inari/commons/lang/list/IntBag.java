@@ -121,6 +121,26 @@ public final class IntBag implements StringConfigurable {
         }
     }
     
+    public final void addAll( int... values ) {
+        if ( values == null ) {
+            return;
+        }
+        
+        for ( int value : values ) {
+            add( value );
+        }
+    }
+    
+    public final void addAll( IntIterator intIterator ) {
+        if ( intIterator == null ) {
+            return;
+        }
+        
+        while( intIterator.hasNext() ) {
+            add( intIterator.next() );
+        }
+    }
+    
     public final boolean isEmpty( int index ) {
         return array[ index ] == nullValue;
     }
