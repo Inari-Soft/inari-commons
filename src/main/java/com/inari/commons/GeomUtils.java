@@ -329,12 +329,16 @@ public abstract class GeomUtils {
         result.clear();
         for ( int y = 0; y < intersectionRect.height; y++ ) {
             for ( int x = 0; x < intersectionRect.width; x++ ) {
-                result.set( 
-                    y * intersectionRect.width + x, 
+                result.set(
+                    getFlatArrayIndex( x, y, intersectionRect.width ),
                     source.get( ( ( intersectionRect.y + y ) * sourceRect.width ) + intersectionRect.x + x ) 
                 );
             }
         }
+    }
+    
+    public static final int getFlatArrayIndex( int x, int y, int width ) {
+        return y * width + x;
     }
 
 }
