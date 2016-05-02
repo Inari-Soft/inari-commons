@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.inari.commons.lang.functional;
+package com.inari.commons.lang;
 
-/** Use this for types that can be cleared or are used in an abstract service that used to
- *  clear object(s) but do not have to know the exact type of the object(s)
- */
-public interface Clearable {
-
-    /** Clears the instance */
-    void clear();
+public interface Loadable {
+    
+    public Disposable load();
 
 }

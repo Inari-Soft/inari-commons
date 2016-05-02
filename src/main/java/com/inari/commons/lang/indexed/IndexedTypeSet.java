@@ -17,8 +17,8 @@ package com.inari.commons.lang.indexed;
 
 import java.util.Iterator;
 
+import com.inari.commons.lang.Clearable;
 import com.inari.commons.lang.aspect.AspectSetBuilder;
-import com.inari.commons.lang.functional.Clearable;
 
 public final class IndexedTypeSet {
     

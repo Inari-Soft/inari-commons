@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.inari.commons.lang.functional;
+package com.inari.commons.lang;
 
 /** Use this on types that can be disposed */
 public interface Disposable {

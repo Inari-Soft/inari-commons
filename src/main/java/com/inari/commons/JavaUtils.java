@@ -16,12 +16,9 @@
 package com.inari.commons;
 
 import java.lang.ref.WeakReference;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
-import com.inari.commons.lang.functional.Operation;
 
 public abstract class JavaUtils {
     
@@ -33,12 +30,6 @@ public abstract class JavaUtils {
         obj = null;
         while ( ref.get() != null ) {
             System.gc();
-        }
-    }
-    
-    public static final <T> void operation( Collection<T> values, Operation<T> op ) {
-        for ( T value : values ) {
-            op.op( value );
         }
     }
 

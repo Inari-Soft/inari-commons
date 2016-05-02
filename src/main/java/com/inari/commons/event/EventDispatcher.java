@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.inari.commons.event.Event.EventTypeKey;
-import com.inari.commons.lang.functional.Predicate;
+import com.inari.commons.lang.Predicate;
 import com.inari.commons.lang.indexed.Indexed;
 import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;

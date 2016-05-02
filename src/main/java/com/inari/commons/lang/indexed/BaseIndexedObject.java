@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
-import com.inari.commons.lang.functional.Disposable;
+import com.inari.commons.lang.Disposable;
 
 public abstract class BaseIndexedObject implements IndexedObject, Disposable {
     

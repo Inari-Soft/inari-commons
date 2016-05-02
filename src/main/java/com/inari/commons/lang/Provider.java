@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.inari.commons.lang.functional;
+package com.inari.commons.lang;
 
-public interface Predicate<T> {
+public interface Provider<T, D> {
     
-    public boolean apply( T t );
+    public T get( D data );
 
 }

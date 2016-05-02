@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.functional.Predicate;
+import com.inari.commons.lang.Predicate;
 
 /** An EventListener which implements also a specified Matcher for the PredicatedEvent that matches if
  *  the listener is interested on specified PredicatedEvent.
