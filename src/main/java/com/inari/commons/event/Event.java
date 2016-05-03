@@ -20,9 +20,9 @@ import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;
 
-/** Base implementation of an Event handled by the IEventDispatcher.
+/** Base implementation of an Event handled by the {@link IEventDispatcher}.
  *  <p>
- *  Implement this for a specific Event type bound to a EventListener implementation (L)
+ *  Implement this for a specific Event type bound to a {@link EventListener} implementation (L)
  *  For example if a specified Event is needed to notify specified listener(s) creation and 
  *  implementation of the following interfaces/classes are needed:
  *  <p>
@@ -51,22 +51,24 @@ import com.inari.commons.lang.indexed.Indexer;
  *  
  * @author andreas hefti
  *
- * @param <L> The type of EventListener the is interested in the specified Event.
+ * @param <L> The type of {@link EventListener} the is interested in the specified Event.
  */
 public abstract class Event<L> implements IndexedType, Indexed {
     
-    /** The EventTypeKey that specified type type of event */
+    /** The {@link EventTypeKey} that specified type type of event */
     protected final EventTypeKey indexedTypeKey;
     
     protected Event( EventTypeKey indexedTypeKey ) {
         this.indexedTypeKey = indexedTypeKey;
     }
 
+    /** Use this to get the index/type id of the specified Event */ 
     @Override
     public final int index() {
         return indexedTypeKey.index();
     }
 
+    /** Use this to get the {@link EventTypeKey} that specified type type of event */
     @Override
     public final IndexedTypeKey indexedTypeKey() {
         return indexedTypeKey;
