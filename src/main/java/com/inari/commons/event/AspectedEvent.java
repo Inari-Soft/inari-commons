@@ -17,12 +17,12 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.AspectBitSet;
 
-/** An Event with an Aspect to verify interested listeners.
- *  Use this to notify AspectedEventListener listening to specified Event and Aspect.
+/** An {@link Event} with an {@link Aspect} to verify interested listeners.<p>
+ *  Use this to notify {@link AspectedEventListener} listening to specified {@link Event} and {@link Aspect}.
  *  
  *  @author andreas hefti
  *
- *  @param <L> The AspectedEventListener implementation type
+ *  @param <L> The {@link AspectedEventListener} implementation type
  */
 public abstract class AspectedEvent<L extends AspectedEventListener> extends Event<L> {
     
@@ -30,7 +30,7 @@ public abstract class AspectedEvent<L extends AspectedEventListener> extends Eve
         super( indexedTypeKey );
     }
 
-    /** Get the Aspect for this event. Only AspectedEventListener that are listening to the specified Event and Aspect are 
+    /** Get the {@link Aspect} for this event. Only {@link AspectedEventListener} that are listening to the specified {@link Event} and {@link Aspect} are 
      *  going to be notified on this event.
      *  
      *  @return The Aspect of this event
