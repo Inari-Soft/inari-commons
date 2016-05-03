@@ -17,19 +17,19 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.AspectBitSet;
 
-/** An EventListener which implements also a specified matching within an Aspect to verify if
- *  the listener is interested on a certain AspectedEvent or not.
+/** An event listener definition which defines also a specified matching within an {@link Aspect} to verify if
+ *  the listener is interested on a certain {@link AspectedEvent} or not.
  *  <p>
- *  Use this to listen to an ApsectedEvent that matches the Aspect on that the listener is interested in.
- *  The listener will only get notifies on a specified AspectedEvent if it match the Aspect
+ *  Use this to listen to an {@link ApsectedEvent} that matches the {@link Aspect} on that the listener is interested in.
+ *  The listener will only get notified on a specified {@link AspectedEvent} if it match the {@link Aspect}
  *  @author andreas hefti
  *
  */
 public interface AspectedEventListener {
     
-    /** Use this to implement the Aspect matching.
+    /** Use this to implement the {@link Aspect} matching.
      * 
-     * @param aspect the Aspect form AspectedEvent to test the matching
+     * @param aspect the {@link Aspect} form {@link AspectedEvent} to test the matching
      * @return true if the listener is interested on a AspectedEvent with specified Aspect.
      */
     boolean match( AspectBitSet aspect );
