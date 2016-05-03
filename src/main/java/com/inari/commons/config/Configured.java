@@ -20,10 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/** Annotation for configured fields on a IConfigObject instance.
- *  Expects to a configuration property or reference on ConfigData of the specified IConfigObject instance
- *  The name, if it is set, expects the name of the configuration property in ConfigData.
- *  If the name is not set (empty) the name of the field will be the name of the configuration property.
+/** Annotation for configured fields on a {@link IConfigObject} instance.
  *     
  *   @author andreas hefti
  *
@@ -42,7 +39,7 @@ public @interface Configured {
      */
     public boolean required() default false ;
     
-    /** The type of the Configured field. Used on none instance-able Field typed
+    /** The type of the configured field. Used on none instance-able Field typed
      *  E.g. List, Set... to define the specified instance type
      *  @return The type of the Configured field
      */
