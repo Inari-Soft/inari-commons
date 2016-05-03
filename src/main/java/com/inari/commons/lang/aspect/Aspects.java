@@ -1,72 +1,51 @@
-/*******************************************************************************
- * Copyright (c) 2015 - 2016 - 2016, Andreas Hefti, inarisoft@yahoo.de 
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
 package com.inari.commons.lang.aspect;
 
 import java.util.BitSet;
 
 import com.inari.commons.lang.indexed.Indexed;
 
-public class AspectBitSet implements AspectSet<AspectBitSet> {
-
+public class Aspects {
+    
     protected final BitSet bitset;
     private final BitSet tempBitset;
     
-    protected AspectBitSet( int size ) {
+    protected Aspects( int size ) {
         bitset = new BitSet( size );
         tempBitset = new BitSet( size );
     }
     
-    protected AspectBitSet( AspectBitSet source ) {
+    protected Aspects( Aspects source ) {
         this( source.bitset.size() );
         bitset.or( source.bitset );
     }
     
-    @Override
-    public boolean valid() {
+    public final boolean valid() {
         return ( bitset != null && !bitset.isEmpty() );
     }
     
-    @Override
-    public final AspectBitSet set( Aspect aspect ) {
+    public final Aspects set( Aspect aspect ) {
         bitset.set( aspect.aspectId() );
         return this;
     }
     
-    @Override
-    public final AspectBitSet reset( Aspect aspect ) {
+    public final Aspects reset( Aspect aspect ) {
         bitset.set( aspect.aspectId(), false );
         return this;
     }
 
-    @Override
-    public final AspectBitSet add( AspectBitSet aspects ) {
-        AspectBitSet result = getCopy();
+    public final Aspects add( Aspects aspects ) {
+        Aspects result = getCopy();
         result.bitset.or( aspects.bitset );
         return result;
     }
     
-    @Override
-    public final AspectBitSet remove( AspectBitSet aspects ) {
-        AspectBitSet result = getCopy();
+    public final Aspects remove( Aspects aspects ) {
+        Aspects result = getCopy();
         result.bitset.andNot( aspects.bitset );
         return result;
     }
 
-    @Override
-    public final boolean include( AspectBitSet aspects ) {
+    public final boolean include( Aspects aspects ) {
         if ( bitset.isEmpty() || aspects.bitset.isEmpty() ) {
             return false;
         }
@@ -81,8 +60,7 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
         return tempBitset.equals( aspects.bitset );
     }
     
-    @Override
-    public final boolean exclude( AspectBitSet aspect ) {
+    public final boolean exclude( Aspects aspect ) {
         if ( bitset.isEmpty() || aspect.bitset.isEmpty() ) {
             return false;
         }
@@ -97,8 +75,7 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
         return tempBitset.isEmpty();
     }
     
-    @Override
-    public final boolean intersects( AspectBitSet aspect ) {
+    public final boolean intersects( Aspects aspect ) {
         return !exclude( aspect );
     }
     
@@ -124,15 +101,14 @@ public class AspectBitSet implements AspectSet<AspectBitSet> {
         }
     }
     
-    @Override
-    public AspectBitSet getCopy() {
-        return new AspectBitSet( this );
+    public Aspects getCopy() {
+        return new Aspects( this );
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append( "Aspect [ size=" + bitset.size() + " bitset=" ).append( bitset ).append( " ]" );
+        sb.append( "Aspects [ size=" + bitset.size() + " bitset=" ).append( bitset ).append( " ]" );
         return sb.toString();
     }
 

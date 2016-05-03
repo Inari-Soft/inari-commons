@@ -18,12 +18,12 @@ package com.inari.commons.lang.indexed;
 import java.util.Iterator;
 
 import com.inari.commons.lang.Clearable;
-import com.inari.commons.lang.aspect.AspectSetBuilder;
+import com.inari.commons.lang.aspect.AspectsBuilder;
 
 public final class IndexedTypeSet {
     
     protected final Class<? extends IndexedTypeKey> indexedBaseType;
-    protected final IndexedTypeAspectSet aspect;
+    protected final IndexedTypeAspects aspect;
     
     private IndexedType[] indexedType;
     protected int size = 0;
@@ -32,13 +32,13 @@ public final class IndexedTypeSet {
     public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType ) {
         this.indexedBaseType = indexedBaseType;
         int size = Indexer.getIndexedObjectSize( indexedBaseType );
-        aspect = new IndexedTypeAspectSet( indexedBaseType, size );
+        aspect = new IndexedTypeAspects( indexedBaseType, size );
         this.indexedType = new IndexedType[ size ];
     }
     
     public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
         this.indexedBaseType = indexedBaseType;
-        aspect = new IndexedTypeAspectSet( indexedBaseType, length );
+        aspect = new IndexedTypeAspects( indexedBaseType, length );
         this.indexedType = new IndexedType[ length ];
     }
     
@@ -46,7 +46,7 @@ public final class IndexedTypeSet {
         return size;
     }
     
-    public final IndexedTypeAspectSet getAspect() {
+    public final IndexedTypeAspects getAspect() {
         return aspect;
     }
     
@@ -54,7 +54,7 @@ public final class IndexedTypeSet {
         return indexedBaseType;
     }
     
-    public final boolean include( IndexedTypeAspectSet aspect ) {
+    public final boolean include( IndexedTypeAspects aspect ) {
         return this.aspect.include( aspect );
     }
     
@@ -112,7 +112,7 @@ public final class IndexedTypeSet {
     public final IndexedType remove( int index ) {
         IndexedType result = this.indexedType[ index ];
         this.indexedType[ index ] = null;
-        AspectSetBuilder.reset( aspect, index );
+        AspectsBuilder.reset( aspect, index );
         if ( result != null ) {
             size--;
         }

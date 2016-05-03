@@ -1,21 +1,21 @@
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.AspectBitSet;
+import com.inari.commons.lang.aspect.Aspects;
 
 public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> {
     
     public static final EventTypeKey TYPE_KEY = createTypeKey( TestAspectedEvent.class );
     
-    private final AspectBitSet aspect;
+    private final Aspects aspects;
 
-    public TestAspectedEvent( AspectBitSet aspect ) {
+    public TestAspectedEvent( Aspects aspects ) {
         super( TYPE_KEY );
-        this.aspect = aspect;
+        this.aspects = aspects;
     }
     
     @Override
-    public AspectBitSet getAspect() {
-        return aspect;
+    public Aspects getAspects() {
+        return aspects;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TestAspectedEvent extends AspectedEvent<AspectedTestEventListener> 
 
     @Override
     public String toString() {
-        return "AspectedEvent [aspect=" + aspect + "]";
+        return "AspectedEvent [aspect=" + aspects + "]";
     }
 
 }

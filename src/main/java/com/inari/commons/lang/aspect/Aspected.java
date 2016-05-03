@@ -17,6 +17,6 @@ package com.inari.commons.lang.aspect;
 
 public interface Aspected {
     
-    public AspectBitSet getAspect();
+    public Aspects getAspect();
 
 }

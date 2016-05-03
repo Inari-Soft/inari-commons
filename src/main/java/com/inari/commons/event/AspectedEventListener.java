@@ -15,7 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.AspectBitSet;
+import com.inari.commons.lang.aspect.Aspect;
+import com.inari.commons.lang.aspect.Aspects;
 
 /** An event listener definition which defines also a specified matching within an {@link Aspect} to verify if
  *  the listener is interested on a certain {@link AspectedEvent} or not.
@@ -32,6 +33,6 @@ public interface AspectedEventListener {
      * @param aspect the {@link Aspect} form {@link AspectedEvent} to test the matching
      * @return true if the listener is interested on a AspectedEvent with specified Aspect.
      */
-    boolean match( AspectBitSet aspect );
+    boolean match( Aspects aspects );
 
 }

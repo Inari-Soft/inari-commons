@@ -1,19 +1,19 @@
 package com.inari.commons.event;
 
-import com.inari.commons.lang.aspect.AspectBitSet;
+import com.inari.commons.lang.aspect.Aspects;
 
 public class AspectedTestEventListener implements AspectedEventListener {
     
-    private final AspectBitSet aspect;
+    private final Aspects aspects;
     private AspectedEvent<?> lastCall;
 
-    public AspectedTestEventListener( AspectBitSet aspect ) {
-        this.aspect = aspect;
+    public AspectedTestEventListener( Aspects aspects ) {
+        this.aspects = aspects;
     }
 
     @Override
-    public boolean match( AspectBitSet aspect ) {
-        return aspect.include( this.aspect );
+    public boolean match( Aspects aspects ) {
+        return aspects.include( this.aspects );
     }
 
 
@@ -24,7 +24,7 @@ public class AspectedTestEventListener implements AspectedEventListener {
 
     @Override
     public String toString() {
-        return "AspectedTestEventListener [aspect=" + aspect + ", lastCall="
+        return "AspectedTestEventListener [aspect=" + aspects + ", lastCall="
                 + lastCall + "]";
     }
 

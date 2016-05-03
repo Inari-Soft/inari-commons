@@ -15,18 +15,18 @@
  ******************************************************************************/
 package com.inari.commons.lang.indexed;
 
-import com.inari.commons.lang.aspect.AspectBitSet;
+import com.inari.commons.lang.aspect.Aspects;
 
-public final class IndexedTypeAspectSet extends AspectBitSet {
+public final class IndexedTypeAspects extends Aspects {
     
     final Class<? extends IndexedTypeKey> indexedBaseType;
 
-    IndexedTypeAspectSet( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
+    IndexedTypeAspects( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
         super( length );
         this.indexedBaseType = indexedBaseType;
     }
     
-    IndexedTypeAspectSet( IndexedTypeAspectSet source ) {
+    IndexedTypeAspects( IndexedTypeAspects source ) {
         super( source );
         indexedBaseType = source.indexedBaseType;
     }
@@ -50,14 +50,14 @@ public final class IndexedTypeAspectSet extends AspectBitSet {
     }
     
     @Override
-    public IndexedTypeAspectSet getCopy() {
-        return new IndexedTypeAspectSet( this );
+    public IndexedTypeAspects getCopy() {
+        return new IndexedTypeAspects( this );
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append( "IndexedAspect [ indexedBaseType=" ).append( indexedBaseType.getSimpleName() );
+        sb.append( "IndexedTypeAspects [ indexedBaseType=" ).append( indexedBaseType.getSimpleName() );
         sb.append( ", bitset=" ).append( bitset );
         sb.append( ", types={" );
         boolean typeAdded = false;

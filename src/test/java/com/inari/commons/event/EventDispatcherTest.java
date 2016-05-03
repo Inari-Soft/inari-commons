@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.inari.commons.lang.aspect.AspectBitSet;
-import com.inari.commons.lang.aspect.AspectSetBuilder;
+import com.inari.commons.lang.aspect.Aspects;
+import com.inari.commons.lang.aspect.AspectsBuilder;
 import com.inari.commons.lang.indexed.Indexer;
 
 public class EventDispatcherTest {
@@ -118,11 +118,11 @@ public class EventDispatcherTest {
     public void testAspectedEvent() {
         EventDispatcher eventDispatcher = new EventDispatcher();
         
-        AspectBitSet filterAspect = AspectSetBuilder.create( 1, 3 );
-        AspectBitSet noMatchAspect1 = AspectSetBuilder.create( 1, 2 );
-        AspectBitSet noMatchAspect2 = AspectSetBuilder.create( 1, 4 );
-        AspectBitSet matchAspect1 = AspectSetBuilder.create( 1, 3 );
-        AspectBitSet matchAspect2 = AspectSetBuilder.create( 1, 2, 3 );
+        Aspects filterAspect = AspectsBuilder.create( 1, 3 );
+        Aspects noMatchAspect1 = AspectsBuilder.create( 1, 2 );
+        Aspects noMatchAspect2 = AspectsBuilder.create( 1, 4 );
+        Aspects matchAspect1 = AspectsBuilder.create( 1, 3 );
+        Aspects matchAspect2 = AspectsBuilder.create( 1, 2, 3 );
         
         AspectedTestEventListener listener = new AspectedTestEventListener( filterAspect );
         
@@ -130,7 +130,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -139,7 +139,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]",
             eventDispatcher.toString() 
         );
@@ -148,7 +148,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
              "EventDispatcher [listeners=DynArray [list=[" +
-             "[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+             "[AspectedTestEventListener [aspect=Aspects [ size=64 bitset={1, 3} ], lastCall=null]], null, null, null, null, null, null, null, null, null" +
              "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -157,7 +157,7 @@ public class EventDispatcherTest {
         
         assertEquals(
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 3} ]]]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspects [ size=64 bitset={1, 3} ]]]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -166,7 +166,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspect [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspect [ size=64 bitset={1, 2, 3} ]]]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [ size=64 bitset={1, 3} ], lastCall=AspectedEvent [aspect=Aspects [ size=64 bitset={1, 2, 3} ]]]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );

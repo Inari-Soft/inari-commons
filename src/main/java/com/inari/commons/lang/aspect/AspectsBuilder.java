@@ -15,91 +15,91 @@
  ******************************************************************************/
 package com.inari.commons.lang.aspect;
 
-public final class AspectSetBuilder {
+public final class AspectsBuilder {
     
-    private AspectBitSet toBuild;
+    private Aspects toBuild;
     
-    public final AspectSetBuilder newAspect( int length ) {
-        toBuild = new AspectBitSet( length );
+    public final AspectsBuilder newAspect( int length ) {
+        toBuild = new Aspects( length );
         return this;
     }
     
-    public final AspectSetBuilder set( int index ) {
+    public final AspectsBuilder set( int index ) {
         toBuild.bitset.set( index );
         return this;
     }
     
-    public final AspectSetBuilder reset( int index ) {
+    public final AspectsBuilder reset( int index ) {
         toBuild.bitset.set( index, false );
         return this;
     }
     
-    public final AspectSetBuilder clear() {
+    public final AspectsBuilder clear() {
         toBuild.clear();
         return this;
     }
     
-    public static final AspectBitSet create() {
-        return new AspectBitSet( 10 );
+    public static final Aspects create() {
+        return new Aspects( 10 );
     }
     
-    public static final AspectBitSet createWithLength( int length ) {
-        return new AspectBitSet( length );
+    public static final Aspects createWithLength( int length ) {
+        return new Aspects( length );
     }
     
-    public static final AspectBitSet create( int... toSet ) {
+    public static final Aspects create( int... toSet ) {
         return set( createWithLength( toSet.length ), toSet );
     }
 
-    public static final AspectBitSet create( Aspect... toSet ) {
+    public static final Aspects create( Aspect... toSet ) {
         return set( createWithLength( toSet.length ), toSet );
     }
 
     
-    public static final AspectBitSet set( AspectBitSet aspect, int index ) {
-        aspect.bitset.set( index );
-        return aspect;
+    public static final Aspects set( Aspects aspects, int index ) {
+        aspects.bitset.set( index );
+        return aspects;
     }
     
-    public static final AspectBitSet reset( AspectBitSet aspect, int index ) {
-        aspect.bitset.set( index, false );
-        return aspect;
+    public static final Aspects reset( Aspects aspects, int index ) {
+        aspects.bitset.set( index, false );
+        return aspects;
     }
     
-    public static final AspectBitSet set( AspectBitSet aspect, Aspect... toSet ) {
+    public static final Aspects set( Aspects aspects, Aspect... toSet ) {
         if ( toSet != null && toSet.length > 0 ) {
             for ( int i = 0; i < toSet.length; i++ ) {
-                aspect.bitset.set( toSet[ i ].aspectId() );
+                aspects.bitset.set( toSet[ i ].aspectId() );
             }
         }
-        return aspect;
+        return aspects;
     }
     
-    public static final AspectBitSet set( AspectBitSet aspect, int... toSet ) {
+    public static final Aspects set( Aspects aspects, int... toSet ) {
         if ( toSet != null && toSet.length > 0 ) {
             for ( int i = 0; i < toSet.length; i++ ) {
-                aspect.bitset.set( toSet[ i ] );
+                aspects.bitset.set( toSet[ i ] );
             }
         }
-        return aspect;
+        return aspects;
     }
     
-    public static final AspectBitSet reset( AspectBitSet aspect, int... toReset ) {
+    public static final Aspects reset( Aspects aspects, int... toReset ) {
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {
-                aspect.bitset.set( toReset[ i ], false );
+                aspects.bitset.set( toReset[ i ], false );
             }
         }
-        return aspect;
+        return aspects;
     }
     
-    public static final AspectBitSet modify( AspectBitSet aspect, int[] toSet, int[] toReset ) {
-        set( aspect, toSet );
+    public static final Aspects modify( Aspects aspects, int[] toSet, int[] toReset ) {
+        set( aspects, toSet );
         if ( toReset != null && toReset.length > 0 ) {
             for ( int i = 0; i < toReset.length; i++ ) {
-                aspect.bitset.set( toReset[ i ], false );
+                aspects.bitset.set( toReset[ i ], false );
             }
         }
-        return aspect;
+        return aspects;
     }
 }

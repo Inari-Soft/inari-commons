@@ -10,13 +10,13 @@ public class AspectSetTest {
     
     @Test
     public void testAspects() {
-        AspectBitSet aspect1 = new AspectBitSet( 5 );
-        AspectBitSet aspect2 = new AspectBitSet( 10 );
-        AspectBitSet aspect3 = new AspectBitSet( 100 );
+        Aspects aspect1 = new Aspects( 5 );
+        Aspects aspect2 = new Aspects( 10 );
+        Aspects aspect3 = new Aspects( 100 );
         
-        assertEquals( "Aspect [ size=64 bitset={} ]", aspect1.toString() );
-        assertEquals( "Aspect [ size=64 bitset={} ]", aspect2.toString() );
-        assertEquals( "Aspect [ size=128 bitset={} ]", aspect3.toString() );
+        assertEquals( "Aspects [ size=64 bitset={} ]", aspect1.toString() );
+        assertEquals( "Aspects [ size=64 bitset={} ]", aspect2.toString() );
+        assertEquals( "Aspects [ size=128 bitset={} ]", aspect3.toString() );
         
         aspect1.bitset.set( 1 );
         aspect1.bitset.set( 3 );
@@ -27,21 +27,21 @@ public class AspectSetTest {
         
         aspect3.bitset.set( 50 );
         
-        assertEquals( "Aspect [ size=64 bitset={1, 3, 5} ]", aspect1.toString() );
-        assertEquals( "Aspect [ size=64 bitset={2, 10} ]", aspect2.toString() );
-        assertEquals( "Aspect [ size=128 bitset={50} ]", aspect3.toString() );
+        assertEquals( "Aspects [ size=64 bitset={1, 3, 5} ]", aspect1.toString() );
+        assertEquals( "Aspects [ size=64 bitset={2, 10} ]", aspect2.toString() );
+        assertEquals( "Aspects [ size=128 bitset={50} ]", aspect3.toString() );
         
         aspect1.bitset.set( 6 );
         
-        assertEquals( "Aspect [ size=64 bitset={1, 3, 5, 6} ]", aspect1.toString() );
+        assertEquals( "Aspects [ size=64 bitset={1, 3, 5, 6} ]", aspect1.toString() );
     }
     
     @Test
     public void testInclude() {
-        AspectBitSet aspect1 = new AspectBitSet( 5 );
-        AspectBitSet aspect2 = new AspectBitSet( 5 );
-        AspectBitSet aspect3 = new AspectBitSet( 10 );
-        AspectBitSet aspect4 = new AspectBitSet( 10 );
+        Aspects aspect1 = new Aspects( 5 );
+        Aspects aspect2 = new Aspects( 5 );
+        Aspects aspect3 = new Aspects( 10 );
+        Aspects aspect4 = new Aspects( 10 );
         
         assertFalse( aspect1.include( aspect2 ) );
         assertFalse( aspect2.include( aspect3 ) );
@@ -76,10 +76,10 @@ public class AspectSetTest {
     
     @Test
     public void testExclude() {
-        AspectBitSet aspect1 = new AspectBitSet( 5 );
-        AspectBitSet aspect2 = new AspectBitSet( 5 );
-        AspectBitSet aspect3 = new AspectBitSet( 10 );
-        AspectBitSet aspect4 = new AspectBitSet( 10 );
+        Aspects aspect1 = new Aspects( 5 );
+        Aspects aspect2 = new Aspects( 5 );
+        Aspects aspect3 = new Aspects( 10 );
+        Aspects aspect4 = new Aspects( 10 );
         
         assertFalse( aspect1.exclude( aspect2 ) );
         assertFalse( aspect2.exclude( aspect3 ) );

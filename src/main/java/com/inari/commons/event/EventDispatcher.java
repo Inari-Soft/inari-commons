@@ -88,7 +88,7 @@ public final class EventDispatcher implements IEventDispatcher {
             eventLog.log( event );
         }
         for ( L listener : this.<L>getListenersOfType( event.indexedTypeKey(), false ) ) {
-            if ( listener.match( event.getAspect() ) ) {
+            if ( listener.match( event.getAspects() ) ) {
                 event.notify( listener );
             }
         }
