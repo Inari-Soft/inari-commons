@@ -22,14 +22,14 @@ import com.inari.commons.lang.indexed.Indexer;
 
 /** Base implementation of an Event handled by the {@link IEventDispatcher}.
  *  <p>
- *  Implement this for a specific Event type bound to a {@link EventListener} implementation (L)
+ *  Implement this for a specific Event type bound to a EventListener implementation (L)
  *  For example if a specified Event is needed to notify specified listener(s) creation and 
  *  implementation of the following interfaces/classes are needed:
  *  <p>
  *  <pre>
- *  public interface TheEventListener extends EventListener {
+ *  public interface TheEventListener {
  *  
- *      void onTheEvent( TheEvent event );
+ *      void onEvent( TheEvent event );
  *      
  *  }
  *  
@@ -43,7 +43,7 @@ import com.inari.commons.lang.indexed.Indexer;
  *      }
  *      
  *      public final void notify( TheEventListener listener ) {
- *          listener.onTheEvent( this );
+ *          listener.onEvent( this );
  *      }
  *  }
  *  </pre>
@@ -51,7 +51,7 @@ import com.inari.commons.lang.indexed.Indexer;
  *  
  * @author andreas hefti
  *
- * @param <L> The type of {@link EventListener} the is interested in the specified Event.
+ * @param <L> The type of EventListener the is interested in the specified Event.
  */
 public abstract class Event<L> implements IndexedType, Indexed {
     
