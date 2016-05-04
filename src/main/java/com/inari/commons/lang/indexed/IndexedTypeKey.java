@@ -1,6 +1,8 @@
 package com.inari.commons.lang.indexed;
 
-public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndexedTypeKey {
+import com.inari.commons.lang.aspect.Aspect;
+
+public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndexedTypeKey, Aspect {
     
     public final Class<? extends IndexedType> indexedType;
 
@@ -22,6 +24,11 @@ public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndex
 
     @Override
     public final int typeIndex() {
+        return index();
+    }
+    
+    @Override
+    public final int aspectId() {
         return index();
     }
 

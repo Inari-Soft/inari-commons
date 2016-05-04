@@ -43,16 +43,16 @@ public final class AspectsBuilder {
         return new Aspects( 10 );
     }
     
-    public static final Aspects createWithLength( int length ) {
-        return new Aspects( length );
+    public static final Aspects createWithCapacity( int capacity ) {
+        return new Aspects( capacity );
     }
     
     public static final Aspects create( int... toSet ) {
-        return set( createWithLength( toSet.length ), toSet );
+        return set( createWithCapacity( toSet.length ), toSet );
     }
 
     public static final Aspects create( Aspect... toSet ) {
-        return set( createWithLength( toSet.length ), toSet );
+        return set( createWithCapacity( toSet.length ), toSet );
     }
 
     

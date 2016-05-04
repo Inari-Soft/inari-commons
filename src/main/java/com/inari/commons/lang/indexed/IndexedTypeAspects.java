@@ -35,27 +35,25 @@ public final class IndexedTypeAspects extends Aspects {
         return indexedBaseType;
     }
 
-    public boolean contains( IndexedTypeKey indexType ) {
+    public final boolean contains( IndexedTypeKey indexType ) {
         return contains( indexType.index() );
     }
     
-    public boolean contains( IndexedType indexedType ) {
+    public final boolean contains( IndexedType indexedType ) {
         return contains( indexedType.indexedTypeKey().typeIndex() );
     }
-
     
-    @Override
-    protected void clear() {
-        super.clear();
+    public final boolean contains( Indexed indexed ) {
+        return contains( indexed.index() );
     }
     
     @Override
-    public IndexedTypeAspects getCopy() {
+    public final IndexedTypeAspects getCopy() {
         return new IndexedTypeAspects( this );
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append( "IndexedTypeAspects [ indexedBaseType=" ).append( indexedBaseType.getSimpleName() );
         sb.append( ", bitset=" ).append( bitset );
@@ -73,7 +71,5 @@ public final class IndexedTypeAspects extends Aspects {
         sb.append( "} ]" );
         return sb.toString();
     }
-
-    
 
 }
