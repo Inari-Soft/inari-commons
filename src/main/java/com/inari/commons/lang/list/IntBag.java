@@ -16,6 +16,7 @@
 package com.inari.commons.lang.list;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
@@ -45,6 +46,15 @@ public final class IntBag implements StringConfigurable {
         this.nullValue = nullValue;
         this.expand = expand;
         initArray( initSize );
+    }
+
+    public IntBag( BitSet bits, int nullValue, int expand ) {
+        this.nullValue = nullValue;
+        this.expand = expand;
+        initArray( bits.cardinality() );
+        for ( int i = bits.nextSetBit( 0 ); i >= 0; i = bits.nextSetBit( i+1 ) ) {
+            add( i );
+        }
     }
 
     public final int getNullValue() {
