@@ -22,7 +22,7 @@ import java.util.List;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
-/** A simple list of Position that defines a path of Position in a two dimensional
+/** A simple list of {@link Position} that defines a path of {@link Position{@link  in a two dimensional
  *  coordinate system with integer precision.
  *  <p>
  *  Use this if a path of Positions is needed in a two dimensional coordinate system
@@ -32,7 +32,7 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
     
     private List<Position> positionPath = new ArrayList<Position>();
 
-    /** Get the Position Iterator to iterate through the path. */
+    /** Get the {@link Position} Iterator to iterate through the path. */
     @Override
     public Iterator<Position> iterator() {
         return positionPath.iterator();
