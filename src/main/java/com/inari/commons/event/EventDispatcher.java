@@ -26,10 +26,10 @@ import com.inari.commons.lang.indexed.IndexedTypeKey;
 import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.list.DynArray;
 
-/** A simple, synchronous and none thread save implementation of the IEventDispatcher interface.
+/** A simple, synchronous and none thread save implementation of the {@link IEventDispatcher} interface.
  * 
  * @author andreas hefti
- * @see IEventDispatcher
+ * @see com.inari.commons.event.IEventDispatcher
  */
 public final class EventDispatcher implements IEventDispatcher {
     
