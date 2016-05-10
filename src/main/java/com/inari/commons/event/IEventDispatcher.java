@@ -15,8 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-/** An generic Event Dispatcher to register/unregister generic Listeners to listen to matching Events.
- *  A Listener interface can be created for specified needs to working with a IEvent<Listener> implementation.
+/** An generic Event Dispatcher to register/unregister generic Listeners to listen to matching {@link Event}.
+ *  A Listener interface can be created for specified needs to working with a {@link Event}<Listener> implementation.
  *  <p>
  *  Implementation and usage example:
  *  
@@ -63,38 +63,38 @@ package com.inari.commons.event;
  */
 public interface IEventDispatcher {
 
-    /** Register a Listener L to listen to specified type of Event(s).
+    /** Register a Listener L to listen to specified type of {@link Event}.
      * 
-     *  @param eventType The class type of the Event(s) to listen at
-     *  @param listener The listener to register and that gets informed by specified Event(s)
+     *  @param eventType The class type of the {@link Event} to listen at
+     *  @param listener The listener to register and that gets informed by specified {@link Event}
      */
     <L> void register( Class<? extends Event<L>> eventType, L listener );
 
-    /** Unregister a specified Listener for a specified Event type.
+    /** Unregister a specified Listener for a specified {@link Event} type.
      * 
-     * @param eventType The Event (class) type 
+     * @param eventType The {@link Event} (class) type 
      * @param listener the listener to unregister.
      * @return true if the specified listener was unregistered or false if there was no such listener registered
      */
     <L> boolean unregister( Class<? extends Event<L>> eventType, L listener );
 
-    /** Notifies all listeners that are interested on the specific type of Event within the specified Event.
+    /** Notifies all listeners that are interested on the specific type of Event within the specified {@link Event}.
      * 
      *  @param event The Event to send to the listeners.
      */
     <L> void notify( Event<L> event );
 
-    /** Notifies all listeners that are interested on the specific type of Event with the specified Aspect
+    /** Notifies all listeners that are interested on the specific type of Event with the specified {@link Aspect}
      *  within the specified Event.
      * 
-     *  @param event The AspectedEvent to send to the AspectedEventListener(s).
+     *  @param event The {@link AspectedEvent} to send to the {@link AspectedEventListener}.
      */
     <L extends AspectedEventListener> void notify( AspectedEvent<L> event );
 
-    /** Notifies all PredicatedEventListener that are interested on the specific type of Event and that matches
-     *  the specified PredicatedEvent, within the specified Predicate.
+    /** Notifies all {@link PredicatedEventListener} that are interested on the specific type of Event and that matches
+     *  the specified {@link PredicatedEvent}, within the specified {@link Predicate}.
      * 
-     *  @param event The AspectedEvent to send to the AspectedEventListener(s).
+     *  @param event The {@link PredicatedEvent} to send to the {@link PredicatedEventListener}.
      */
     <L extends PredicatedEventListener> void notify( PredicatedEvent<L> event );
 
