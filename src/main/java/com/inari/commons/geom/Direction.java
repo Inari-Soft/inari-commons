@@ -15,8 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.geom;
 
-/** Eight directions, build of four Orientations, and a NONE constant
- *  containing also a Horizontal and Vertical enum value that divides the
+/** Eight directions, build of four {@link Orientation}, and a NONE constant
+ *  containing also a horizontal and vertical enum value that divides the
  *  Direction into a horizontal and vertical part.
  *
  *  Use this if you have a discrete direction with eight different directions,
@@ -50,8 +50,8 @@ public enum Direction {
     public final Orientation vertical;
     
     /** Use this to create a new Direction with specified horizontal and vertical Orientation.
-     * @param horizontal horizontal Orientation of the new Direction
-     * @param vertical vertical Orientation of the new Direction
+     * @param horizontal horizontal {@link Orientation} of the new Direction
+     * @param vertical vertical {@link Orientation} of the new Direction
      */
     Direction( Orientation horizontal, Orientation vertical ) {
         this.horizontal = horizontal;
