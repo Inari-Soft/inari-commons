@@ -34,6 +34,9 @@ public class ColorConverter extends RGBImageFilter implements ImageColorTransfor
     
     private int[][] colorMap;
     
+    /** Use this to create a new ColorConverter with the spcified color conversion map
+     * @param colorMap the {@link Color} conversion map wehere source {@link Color} maps a destionation color
+     */
     public ColorConverter( Map<Color,Color> colorMap ) {
         this.colorMap = new int[ colorMap.size() ][ 2 ];
         int index = 0;
