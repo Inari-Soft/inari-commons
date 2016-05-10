@@ -20,9 +20,7 @@ import java.util.StringTokenizer;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
-/** A simple x/y axis position with integer precision.
- *  <p>
- *  Use this if a simple x/y position with a integer precision is needed */
+/** A simple position in a 2D cartesian coordinate system with integer precision. */
 public class Position implements StringConfigurable {
 
     /** The x axis value of the position */
