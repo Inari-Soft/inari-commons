@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-/** This is just a marker interface and used to bind PredicatedEventListener(s) to PredicatedEventListener.
+/** This is just a marker interface and used to bind {@link PredicatedEvent} to {@link PredicatedEventListener}.
  * 
  * @author andreas hefti
  *
- * @param <L> The type of PredicatedEventListener to which the PredicatedEvent type is bound to.
+ * @param <L> The type of {@link PredicatedEventListener} to which the {@link PredicatedEvent} type is bound to.
  */
 public abstract class PredicatedEvent<L extends PredicatedEventListener> extends Event<L> {
 
