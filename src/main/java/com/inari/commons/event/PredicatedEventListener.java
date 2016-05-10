@@ -17,18 +17,18 @@ package com.inari.commons.event;
 
 import com.inari.commons.lang.Predicate;
 
-/** An EventListener which implements also a specified Matcher for the PredicatedEvent that matches if
- *  the listener is interested on specified PredicatedEvent.
+/** An event listener which implements also a specified matcher for the {@link PredicatedEvent} that matches if
+ *  the listener is interested on specified {@link PredicatedEvent}.
  *  <p>
- *  Use this to listen to an PredicatedEvent that matches the Event on that the listener is interested in.
- *  The listener will only get notifies on a specified PredicatedEvent if the Predicate matches
+ *  Use this to listen to an {@link PredicatedEvent} that matches the Event on that the listener is interested in.
+ *  The listener will only get notifies on a specified {@link PredicatedEvent} if the {@link Predicate} matches
  *  @author andreas hefti
  *
  */
 public interface PredicatedEventListener {
     
-    /** Get the Matcher for this listener. Only MatchedEventListener that are listening to the specified Event and matches 
-     *  the specified Event are going to be notified.
+    /** Get the matcher for this listener. Only listeners that are listening to the specified {@link Event} and matches 
+     *  the specified {@link Predicate} are going to be notified.
      *  
      *  @return The Matcher to check if the MatchedEventListener is interested in a specified Event
      */
