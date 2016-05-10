@@ -21,8 +21,8 @@ package com.inari.commons.event;
  */
 public interface IEventLog {
     
-    /** Logs the specified Event. Is called on notify event methods of a given IEventDispatcher implementation
-     * @param event The event that is notified
+    /** Logs the specified Event. Is called on notify event methods of a given {@link IEventDispatcher} implementation
+     * @param event The {@link Event} that is notified
      */
     void log( Event<?> event );
 
