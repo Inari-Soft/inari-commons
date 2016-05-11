@@ -22,8 +22,6 @@ import java.util.List;
 import com.inari.commons.event.Event.EventTypeKey;
 import com.inari.commons.lang.Predicate;
 import com.inari.commons.lang.indexed.Indexed;
-import com.inari.commons.lang.indexed.IndexedTypeKey;
-import com.inari.commons.lang.indexed.Indexer;
 import com.inari.commons.lang.list.DynArray;
 
 /** A simple, synchronous and none thread save implementation of the {@link IEventDispatcher} interface.
@@ -48,7 +46,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#register(java.lang.Class, L)
      */
     @Override
-    public final <L> void register( final Class<? extends Event<L>> eventType, final L listener ) {
+    public final <L> void register( final EventTypeKey eventType, final L listener ) {
         final List<L> listenersOfType = getListenersOfType( eventType, true );
         if ( !listenersOfType.contains( listener ) ) {
             listenersOfType.add( listener );
@@ -59,7 +57,7 @@ public final class EventDispatcher implements IEventDispatcher {
      * @see com.inari.commons.event.IEventDispatcher#unregister(java.lang.Class, L)
      */
     @Override
-    public final <L> boolean unregister( final Class<? extends Event<L>> eventType, final L listener ) {
+    public final <L> boolean unregister( final EventTypeKey eventType, final L listener ) {
         final List<L> listenersOfType = getListenersOfType( eventType, false );
         return listenersOfType.remove( listener );
     }
@@ -122,11 +120,6 @@ public final class EventDispatcher implements IEventDispatcher {
         return "EventDispatcher [listeners=" + listeners + "]";
     }
 
-    private final <L> List<L> getListenersOfType( final Class<? extends Event<L>> eventType, final boolean create ) {
-        IndexedTypeKey indexedTypeKey = Indexer.createIndexedTypeKey( EventTypeKey.class, eventType );
-        return getListenersOfType( indexedTypeKey, create );
-    }
-    
     @SuppressWarnings( "unchecked" )
     private final <L> List<L> getListenersOfType( final Indexed indexed, final boolean create ) {
         int eventIndex = indexed.index();

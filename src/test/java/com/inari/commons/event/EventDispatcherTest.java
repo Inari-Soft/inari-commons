@@ -39,12 +39,12 @@ public class EventDispatcherTest {
         GenericTestEventListener listener21 = new GenericTestEventListener();
         GenericTestEventListener listener22 = new GenericTestEventListener();
         
-        eventDispatcher.register( SimpleTestEvent1.class, listener11 );
-        eventDispatcher.register( SimpleTestEvent1.class, listener12 );
-        eventDispatcher.register( SimpleTestEvent1.class, listener13 );
+        eventDispatcher.register( SimpleTestEvent1.TYPE_KEY, listener11 );
+        eventDispatcher.register( SimpleTestEvent1.TYPE_KEY, listener12 );
+        eventDispatcher.register( SimpleTestEvent1.TYPE_KEY, listener13 );
         
-        eventDispatcher.register( SimpleTestEvent2.class, listener21 );
-        eventDispatcher.register( SimpleTestEvent2.class, listener22 );
+        eventDispatcher.register( SimpleTestEvent2.TYPE_KEY, listener21 );
+        eventDispatcher.register( SimpleTestEvent2.TYPE_KEY, listener22 );
         
         assertEquals( 
               "EventDispatcher [listeners=DynArray [list=[" +
@@ -82,9 +82,9 @@ public class EventDispatcherTest {
         CombinedTestEventListener listener1 = new CombinedTestEventListener();
         CombinedTestEventListener listener2 = new CombinedTestEventListener();
         
-        eventDispatcher.register( CTestEvent1.class, listener1 );
-        eventDispatcher.register( CTestEvent2.class, listener1 );
-        eventDispatcher.register( CTestEvent2.class, listener2 );
+        eventDispatcher.register( CTestEvent1.TYPE_KEY, listener1 );
+        eventDispatcher.register( CTestEvent2.TYPE_KEY, listener1 );
+        eventDispatcher.register( CTestEvent2.TYPE_KEY, listener2 );
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
@@ -137,7 +137,7 @@ public class EventDispatcherTest {
         
         AspectedTestEventListener listener = new AspectedTestEventListener( filterAspect );
         
-        eventDispatcher.register( TestAspectedEvent.class, listener );
+        eventDispatcher.register( TestAspectedEvent.TYPE_KEY, listener );
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +

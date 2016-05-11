@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
+import com.inari.commons.event.Event.EventTypeKey;
+
 /** An generic Event Dispatcher to register/unregister generic Listeners to listen to matching {@link Event}.
  *  A Listener interface can be created for specified needs to working with a {@link Event}<Listener> implementation.
  *  <p>
@@ -68,7 +70,7 @@ public interface IEventDispatcher {
      *  @param eventType The class type of the {@link Event} to listen at
      *  @param listener The listener to register and that gets informed by specified {@link Event}
      */
-    <L> void register( Class<? extends Event<L>> eventType, L listener );
+    <L> void register( EventTypeKey eventType, L listener );
 
     /** Unregister a specified Listener for a specified {@link Event} type.
      * 
@@ -76,7 +78,7 @@ public interface IEventDispatcher {
      * @param listener the listener to unregister.
      * @return true if the specified listener was unregistered or false if there was no such listener registered
      */
-    <L> boolean unregister( Class<? extends Event<L>> eventType, L listener );
+    <L> boolean unregister( EventTypeKey eventType, L listener );
 
     /** Notifies all listeners that are interested on the specific type of Event within the specified {@link Event}.
      * 
