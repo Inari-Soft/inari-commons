@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
+import com.inari.commons.lang.aspect.AspectGroup;
 import com.inari.commons.lang.indexed.Indexed;
 import com.inari.commons.lang.indexed.IndexedType;
 import com.inari.commons.lang.indexed.IndexedTypeKey;
@@ -97,6 +98,8 @@ public abstract class Event<L> implements IndexedType, Indexed {
      */
     public static final class EventTypeKey extends IndexedTypeKey {
         
+        private static final AspectGroup ASPECT_GROUP = new AspectGroup( "EventTypeKey" );
+        
         EventTypeKey( Class<? extends Event<?>> indexedType ) {
             super( indexedType );
         }
@@ -105,7 +108,11 @@ public abstract class Event<L> implements IndexedType, Indexed {
         public final Class<?> baseType() {
             return Event.class;
         }
-        
+
+        @Override
+        public final AspectGroup aspectGroup() {
+            return ASPECT_GROUP;
+        }
     }
 
 }

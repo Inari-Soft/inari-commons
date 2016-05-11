@@ -141,7 +141,7 @@ public abstract class Indexer {
         }
 
         if ( key.index < 0 ) {
-            key.index = Indexer.nextObjectIndex( key.indexedObjectType() );
+            key.index = nextObjectIndex( key.indexedObjectType() );
         }
         indexedTypeKeys.add( key );
         return key;
@@ -162,6 +162,16 @@ public abstract class Indexer {
     
     final static void removeIndexedTypeKey( IndexedTypeKey key ) {
         indexedTypeKeys.remove( key );
+    }
+    
+    final static int getTypeIndexForBaseType( Class<? extends IndexedTypeKey> baseType ) {
+        for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
+            if ( indexedTypeKey.indexedObjectType() == baseType ) {
+                return indexedTypeKey.index;
+            }
+        }
+        
+        return -1;
     }
 
     public static final <K extends IndexedTypeKey> K getIndexedTypeKeyForIndex( Class<K> baseType, int index ) {

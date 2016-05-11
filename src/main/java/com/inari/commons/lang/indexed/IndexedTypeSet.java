@@ -18,27 +18,24 @@ package com.inari.commons.lang.indexed;
 import java.util.Iterator;
 
 import com.inari.commons.lang.Clearable;
-import com.inari.commons.lang.aspect.AspectsBuilder;
+import com.inari.commons.lang.aspect.Aspects;
 
 public final class IndexedTypeSet {
     
     protected final Class<? extends IndexedTypeKey> indexedBaseType;
-    protected final IndexedTypeAspects aspect;
+    protected Aspects aspects = null;
     
     private IndexedType[] indexedType;
     protected int size = 0;
     
-    
-    public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType ) {
+    public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType  ) {
         this.indexedBaseType = indexedBaseType;
         int size = Indexer.getIndexedObjectSize( indexedBaseType );
-        aspect = new IndexedTypeAspects( indexedBaseType, size );
         this.indexedType = new IndexedType[ size ];
     }
     
     public IndexedTypeSet( Class<? extends IndexedTypeKey> indexedBaseType, int length ) {
         this.indexedBaseType = indexedBaseType;
-        aspect = new IndexedTypeAspects( indexedBaseType, length );
         this.indexedType = new IndexedType[ length ];
     }
     
@@ -46,16 +43,20 @@ public final class IndexedTypeSet {
         return size;
     }
     
-    public final IndexedTypeAspects getAspect() {
-        return aspect;
+    public final Aspects getAspect() {
+        return aspects;
     }
     
     public final Class<? extends IndexedTypeKey> getIndexedBaseType() {
         return indexedBaseType;
     }
     
-    public final boolean include( IndexedTypeAspects aspect ) {
-        return this.aspect.include( aspect );
+    public final boolean include( Aspects aspects ) {
+        if ( this.aspects == null ) {
+            return false;
+        }
+        
+        return this.aspects.include( aspects );
     }
     
     public final int length() {
@@ -67,12 +68,19 @@ public final class IndexedTypeSet {
             return null;
         }
         
-        int typeIndex = indexedType.indexedTypeKey().typeIndex();
+        if ( aspects == null ) {
+            aspects = indexedType
+                .indexedTypeKey()
+                .aspectGroup()
+                .createAspects();
+        }
+        
+        int typeIndex = indexedType.indexedTypeKey().index();
         ensureCapacity( typeIndex );
         
         IndexedType old = this.indexedType[ typeIndex ];
         this.indexedType[ typeIndex ] = indexedType;
-        IndexedTypeAspectBuilder.set( aspect, indexedType );
+        aspects.set( indexedType.indexedTypeKey() );
         if ( old == null ) {
             size++;
         }
@@ -90,7 +98,7 @@ public final class IndexedTypeSet {
             if ( other.indexedType[ i ] == null ) {
                 continue;
             }
-            indexedType[ i ] = other.indexedType[ i ];
+            set( other.indexedType[ i ] );
         }
     }
     
@@ -102,7 +110,7 @@ public final class IndexedTypeSet {
     }
     
     public final IndexedType remove( IndexedType indexedType ) {
-        return this.remove( indexedType.indexedTypeKey().typeIndex() );
+        return this.remove( indexedType.indexedTypeKey().index() );
     }
     
     public final IndexedType remove( IndexedTypeKey indexedTypeKey ) {
@@ -112,9 +120,9 @@ public final class IndexedTypeSet {
     public final IndexedType remove( int index ) {
         IndexedType result = this.indexedType[ index ];
         this.indexedType[ index ] = null;
-        AspectsBuilder.reset( aspect, index );
         if ( result != null ) {
             size--;
+            aspects.reset( result.indexedTypeKey() );
         }
         return result;
     }
@@ -157,8 +165,8 @@ public final class IndexedTypeSet {
     }
     
     public final void clear() {
-        if ( aspect != null ) {
-            IndexedTypeAspectBuilder.clear( aspect );
+        if ( aspects != null ) {
+            aspects.clear();
         }
         size = 0;
         if ( indexedType != null ) {
@@ -191,7 +199,7 @@ public final class IndexedTypeSet {
     
     private final class IndexedIterator<T extends IndexedType> implements Iterator<T> {
         
-        private int i = aspect.nextSetBit( 0 );
+        private int i = ( aspects != null )? aspects.nextSetBit( 0 ) : -1;
 
         @Override
         public boolean hasNext() {
@@ -202,7 +210,7 @@ public final class IndexedTypeSet {
         @Override
         public T next() {
             int nextIndex = i;
-            i = aspect.nextSetBit( i + 1 );
+            i = aspects.nextSetBit( i + 1 );
             return (T) indexedType[ nextIndex ];
         }
 

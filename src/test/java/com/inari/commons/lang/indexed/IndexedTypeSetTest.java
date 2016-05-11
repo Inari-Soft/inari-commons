@@ -20,7 +20,6 @@ public class IndexedTypeSetTest {
     
     @Test
     public void testCreation() {
-
         IndexedTypeSet aSet1 = new IndexedTypeSet( A.AIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=0 size:0, indexed={} ]", aSet1.toString() );
         
@@ -38,27 +37,27 @@ public class IndexedTypeSetTest {
     public void testPopulate1() {
         IndexedTypeSet aSet1 = new IndexedTypeSet( A.AIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=0 size:0, indexed={} ]", aSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=AIndexedTypeKey, bitset={}, types={} ]", aSet1.getAspect().toString() );
+        assertNull( aSet1.getAspect() );
         
         AA aa = new AA();
         AB ab = new AB();
         AC ac = new AC();
         
-        assertTrue( aa.indexedTypeKey().index() == 0 );
-        assertTrue( ab.indexedTypeKey().index() == 1 );
-        assertTrue( ac.indexedTypeKey().index() == 2 );
+        assertEquals( "0", String.valueOf( aa.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( ab.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( ac.indexedTypeKey().index() ) );
         
         aSet1.set( aa );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=1 size:1, indexed={AA} ]", aSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=AIndexedTypeKey, bitset={0}, types={AA} ]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey, bitset={0}, size=64]", aSet1.getAspect().toString() );
         
         aSet1.set( ac );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=3 size:2, indexed={AA,null,AC} ]", aSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=AIndexedTypeKey, bitset={0, 2}, types={AA,AC} ]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey, bitset={0, 2}, size=64]", aSet1.getAspect().toString() );
         
         aSet1.set( ab );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=3 size:3, indexed={AA,AB,AC} ]", aSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=AIndexedTypeKey, bitset={0, 1, 2}, types={AA,AB,AC} ]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey, bitset={0, 1, 2}, size=64]", aSet1.getAspect().toString() );
 
     }
     
@@ -71,9 +70,9 @@ public class IndexedTypeSetTest {
         AC ac = new AC();
         AB ab = new AB();
         
-        assertTrue( aa.indexedTypeKey().index() == 0 );
-        assertTrue( ab.indexedTypeKey().index() == 2 );
-        assertTrue( ac.indexedTypeKey().index() == 1 );
+        assertEquals( "0", String.valueOf( aa.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( ab.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( ac.indexedTypeKey().index() ) );
         
         aSet1.set( aa );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=1 size:1, indexed={AA} ]", aSet1.toString() );
@@ -92,25 +91,25 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.indexedTypeKey().index() == 0 );
-        assertTrue( bb.indexedTypeKey().index() == 1 );
-        assertTrue( bc.indexedTypeKey().index() == 2 );
+        assertEquals( "0", String.valueOf( ba.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( bb.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( bc.indexedTypeKey().index() ) );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={}, types={} ]", bSet1.getAspect().toString() );
+        assertNull( bSet1.getAspect() );
 
         bSet1.set( ba );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:1, indexed={BA,null,null} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={0}, types={BA} ]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey, bitset={0}, size=64]", bSet1.getAspect().toString() );
         
         bSet1.set( bc );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:2, indexed={BA,null,BC} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={0, 2}, types={BA,BC} ]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey, bitset={0, 2}, size=64]", bSet1.getAspect().toString() );
         
         bSet1.set( bb );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={0, 1, 2}, types={BA,BB,BC} ]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey, bitset={0, 1, 2}, size=64]", bSet1.getAspect().toString() );
     }
     
     @Test
@@ -119,9 +118,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.indexedTypeKey().index() == 0 );
-        assertTrue( bb.indexedTypeKey().index() == 1 );
-        assertTrue( bc.indexedTypeKey().index() == 2 );
+        assertEquals( "0", String.valueOf( ba.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( bb.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( bc.indexedTypeKey().index() ) );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
@@ -201,9 +200,9 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.indexedTypeKey().index() == 0 );
-        assertTrue( bb.indexedTypeKey().index() == 1 );
-        assertTrue( bc.indexedTypeKey().index() == 2 );
+        assertEquals( "0", String.valueOf( ba.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( bb.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( bc.indexedTypeKey().index() ) );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         bSet1.set( ba );
@@ -230,20 +229,20 @@ public class IndexedTypeSetTest {
         BB bb = new BB();
         BC bc = new BC();
         
-        assertTrue( ba.indexedTypeKey().index() == 0 );
-        assertTrue( bb.indexedTypeKey().index() == 1 );
-        assertTrue( bc.indexedTypeKey().index() == 2 );
+        assertEquals( "0", String.valueOf( ba.indexedTypeKey().index() ) );
+        assertEquals( "1", String.valueOf( bb.indexedTypeKey().index() ) );
+        assertEquals( "2", String.valueOf( bc.indexedTypeKey().index() ) );
         
         IndexedTypeSet bSet1 = new IndexedTypeSet( B.BIndexedTypeKey.class );
         bSet1.set( ba );
         bSet1.set( bc );
         bSet1.set( bb );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={0, 1, 2}, types={BA,BB,BC} ]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey, bitset={0, 1, 2}, size=64]", bSet1.getAspect().toString() );
         
         bSet1.clear();
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
-        assertEquals( "IndexedTypeAspects [ indexedBaseType=BIndexedTypeKey, bitset={}, types={} ]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey, bitset={}, size=64]", bSet1.getAspect().toString() );
 
     }
  

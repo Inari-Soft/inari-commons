@@ -1,63 +1,65 @@
 package com.inari.commons.lang.aspect;
 
 import java.util.BitSet;
-import java.util.Collection;
 
-import com.inari.commons.StringUtils;
-import com.inari.commons.config.StringConfigurable;
 import com.inari.commons.lang.list.IntBag;
 
-public class Aspects implements StringConfigurable {
+public final class Aspects {
     
-    protected final BitSet bitset;
-    private final BitSet tempBitset;
+    final AspectGroup group;
+    final BitSet bitset;
+    final BitSet tempBitset;
     
-    protected Aspects( int capacity ) {
-        bitset = new BitSet( capacity );
-        tempBitset = new BitSet( capacity );
+    Aspects( AspectGroup group, int initSize ) {
+        this.group = group;
+        bitset = new BitSet( initSize );
+        tempBitset = new BitSet( initSize );
     }
     
-    protected Aspects( Aspects source ) {
-        this( source.bitset.size() );
+    private Aspects( Aspects source ) {
+        this( source.group, source.size() );
         bitset.or( source.bitset );
     }
     
+    public final AspectGroup getAspectGroup() {
+        return group;
+    }
+
     public final boolean valid() {
         return ( bitset != null && !bitset.isEmpty() );
     }
     
-    public final int length() {
-        return bitset.length();
+    public final int size() {
+        return bitset.size();
     }
     
     public final Aspects set( Aspect aspect ) {
-        bitset.set( aspect.aspectId() );
-        return this;
-    }
-    
-    public final Aspects set( int aspectId ) {
-        bitset.set( aspectId );
+        checkType( aspect );
+        bitset.set( aspect.index() );
         return this;
     }
     
     public final Aspects reset( Aspect aspect ) {
-        bitset.set( aspect.aspectId(), false );
+        checkType( aspect );
+        bitset.set( aspect.index(), false );
         return this;
     }
 
-    public final Aspects add( Aspects aspects ) {
-        Aspects result = getCopy();
-        result.bitset.or( aspects.bitset );
-        return result;
+    public final Aspects set( Aspects aspects ) {
+        checkType( aspects );
+        clear();
+        bitset.or( aspects.bitset );
+        return this;
     }
-    
+
     public final Aspects remove( Aspects aspects ) {
-        Aspects result = getCopy();
-        result.bitset.andNot( aspects.bitset );
-        return result;
+        checkType( aspects );
+        bitset.andNot( aspects.bitset );
+        return this;
     }
 
     public final boolean include( Aspects aspects ) {
+        checkType( aspects );
         if ( bitset.isEmpty() || aspects.bitset.isEmpty() ) {
             return false;
         }
@@ -72,34 +74,30 @@ public class Aspects implements StringConfigurable {
         return tempBitset.equals( aspects.bitset );
     }
     
-    public final boolean exclude( Aspects aspect ) {
-        if ( bitset.isEmpty() || aspect.bitset.isEmpty() ) {
+    public final boolean exclude( Aspects aspects ) {
+        checkType( aspects );
+        if ( bitset.isEmpty() || aspects.bitset.isEmpty() ) {
             return false;
         }
         
-        if ( this == aspect ) {
+        if ( this == aspects ) {
             return false;
         }
         
         tempBitset.clear();
         tempBitset.or( bitset );
-        tempBitset.and( aspect.bitset );
+        tempBitset.and( aspects.bitset );
         return tempBitset.isEmpty();
     }
     
-    public final boolean intersects( Aspects aspect ) {
-        return !exclude( aspect );
-    }
-    
-    public final boolean contains( int index ) {
-        if ( index < 0 || index >= bitset.length() ) {
-            return false;
-        }  
-        return bitset.get( index );
+    public final boolean intersects( Aspects aspects ) {
+        checkType( aspects );
+        return !exclude( aspects );
     }
     
     public final boolean contains( Aspect aspect ) {
-        return bitset.get( aspect.aspectId() );
+        checkType( aspect );
+        return bitset.get( aspect.index() );
     }
     
     public final int nextSetBit( int fromIndex ) {
@@ -124,42 +122,31 @@ public class Aspects implements StringConfigurable {
         }
         return result;
     }
-    
-    @Override
-    public void fromConfigString( String stringValue ) {
-        bitset.clear();
-        
-        if ( stringValue == null ) {
-            return;
+
+    private final void checkType( Aspects aspects ) {
+        if ( aspects.group != group ) {
+            throw new IllegalArgumentException( "Aspect group missmatch: " + aspects.group + " " + group );
         }
-        
-        Collection<String> bits = StringUtils.split( stringValue, StringUtils.LIST_VALUE_SEPARATOR_STRING );
-        int index = 0;
-        for ( String bit : bits ) {
-            bitset.set( index, !"0".equals( bit ) );
-            index++;
+    }
+    
+    private final void checkType( Aspect aspect ) {
+        if ( aspect.aspectGroup() != group ) {
+            throw new IllegalArgumentException( "Aspect type missmatch: " + aspect.aspectGroup() + " " + group );
         }
     }
 
     @Override
-    public String toConfigString() {
-        StringBuilder sb = new StringBuilder();
-        for ( int i = 0; i < bitset.length(); i++ ) {
-            sb.append( ( bitset.get( i ) )? "1" : "0" );
-            if ( i < bitset.length() ) {
-                sb.append( StringUtils.LIST_VALUE_SEPARATOR );
-            }
-        }
-        
-        return sb.toString();
-    }
-    
-    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append( "Aspects [ size=" + bitset.size() + " bitset=" ).append( bitset ).append( " ]" );
-        return sb.toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append( "Aspects [group=" );
+        builder.append( group );
+        builder.append( ", bitset=" );
+        builder.append( bitset );
+        builder.append( ", size=" );
+        builder.append( size() );
+        builder.append( "]" );
+        return builder.toString();
     }
-    
+
 
 }

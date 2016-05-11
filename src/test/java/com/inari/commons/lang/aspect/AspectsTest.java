@@ -6,17 +6,20 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class AspectSetTest {
-    
+public class AspectsTest {
+
     @Test
     public void testAspects() {
-        Aspects aspect1 = new Aspects( 5 );
-        Aspects aspect2 = new Aspects( 10 );
-        Aspects aspect3 = new Aspects( 100 );
+        AspectGroup aspectGroup = new AspectGroup( "TestAspect1" );
+        aspectGroup.createAspect( "TestAspect1" );
         
-        assertEquals( "Aspects [ size=64 bitset={} ]", aspect1.toString() );
-        assertEquals( "Aspects [ size=64 bitset={} ]", aspect2.toString() );
-        assertEquals( "Aspects [ size=128 bitset={} ]", aspect3.toString() );
+        Aspects aspect1 = aspectGroup.createAspects();
+        Aspects aspect2 = aspectGroup.createAspects();
+        Aspects aspect3 = aspectGroup.createAspects();
+        
+        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect1.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect2.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect3.toString() );
         
         aspect1.bitset.set( 1 );
         aspect1.bitset.set( 3 );
@@ -27,21 +30,25 @@ public class AspectSetTest {
         
         aspect3.bitset.set( 50 );
         
-        assertEquals( "Aspects [ size=64 bitset={1, 3, 5} ]", aspect1.toString() );
-        assertEquals( "Aspects [ size=64 bitset={2, 10} ]", aspect2.toString() );
-        assertEquals( "Aspects [ size=128 bitset={50} ]", aspect3.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={1, 3, 5}, size=64]", aspect1.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={2, 10}, size=64]", aspect2.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={50}, size=64]", aspect3.toString() );
         
         aspect1.bitset.set( 6 );
         
-        assertEquals( "Aspects [ size=64 bitset={1, 3, 5, 6} ]", aspect1.toString() );
+        assertEquals( "Aspects [group=TestAspect1, bitset={1, 3, 5, 6}, size=64]", aspect1.toString() );
     }
+    
+    
     
     @Test
     public void testInclude() {
-        Aspects aspect1 = new Aspects( 5 );
-        Aspects aspect2 = new Aspects( 5 );
-        Aspects aspect3 = new Aspects( 10 );
-        Aspects aspect4 = new Aspects( 10 );
+        AspectGroup aspectGroup = new AspectGroup( "TestAspect2" );
+        
+        Aspects aspect1 = aspectGroup.createAspects();
+        Aspects aspect2 = aspectGroup.createAspects();
+        Aspects aspect3 = aspectGroup.createAspects();
+        Aspects aspect4 = aspectGroup.createAspects();
         
         assertFalse( aspect1.include( aspect2 ) );
         assertFalse( aspect2.include( aspect3 ) );
@@ -76,10 +83,12 @@ public class AspectSetTest {
     
     @Test
     public void testExclude() {
-        Aspects aspect1 = new Aspects( 5 );
-        Aspects aspect2 = new Aspects( 5 );
-        Aspects aspect3 = new Aspects( 10 );
-        Aspects aspect4 = new Aspects( 10 );
+        AspectGroup aspectGroup = new AspectGroup( "TestAspect3" );
+        
+        Aspects aspect1 = aspectGroup.createAspects();
+        Aspects aspect2 = aspectGroup.createAspects();
+        Aspects aspect3 = aspectGroup.createAspects();
+        Aspects aspect4 = aspectGroup.createAspects();
         
         assertFalse( aspect1.exclude( aspect2 ) );
         assertFalse( aspect2.exclude( aspect3 ) );

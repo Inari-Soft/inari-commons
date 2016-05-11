@@ -4,7 +4,11 @@ package com.inari.commons.lang.aspect;
  */ 
 public interface Aspect {
     
+    AspectGroup aspectGroup();
+    
     /** Gets the integer id of the aspect */
-    int aspectId();
+    int index();
+    
+    String name();
 
 }
