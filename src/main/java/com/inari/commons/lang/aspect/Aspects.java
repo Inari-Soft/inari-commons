@@ -1,10 +1,11 @@
 package com.inari.commons.lang.aspect;
 
 import java.util.BitSet;
+import java.util.Iterator;
 
 import com.inari.commons.lang.list.IntBag;
 
-public final class Aspects {
+public final class Aspects implements Iterable<Aspect> {
     
     final AspectGroup group;
     final BitSet bitset;
@@ -100,8 +101,9 @@ public final class Aspects {
         return bitset.get( aspect.index() );
     }
     
-    public final int nextSetBit( int fromIndex ) {
-        return bitset.nextSetBit( fromIndex );
+    @Override
+    public final Iterator<Aspect> iterator() {
+        return new AspectIterator();
     }
     
     public final void clear() {
@@ -140,13 +142,39 @@ public final class Aspects {
         StringBuilder builder = new StringBuilder();
         builder.append( "Aspects [group=" );
         builder.append( group );
-        builder.append( ", bitset=" );
-        builder.append( bitset );
-        builder.append( ", size=" );
-        builder.append( size() );
+        builder.append( " {" );
+        AspectIterator iterator = new AspectIterator();
+        while( iterator.hasNext() ) {
+            builder.append( iterator.next().name() );
+            if ( iterator.hasNext() ) {
+                builder.append( ", " );
+            }
+        }
+        builder.append( "}" );
         builder.append( "]" );
         return builder.toString();
     }
+    
+    private final class AspectIterator implements Iterator<Aspect> {
+        
+        private int nextSetBit = bitset.nextSetBit( 0 );
 
+        @Override
+        public boolean hasNext() {
+            return nextSetBit >= 0;
+        }
+
+        @Override
+        public Aspect next() {
+            Aspect aspect = group.getAspect( nextSetBit );
+            nextSetBit = bitset.nextSetBit( nextSetBit + 1 );
+            return aspect;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 
 }

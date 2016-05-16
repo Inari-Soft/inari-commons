@@ -136,12 +136,13 @@ public abstract class Indexer {
         Class<?> baseIndexedType = key.baseType();
         if ( baseIndexedType != null ) {
             if ( !baseIndexedType.isAssignableFrom( indexedType ) ) {
+                key.disable();
                 throw new IllegalArgumentException( "IndexedType missmatch: indexedType: " + indexedType + " is not a valid substitute of indexedBaseType: " + baseIndexedType );
             }
         }
 
         if ( key.index < 0 ) {
-            key.index = nextObjectIndex( key.indexedObjectType() );
+            key.enable( nextObjectIndex( key.indexedObjectType() ) );
         }
         indexedTypeKeys.add( key );
         return key;
@@ -151,7 +152,7 @@ public abstract class Indexer {
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
             if ( indexedType == indexedTypeKey.indexedType && baseType == indexedTypeKey.indexedObjectType() ) {
                 if ( indexedTypeKey.index < 0 ) {
-                    indexedTypeKey.index = Indexer.nextObjectIndex( indexedTypeKey.indexedObjectType() );
+                    indexedTypeKey.enable( Indexer.nextObjectIndex( indexedTypeKey.indexedObjectType() ) );
                 }
                 return baseType.cast( indexedTypeKey );
             }
@@ -187,7 +188,7 @@ public abstract class Indexer {
     public static final void clear() {
         indexedObjectTypes.clear();
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
-            indexedTypeKey.index = -1;
+            indexedTypeKey.disable();
         }
     }
     
@@ -200,7 +201,7 @@ public abstract class Indexer {
             declaredConstructor.setAccessible( accessible );
             return result;
         } catch ( Exception e ) {
-            throw new IllegalArgumentException( "Faild to create instance form " + baseType.getName() + ". Root cause: ", e );
+            throw new IllegalArgumentException( "Faild to create instance from " + baseType.getName() + ". Root cause: ", e );
         }
     }
 

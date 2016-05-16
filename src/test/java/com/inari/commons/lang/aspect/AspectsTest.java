@@ -13,30 +13,36 @@ public class AspectsTest {
         AspectGroup aspectGroup = new AspectGroup( "TestAspect1" );
         aspectGroup.createAspect( "TestAspect1" );
         
-        Aspects aspect1 = aspectGroup.createAspects();
-        Aspects aspect2 = aspectGroup.createAspects();
-        Aspects aspect3 = aspectGroup.createAspects();
+        Aspect aspect1 = aspectGroup.createAspect( "aspect1", 1 );
+        Aspect aspect2 = aspectGroup.createAspect( "aspect2", 2 );
+        Aspect aspect3 = aspectGroup.createAspect( "aspect3", 3 );
+        Aspect aspect5 = aspectGroup.createAspect( "aspect5", 4 );
+        Aspect aspect10 = aspectGroup.createAspect( "aspect10", 10 );
+        Aspect aspect50 = aspectGroup.createAspect( "aspect50", 50 );
         
-        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect1.toString() );
-        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect2.toString() );
-        assertEquals( "Aspects [group=TestAspect1, bitset={}, size=64]", aspect3.toString() );
+        Aspects aspects1 = aspectGroup.createAspects();
+        Aspects aspects2 = aspectGroup.createAspects();
+        Aspects aspects3 = aspectGroup.createAspects();
+
+        assertEquals( "Aspects [group=TestAspect1 {}]", aspects1.toString() );
+        assertEquals( "Aspects [group=TestAspect1 {}]", aspects2.toString() );
+        assertEquals( "Aspects [group=TestAspect1 {}]", aspects3.toString() );
+        assertEquals( "64", String.valueOf( aspects1.size() ) );
+        assertEquals( "64", String.valueOf( aspects2.size() ) );
+        assertEquals( "64", String.valueOf( aspects3.size() ) );
         
-        aspect1.bitset.set( 1 );
-        aspect1.bitset.set( 3 );
-        aspect1.bitset.set( 5 );
+        aspects1.set( aspect1 );
+        aspects1.set( aspect3 );
+        aspects1.set( aspect5 );
         
-        aspect2.bitset.set( 2 );
-        aspect2.bitset.set( 10 );
+        aspects2.set( aspect2 );
+        aspects2.set( aspect10 );
         
-        aspect3.bitset.set( 50 );
+        aspects3.set( aspect50 );
         
-        assertEquals( "Aspects [group=TestAspect1, bitset={1, 3, 5}, size=64]", aspect1.toString() );
-        assertEquals( "Aspects [group=TestAspect1, bitset={2, 10}, size=64]", aspect2.toString() );
-        assertEquals( "Aspects [group=TestAspect1, bitset={50}, size=64]", aspect3.toString() );
-        
-        aspect1.bitset.set( 6 );
-        
-        assertEquals( "Aspects [group=TestAspect1, bitset={1, 3, 5, 6}, size=64]", aspect1.toString() );
+        assertEquals( "Aspects [group=TestAspect1 {aspect1, aspect3, aspect5}]", aspects1.toString() );
+        assertEquals( "Aspects [group=TestAspect1 {aspect2, aspect10}]", aspects2.toString() );
+        assertEquals( "Aspects [group=TestAspect1 {aspect50}]", aspects3.toString() );
     }
     
     

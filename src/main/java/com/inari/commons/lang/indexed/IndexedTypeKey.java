@@ -7,6 +7,7 @@ public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndex
     protected IndexedTypeKey( Class<? extends IndexedType> indexedType ) {
         super();
         this.indexedType = indexedType;
+        aspectGroup().createAspect( name(), index() );
     }
 
     @Override
@@ -22,12 +23,22 @@ public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndex
     
     @Override
     public final String name() {
-        return indexedType.toString();
+        return indexedType.getSimpleName();
     }
 
     @Override
     public String toString() {
         return indexedObjectType().getSimpleName() + " [indexedType=" + indexedType + ", index=" + index + "]";
+    }
+
+    final void disable() {
+        aspectGroup().disposeAspect( index() );
+        index = -1;
+    }
+
+    final void enable( int index ) {
+        this.index = index;
+        aspectGroup().createAspect( name(), index() );
     }
 
 }

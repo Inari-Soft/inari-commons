@@ -67,6 +67,23 @@ public final class AspectGroup {
         aspects.add( result );
         return result;
     }
+    
+    public final Aspect createAspect( String name, int index ) {
+        if ( aspects.contains( index ) ) {
+            throw new IllegalArgumentException( "An Aspect with index: " + index + " already exists for this aspect group: " + this );
+        }
+        if ( getAspect( name ) != null ) {
+            throw new IllegalArgumentException( "An Aspect with name: " + name + " already exists for this aspect group: " + this );
+        }
+        
+        AspectImpl result = new AspectImpl( this, index, name );
+        aspects.set( index, result );
+        return result;
+    }
+    
+    public void disposeAspect( int index ) {
+        aspects.remove( index );
+    }
 
     @Override
     public final int hashCode() {

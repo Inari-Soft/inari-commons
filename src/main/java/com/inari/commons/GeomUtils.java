@@ -121,7 +121,7 @@ public abstract class GeomUtils {
         int x1 = Math.min( r.x, r1.x );
         int y1 = Math.min( r.y, r1.y );
         int x2 = Math.max( r.x + r.width - 1, r1.x + r1.width - 1 );
-        int y2 = Math.max( r.y + r.height - 1, r1.y + r1.height - 1) ;
+        int y2 = Math.max( r.y + r.height - 1, r1.y + r1.height - 1 ) ;
         return new Rectangle( x1, y1, x2 - x1 + 1, y2 - y1 + 1 );
     }
     

@@ -150,6 +150,23 @@ public class GeomUtilsTest {
     }
     
     @Test
+    public void testIntersection2() {
+        Rectangle r1 = new Rectangle( 0, 0, 8, 8 );
+        Rectangle r2 = new Rectangle( 0, 0, 8, 8 );
+        
+        Rectangle intersection = GeomUtils.intersection( r1, r2 );
+        assertEquals( "[x=0,y=0,width=8,height=8]", intersection.toString() );
+        
+        r2.x++;
+        intersection = GeomUtils.intersection( r1, r2 );
+        assertEquals( "[x=1,y=0,width=7,height=8]", intersection.toString() );
+        
+        r2.x = 7;
+        intersection = GeomUtils.intersection( r1, r2 );
+        assertEquals( "[x=7,y=0,width=1,height=8]", intersection.toString() );
+    }
+    
+    @Test
     public void testIntersectionAA() {
         assertEquals( "0", String.valueOf( GeomUtils.intersection( 0, 10, 20, 10 ) ) );
         assertEquals( "0", String.valueOf( GeomUtils.intersection( 100, 10, 20, 10 ) ) );

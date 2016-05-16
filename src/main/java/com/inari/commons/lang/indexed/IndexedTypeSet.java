@@ -18,6 +18,7 @@ package com.inari.commons.lang.indexed;
 import java.util.Iterator;
 
 import com.inari.commons.lang.Clearable;
+import com.inari.commons.lang.aspect.Aspect;
 import com.inari.commons.lang.aspect.Aspects;
 
 public final class IndexedTypeSet {
@@ -199,19 +200,17 @@ public final class IndexedTypeSet {
     
     private final class IndexedIterator<T extends IndexedType> implements Iterator<T> {
         
-        private int i = ( aspects != null )? aspects.nextSetBit( 0 ) : -1;
+        private final Iterator<Aspect> delegate = ( aspects!= null )? aspects.iterator() : null;
 
         @Override
         public boolean hasNext() {
-            return i >= 0;
+            return delegate != null && delegate.hasNext();
         }
 
         @SuppressWarnings( "unchecked" )
         @Override
         public T next() {
-            int nextIndex = i;
-            i = aspects.nextSetBit( i + 1 );
-            return (T) indexedType[ nextIndex ];
+            return (T) indexedType[ delegate.next().index() ];
         }
 
         @Override

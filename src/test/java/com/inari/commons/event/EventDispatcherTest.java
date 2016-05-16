@@ -141,7 +141,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -150,7 +150,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]",
             eventDispatcher.toString() 
         );
@@ -159,7 +159,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
              "EventDispatcher [listeners=DynArray [list=[" +
-             "[AspectedTestEventListener [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64], lastCall=null]], null, null, null, null, null, null, null, null, null" +
+             "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
              "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -168,7 +168,7 @@ public class EventDispatcherTest {
         
         assertEquals(
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64]]]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}]]]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
@@ -177,7 +177,7 @@ public class EventDispatcherTest {
         
         assertEquals( 
             "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup, bitset={1, 3}, size=64], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup, bitset={1, 2, 3}, size=64]]]], null, null, null, null, null, null, null, null, null" +
+            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_2, aspect_3}]]]], null, null, null, null, null, null, null, null, null" +
             "], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
