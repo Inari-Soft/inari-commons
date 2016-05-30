@@ -10,7 +10,6 @@ public final class BitMask {
     private final Rectangle region = new Rectangle();
     private final BitSet bits;
     
-    private final Rectangle origin = new Rectangle();
     private final Rectangle tmpRegion = new Rectangle();
     private final Rectangle intersection = new Rectangle();
     
@@ -25,8 +24,6 @@ public final class BitMask {
         region.y = y;
         region.width = width;
         region.height = height;
-        origin.width = width;
-        origin.height = height;
         bits = new BitSet( region.width + region.height );
         tmpBits = new BitSet( region.width + region.height );
     }
@@ -35,8 +32,6 @@ public final class BitMask {
         this.region.setFrom( region );
         bits = new BitSet( region.width + region.height );
         tmpBits = new BitSet( region.width + region.height );
-        origin.width = region.width;
-        origin.height = region.height;
     }
     
     public final int getWidth() {
@@ -49,17 +44,18 @@ public final class BitMask {
     
     public final void clearMask() {
         bits.clear();
+        tmpBits.clear();
     }
     
-    public final void set( int x, int y, boolean relativeToOrigin ) {
+    public final void setBit( int x, int y, boolean relativeToOrigin ) {
         if ( relativeToOrigin ) {
-            set( x - region.x, y - region.y );
+            setBit( x - region.x, y - region.y );
         } else {
-            set( x, y );
+            setBit( x, y );
         }
     }
     
-    public final void set( int x, int y ) {
+    public final void setBit( int x, int y ) {
         if ( x < 0 || x >= region.width || y < 0 || y >= region.height ) {
             return;
         }
@@ -67,50 +63,56 @@ public final class BitMask {
         bits.set( y * region.width + x );
     }
     
-    public final void setAll( final Rectangle region, boolean relativeToOrigin ) {
-        setAll( region.x, region.y, region.width, region.height, relativeToOrigin );
+    public final void setRegion( final Rectangle region, boolean relativeToOrigin ) {
+        setRegion( region.x, region.y, region.width, region.height, relativeToOrigin );
     }
     
-    public final void setAll( int x, int y, int width, int height, boolean relativeToOrigin ) {
+    public final void setRegion( int x, int y, int width, int height ) {
+        setRegion( x, y, width, height, true );
+    }
+    
+    public final void setRegion( int x, int y, int width, int height, boolean relativeToOrigin ) {
         if ( relativeToOrigin ) {
-            setAll( x - region.x, y - region.y, width, height );
+            setIntersectionRegion( x, y, width, height );
         } else {
-            setAll( x, y, width, height );
+            setIntersectionRegion( x + region.x, y + region.y, width, height );
         }
     }
     
-    public final void setAll( int x, int y, int width, int height ) {
-        tmpRegion.x = x;
-        tmpRegion.y = y;
+    private final void setIntersectionRegion( int xoffset, int yoffset, int width, int height ) {
+        tmpRegion.x = xoffset;
+        tmpRegion.y = yoffset;
         tmpRegion.width = width;
         tmpRegion.height = height;
-        GeomUtils.intersection( origin, tmpRegion, intersection );
+        GeomUtils.intersection( region, tmpRegion, intersection );
         if ( intersection.area() <= 0 ) {
             return;
         }
         
-        int width1 = intersection.x + intersection.width;
-        int height1 = intersection.y + intersection.height;
+        int x1 = intersection.x - region.x;
+        int y1 = intersection.y - region.y;
+        int width1 = x1 + intersection.width;
+        int height1 = y1 + intersection.height;
         
-        for ( int y1 = intersection.y; y1 < height1; y1++ ) {
-            for ( int x1 = intersection.x; x1 < width1; x1++ ) {
-                bits.set( y1 * region.width + x1 );
+        for ( int y = y1; y < height1; y++ ) {
+            for ( int x = x1; x < width1; x++ ) {
+                bits.set( y * region.width + x );
             }
         }
     }
     
     public final void and( final BitMask other ) {
-        setTmpBits( other, other.region.x, other.region.y );
+        setTmpBits( other, 0, 0 );
         bits.and( tmpBits );
     }
     
     public final void and( final BitMask other, final int xoffset, final int yoffset ) {
-        setTmpBits( other, other.region.x + xoffset, other.region.y + yoffset );
+        setTmpBits( other, xoffset, yoffset );
         bits.and( tmpBits );
     }
     
     public final void or( final BitMask other ) {
-        setTmpBits( other, other.region.x, other.region.y );
+        setTmpBits( other, 0, 0 );
         bits.or( tmpBits );
     }
     
@@ -118,61 +120,106 @@ public final class BitMask {
         setTmpBits( other, xoffset, yoffset );
         bits.or( tmpBits );
     }
+    
+    public static final void createIntersectionMask( final BitMask bitMask1, final Rectangle region, final BitMask result ) {
+        createIntersectionMask( bitMask1, region, result, 0, 0 );
+    }
+    
+    public static final void createIntersectionMask( final BitMask bitMask1, final BitMask bitMask2, final BitMask result ) {
+        createIntersectionMask( bitMask1, bitMask2, result, 0, 0 );
+    }
+    
+    public static final void createIntersectionMask( final BitMask bitMask1, final Rectangle region, final BitMask result, final int xoffset, final int yoffset ) {
+        result.clearMask();
+        
+        result.region.x = 0;
+        result.region.y = 0;
+        result.region.width = 0;
+        result.region.height = 0;
+        result.tmpRegion.x = region.x + xoffset;
+        result.tmpRegion.y = region.y + yoffset;
+        result.tmpRegion.width = region.width;
+        result.tmpRegion.height = region.height;
+        
+        GeomUtils.intersection( bitMask1.region, result.tmpRegion, result.intersection );
+        if ( result.intersection.area() <= 0 ) {
+            return;
+        }
+        
+        result.region.setFrom( result.intersection );
+        
+        int x1 = result.intersection.x - bitMask1.region.x;
+        int y1 = result.intersection.y - bitMask1.region.y;
+        
+        for ( int y = 0; y < result.intersection.height; y++ ) {
+            for ( int x = 0; x < result.intersection.width; x++ ) {
+                result.bits.set( 
+                    y * result.region.width + x, 
+                    bitMask1.bits.get( ( y + y1 ) * bitMask1.region.width + ( x + x1 ) )
+                );
+            }
+        }
+    }
+    
+    public static final void createIntersectionMask( final BitMask bitMask1, final BitMask bitMask2, final BitMask result, final int xoffset, final int yoffset ) {
+        result.clearMask();
+        
+        result.region.x = 0;
+        result.region.y = 0;
+        result.region.width = 0;
+        result.region.height = 0;
+        result.tmpRegion.x = bitMask2.region.x + xoffset;
+        result.tmpRegion.y = bitMask2.region.y + yoffset;
+        result.tmpRegion.width = bitMask2.region.width;
+        result.tmpRegion.height = bitMask2.region.height;
+        
+        GeomUtils.intersection( bitMask1.region, result.tmpRegion, result.intersection );
+        if ( result.intersection.area() <= 0 ) {
+            return;
+        }
+        
+        result.region.setFrom( result.intersection );
+        
+        int x1 = result.intersection.x - bitMask1.region.x;
+        int y1 = result.intersection.y - bitMask1.region.y;
+        int x2 = result.intersection.x - ( bitMask2.region.x + xoffset );
+        int y2 = result.intersection.y - ( bitMask2.region.y + yoffset );
+        
+        for ( int y = 0; y < result.intersection.height; y++ ) {
+            for ( int x = 0; x < result.intersection.width; x++ ) {
+                result.bits.set( 
+                    y * result.region.width + x, 
+                    bitMask1.bits.get( ( y + y1 ) * bitMask1.region.width + ( x + x1 ) ) &&
+                    bitMask2.bits.get( ( y + y2 ) * bitMask2.region.width + ( x + x2 ) ) 
+                );
+            }
+        }
+    }
 
     private void setTmpBits( BitMask other, int xoffset, int yoffset ) {
-//        int x = ( xoffset >= 0 )? xoffset: 0;
-//        int y = ( yoffset >= 0 )? yoffset: 0;
-//        int x1 = ( xoffset >= 0 )? 0: -xoffset;
-//        int y1 = ( yoffset >= 0 )? 0: -yoffset;
-        
-        tmpRegion.x = xoffset;
-        tmpRegion.y = yoffset;
+        tmpRegion.x = other.region.x + xoffset;
+        tmpRegion.y = other.region.y + yoffset;
         tmpRegion.width = other.region.width;
         tmpRegion.height = other.region.height;
-        GeomUtils.intersection( origin, tmpRegion, intersection );
+        GeomUtils.intersection( region, tmpRegion, intersection );
         if ( intersection.area() <= 0 ) {
             return;
         }
         
         tmpBits.clear();
         
-        int width = intersection.x + intersection.width;
-        int height = intersection.y + intersection.height;
-        int x1 = intersection.x;
-        int y1 = intersection.y;
+        // adjust intersection to origin
+        int x1 = intersection.x - region.x;
+        int y1 = intersection.y - region.y;
+        int x2 = ( intersection.x == 0 )? other.region.width - intersection.width : 0;
+        int y2 = ( intersection.y == 0 )? other.region.height - intersection.height : 0;
         
-        for ( int y = 0; y < height; y++ ) {
-            for ( int x = 0; x < width; x++ ) {
-                tmpBits.set( y1 * region.width + x1, other.bits.get( y * other.region.width + x ) );
-                x1++;
+        for ( int y = 0; y < intersection.height; y++ ) {
+            for ( int x = 0; x < intersection.width; x++ ) {
+                tmpBits.set( ( y + y1 ) * region.width + ( x + x1 ), other.bits.get( ( y + y2 ) * other.region.width + ( x + x2 ) ) );
             }
-            y1++;
         }
-        
-        
-        
-//        
-//        while ( y < height1 ) {
-//            while( x < width1 ) {
-//                tmpBits.set( y * region.width + x, other.bits.get( y1 * other.region.width + x1 ) );
-//                x++; x1++;
-//            }
-//            y++; y1++;
-//        }
-//        adjustToRegion( xoffset, yoffset, other.region.width, other.region.height );
-//        if ( tmpRegion.area() <= 0 ) {
-//            return;
-//        }
-//        
-//        tmpBits.clear();
-//        for ( int y1 = tmpRegion.y; y1 < tmpRegion.height; y1++ ) {
-//            for ( int x1 = tmpRegion.x; x1 < tmpRegion.width; x1++ ) {
-//                tmpBits.set( y1 * tmpRegion.width + x1, other.bits.get( bitIndex ) );
-//            }
-//        }
     }
-    
-    
 
     @Override
     public String toString() {
@@ -184,14 +231,5 @@ public final class BitMask {
         builder.append( "]" );
         return builder.toString();
     }
-
-    private final void adjustToRegion( int x, int y, int width, int height ) {
-        tmpRegion.x = ( x < region.x )? region.x : x;
-        tmpRegion.y = ( y < region.y )? region.y : y;
-        tmpRegion.width = ( tmpRegion.x + width > region.width )? region.width - ( tmpRegion.x - region.x ): width;
-        tmpRegion.height = ( tmpRegion.y + height > region.height )? region.height - ( tmpRegion.y - region.y ): height;
-    }
-
-    
 
 }
