@@ -281,154 +281,809 @@ public class BitMaskTest {
     
     @Test
     public void testCreateIntersectionMaskWithRegion() {
-        BitMask mask1 = new BitMask( 10, 10, 10, 10 );
-        for ( int y = 0; y < 10; y++ ) {
-            for ( int x = 0; x < 10; x++ ) {
-                if ( x % 2 != 0 ) {
-                    mask1.setBit( x, y, false );
-                }
-            }
-        }
+        BitMask intersection = new BitMask( 0, 0 );
+        Rectangle region = new Rectangle( 0, 0, 8, 8 );
+        BitMask mask = new BitMask( 0, 0, 8, 8 );
+        mask.fill();
         
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=10,height=10], bits=\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101\n" + 
-            "0101010101]", 
-            mask1.toString() 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            mask.toString() 
+        );
+
+        BitMask.createIntersectionMask( mask, region, intersection );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+        region.x = -4;
+        region.y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
         );
         
-        BitMask result = new BitMask( 0, 0 );
-        Rectangle region = new Rectangle( 0, 0, 10, 10 );
-        
-        // the region do not intersect with mask1 at all, so result should be empty
-        BitMask.createIntersectionMask( mask1, region, result );
-        
+        region.x = 4;
+        region.y = 4;
+        BitMask.createIntersectionMask( mask, region, intersection );
         assertEquals( 
-            "BitMask [region=[x=0,y=0,width=0,height=0], bits=\n" + 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 4;
+        region.y = 4;
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=0,height=0], bits=\n" + 
             "]", 
-            result.toString() 
+            intersection.toString() 
         );
         
-        // now we shift the region 2 in x and y
-        BitMask.createIntersectionMask( mask1, region, result, 2, 2 );
-        // NOTE: x and y of the region of the mask intersection are relative to the origin
+        region.x = 0;
+        region.y = 0;
+        BitMask.createIntersectionMask( mask, region, intersection );
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=2,height=2], bits=\n" + 
-            "01\n" + 
-            "01]", 
-            result.toString() 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
         );
         
-        // now we create a new region that intersects mask1 by origin
-        region = new Rectangle( 5, 5, 10, 10 );
-        BitMask.createIntersectionMask( mask1, region, result );
+        region.x = 10;
+        region.y = 10;
+        mask.region().x = 10;
+        mask.region().y = 10;
+        BitMask.createIntersectionMask( mask, region, intersection );
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=5,height=5], bits=\n" + 
-            "01010\n" + 
-            "01010\n" + 
-            "01010\n" + 
-            "01010\n" + 
-            "01010]", 
-            result.toString() 
-        );
-        
-        
-        BitMask.createIntersectionMask( mask1, region, result, 10, 10 );
-        assertEquals( 
-            "BitMask [region=[x=15,y=15,width=5,height=5], bits=\n" + 
-            "10101\n" + 
-            "10101\n" + 
-            "10101\n" + 
-            "10101\n" + 
-            "10101]", 
-            result.toString() 
+            "BitMask [region=[x=10,y=10,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
         );
     }
     
     @Test
-    public void testCreateIntersectionMask() { 
-        BitMask mask1 = new BitMask( 10, 10, 10, 10 );
-        BitMask mask2 = new BitMask( 10, 10, 10, 10 );
-        for ( int y = 0; y < 10; y++ ) {
-            for ( int x = 0; x < 10; x++ ) {
-                if ( x >= y ) {
-                    mask1.setBit( x, y );
-                }
-                if ( x < y ) {
-                    mask2.setBit( x, y );
-                }
+    public void testCreateIntersectionMaskWithRegionWithIntersectionAdjustOnMask() {
+        BitMask intersection = new BitMask( 0, 0 );
+        Rectangle region = new Rectangle( 0, 0, 8, 8 );
+        BitMask mask = new BitMask( 0, 0, 8, 8 );
+        mask.fill();
+        
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            mask.toString() 
+        );
+
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+        region.x = -4;
+        region.y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 4;
+        region.y = 4;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 4;
+        region.y = 4;
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=8,y=8,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        region.x = 8;
+        region.y = 8;
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=12,y=12,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        region.x = 0;
+        region.y = 0;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        mask.region().x = 10;
+        mask.region().y = 10;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        region.x = -10;
+        region.y = -10;
+        mask.region().x = -10;
+        mask.region().y = -10;
+        BitMask.createIntersectionMask( mask, region, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+    }
+    
+    @Test
+    public void testCreateIntersectionMaskWithRegionWithIntersectionAdjustOnRegion() {
+        BitMask intersection = new BitMask( 0, 0 );
+        Rectangle region = new Rectangle( 0, 0, 8, 8 );
+        BitMask mask = new BitMask( 0, 0, 8, 8 );
+        mask.fill();
+        
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            mask.toString() 
+        );
+
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+        region.x = -4;
+        region.y = -4;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 4;
+        region.y = 4;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 4;
+        region.y = 4;
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        region.x = 8;
+        region.y = 8;
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        region.x = 0;
+        region.y = 0;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        mask.region().x = 10;
+        mask.region().y = 10;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        region.x = -10;
+        region.y = -10;
+        mask.region().x = -10;
+        mask.region().y = -10;
+        BitMask.createIntersectionMask( region, mask, intersection, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+    }
+    
+    @Test
+    public void testCreateIntersectionMaskWithRegionWithOffsetOnRegion() {
+        BitMask intersection = new BitMask( 0, 0 );
+        Rectangle region = new Rectangle( 0, 0, 8, 8 );
+        BitMask mask = new BitMask( 0, 0, 8, 8 );
+        mask.fill();
+        
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            mask.toString() 
+        );
+
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, -4, -4, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, 4, 4, false );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection, 4, 4, false );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        mask.region().x = 10;
+        mask.region().y = 10;
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, false );
+        assertEquals( 
+            "BitMask [region=[x=10,y=10,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+        region.x = 0;
+        region.y = 0;
+        mask.region().x = 0;
+        mask.region().y = 0;
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, -4, -4, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, 4, 4, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        mask.region().x = -4;
+        mask.region().y = -4;
+        BitMask.createIntersectionMask( mask, region, intersection, 4, 4, true );
+        assertEquals( 
+            "BitMask [region=[x=8,y=8,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        mask.region().x = 10;
+        mask.region().y = 10;
+        BitMask.createIntersectionMask( mask, region, intersection, 0, 0, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+    }
+    
+   
+    
+    @Test
+    public void testCreateIntersectionMaskWithRegionWithOffsetOnMask() {
+        BitMask intersection = new BitMask( 0, 0 );
+        Rectangle region = new Rectangle( 0, 0, 8, 8 );
+        BitMask mask = new BitMask( 0, 0, 8, 8 );
+        mask.fill();
+        
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            mask.toString() 
+        );
+
+        BitMask.createIntersectionMask( region, mask, intersection, 0, 0, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, -4, -4, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, 4, 4, false );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = -4;
+        region.y = -4;
+        BitMask.createIntersectionMask( region, mask, intersection, 4, 4, false );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, 0, 0, false );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        BitMask.createIntersectionMask( region, mask, intersection, 10, 10, false );
+        assertEquals( 
+            "BitMask [region=[x=10,y=10,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+
+        region.x = 0;
+        region.y = 0;
+        BitMask.createIntersectionMask( region, mask, intersection, 0, 0, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, -4, -4, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, 4, 4, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = -4;
+        region.y = -4;
+        BitMask.createIntersectionMask( region, mask, intersection, 4, 4, true );
+        assertEquals( 
+            "BitMask [region=[x=8,y=8,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        BitMask.createIntersectionMask( region, mask, intersection, 0, 0, true );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111\n" + 
+            "1111]", 
+            intersection.toString() 
+        );
+        
+        region.x = 10;
+        region.y = 10;
+        BitMask.createIntersectionMask( region, mask, intersection, 10, 10, true );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
+            intersection.toString() 
+        );
+    }
+    
+    @Test
+    public void testCreateIntersectionMask() {
+        BitMask intersection = new BitMask( 0, 0 );
+        BitMask mask1 = new BitMask( 0, 0, 8, 8 );
+        mask1.fill();
+        BitMask mask2 = new BitMask( 0, 0, 8, 8 );
+        for ( int i = 0; i < 8 * 8; i++ ) {
+            if ( i % 2 > 0 ) {
+                mask2.setBit( i );
             }
         }
         
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=10,height=10], bits=\n" + 
-            "1111111111\n" + 
-            "0111111111\n" + 
-            "0011111111\n" + 
-            "0001111111\n" + 
-            "0000111111\n" + 
-            "0000011111\n" + 
-            "0000001111\n" + 
-            "0000000111\n" + 
-            "0000000011\n" + 
-            "0000000001]", 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111\n" + 
+            "11111111]", 
             mask1.toString() 
         );
-        
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=10,height=10], bits=\n" + 
-            "0000000000\n" + 
-            "1000000000\n" + 
-            "1100000000\n" + 
-            "1110000000\n" + 
-            "1111000000\n" + 
-            "1111100000\n" + 
-            "1111110000\n" + 
-            "1111111000\n" + 
-            "1111111100\n" + 
-            "1111111110]", 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101]", 
             mask2.toString() 
         );
         
-        BitMask result = new BitMask( 0, 0 );
-        BitMask.createIntersectionMask( mask1, mask2, result );
-        
-        // NOTE: we have an intersection mask as result with no set bits here because we have a regions intersect but not the set-bits
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
         assertEquals( 
-            "BitMask [region=[x=10,y=10,width=10,height=10], bits=\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000\n" + 
-            "0000000000]", 
-            result.toString() 
+            "BitMask [region=[x=0,y=0,width=8,height=8], bits=\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101]", 
+            intersection.toString() 
+        );
+
+        mask2.region().x = -4;
+        mask2.region().y = -4;
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101]", 
+            intersection.toString() 
         );
         
-        // now we shift one to the right
-        BitMask.createIntersectionMask( mask1, mask2, result, 1, 0 );
+        mask2.region().x = 4;
+        mask2.region().y = 4;
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
         assertEquals( 
-            "BitMask [region=[x=16,y=15,width=4,height=5], bits=\n" + 
-            "0000\n" + 
-            "1000\n" + 
-            "0100\n" + 
-            "0010\n" + 
-            "0001]", 
-            result.toString() 
+            "BitMask [region=[x=4,y=4,width=4,height=4], bits=\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101]", 
+            intersection.toString() 
+        );
+        
+        mask2.region().x = 4;
+        mask2.region().y = 4;
+        mask1.region().x = -4;
+        mask1.region().y = -4;
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
+        assertEquals( 
+            "BitMask [region=[x=4,y=4,width=0,height=0], bits=\n" + 
+            "]", 
+            intersection.toString() 
+        );
+        
+        mask2.region().x = 0;
+        mask2.region().y = 0;
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=4,height=4], bits=\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101\n" + 
+            "0101]", 
+            intersection.toString() 
+        );
+        
+        mask2.region().x = 10;
+        mask2.region().y = 10;
+        mask1.region().x = 10;
+        mask1.region().y = 10;
+        BitMask.createIntersectionMask( mask1, mask2, intersection );
+        assertEquals( 
+            "BitMask [region=[x=10,y=10,width=8,height=8], bits=\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101\n" + 
+            "01010101]", 
+            intersection.toString() 
         );
     }
-    
+
 
 }

@@ -96,6 +96,21 @@ public final class Rectangle extends Position {
         width = other.width;
         height = other.height;
     }
+    
+    public final void setFrom( Rectangle other, int x, int y ) {
+        super.setFrom( other );
+        this.x += x;
+        this.y += y;
+        width = other.width;
+        height = other.height;
+    }
+    
+    public final void clear() {
+        x = 0;
+        y = 0;
+        width = 0;
+        height = 0;
+    }
 
     /** Use this to set  the Rectangle attributes from specified configuration String value with the
      *  format: [x],[y],[width],[height].
@@ -167,5 +182,8 @@ public final class Rectangle extends Position {
         builder.append( "]" );
         return builder.toString();
     }
+
+    
+
 
 }

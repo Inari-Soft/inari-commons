@@ -34,17 +34,42 @@ public final class BitMask {
         tmpBits = new BitSet( region.width + region.height );
     }
     
-    public final int getWidth() {
-        return region.width;
+    public final Rectangle region() {
+        return region;
     }
     
-    public final int getHeight() {
-        return region.height;
+    public final boolean isEmpty() {
+        return bits.isEmpty();
+    }
+    
+    public final BitMask fill() {
+        clearMask();
+        for ( int i = 0; i < region.width * region.height; i++ ) {
+            bits.set( i );
+        }
+        return this;
+    }
+    
+    public final void reset( Rectangle region ) {
+        reset( region.x, region.y, region.width, region.height );
+    }
+    
+    public final void reset( int x, int y, int width, int height ) {
+        region.x = x;
+        region.y = y;
+        region.width = width;
+        region.height = height;
+        bits.clear();
+        tmpBits.clear();
     }
     
     public final void clearMask() {
         bits.clear();
         tmpBits.clear();
+    }
+    
+    public final void setBit( int index ) {
+        bits.set( index );
     }
     
     public final void setBit( int x, int y, boolean relativeToOrigin ) {
@@ -61,6 +86,10 @@ public final class BitMask {
         }
         
         bits.set( y * region.width + x );
+    }
+    
+    public boolean getBit( int x, int y ) {
+        return bits.get( y * region.width + x );
     }
     
     public final void setRegion( final Rectangle region, boolean relativeToOrigin ) {
@@ -121,81 +150,6 @@ public final class BitMask {
         bits.or( tmpBits );
     }
     
-    public static final void createIntersectionMask( final BitMask bitMask1, final Rectangle region, final BitMask result ) {
-        createIntersectionMask( bitMask1, region, result, 0, 0 );
-    }
-    
-    public static final void createIntersectionMask( final BitMask bitMask1, final BitMask bitMask2, final BitMask result ) {
-        createIntersectionMask( bitMask1, bitMask2, result, 0, 0 );
-    }
-    
-    public static final void createIntersectionMask( final BitMask bitMask1, final Rectangle region, final BitMask result, final int xoffset, final int yoffset ) {
-        result.clearMask();
-        
-        result.region.x = 0;
-        result.region.y = 0;
-        result.region.width = 0;
-        result.region.height = 0;
-        result.tmpRegion.x = region.x + xoffset;
-        result.tmpRegion.y = region.y + yoffset;
-        result.tmpRegion.width = region.width;
-        result.tmpRegion.height = region.height;
-        
-        GeomUtils.intersection( bitMask1.region, result.tmpRegion, result.intersection );
-        if ( result.intersection.area() <= 0 ) {
-            return;
-        }
-        
-        result.region.setFrom( result.intersection );
-        
-        int x1 = result.intersection.x - bitMask1.region.x;
-        int y1 = result.intersection.y - bitMask1.region.y;
-        
-        for ( int y = 0; y < result.intersection.height; y++ ) {
-            for ( int x = 0; x < result.intersection.width; x++ ) {
-                result.bits.set( 
-                    y * result.region.width + x, 
-                    bitMask1.bits.get( ( y + y1 ) * bitMask1.region.width + ( x + x1 ) )
-                );
-            }
-        }
-    }
-    
-    public static final void createIntersectionMask( final BitMask bitMask1, final BitMask bitMask2, final BitMask result, final int xoffset, final int yoffset ) {
-        result.clearMask();
-        
-        result.region.x = 0;
-        result.region.y = 0;
-        result.region.width = 0;
-        result.region.height = 0;
-        result.tmpRegion.x = bitMask2.region.x + xoffset;
-        result.tmpRegion.y = bitMask2.region.y + yoffset;
-        result.tmpRegion.width = bitMask2.region.width;
-        result.tmpRegion.height = bitMask2.region.height;
-        
-        GeomUtils.intersection( bitMask1.region, result.tmpRegion, result.intersection );
-        if ( result.intersection.area() <= 0 ) {
-            return;
-        }
-        
-        result.region.setFrom( result.intersection );
-        
-        int x1 = result.intersection.x - bitMask1.region.x;
-        int y1 = result.intersection.y - bitMask1.region.y;
-        int x2 = result.intersection.x - ( bitMask2.region.x + xoffset );
-        int y2 = result.intersection.y - ( bitMask2.region.y + yoffset );
-        
-        for ( int y = 0; y < result.intersection.height; y++ ) {
-            for ( int x = 0; x < result.intersection.width; x++ ) {
-                result.bits.set( 
-                    y * result.region.width + x, 
-                    bitMask1.bits.get( ( y + y1 ) * bitMask1.region.width + ( x + x1 ) ) &&
-                    bitMask2.bits.get( ( y + y2 ) * bitMask2.region.width + ( x + x2 ) ) 
-                );
-            }
-        }
-    }
-
     private void setTmpBits( BitMask other, int xoffset, int yoffset ) {
         tmpRegion.x = other.region.x + xoffset;
         tmpRegion.y = other.region.y + yoffset;
@@ -220,6 +174,25 @@ public final class BitMask {
             }
         }
     }
+    
+    public final boolean hasIntersection( Rectangle region ) {
+        GeomUtils.intersection( this.region, region, intersection );
+        if ( intersection.area() <= 0 ) {
+            return false;
+        }
+        
+        int width = intersection.x + intersection.width;
+        int height = intersection.y + intersection.height;
+        for ( int y = intersection.y; y < height; y++ ) {
+            for ( int x = intersection.x; x < width; x++ ) {
+                if ( bits.get( y * this.region.width + x ) ) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
 
     @Override
     public String toString() {
@@ -231,5 +204,155 @@ public final class BitMask {
         builder.append( "]" );
         return builder.toString();
     }
+    
+    
+
+    
+    public static final boolean createIntersectionMask( final Rectangle region, final BitMask bitmask, final BitMask result, final int xoffset, final int yoffset, final boolean adjustResult ) {
+        bitmask.region.x += xoffset;
+        bitmask.region.y += yoffset;
+        
+       boolean intersection = createIntersectionMask( bitmask, region, result );
+        
+        bitmask.region.x -= xoffset;
+        bitmask.region.y -= yoffset;
+        
+        if ( adjustResult ) {
+            result.region.x -= region.x;
+            result.region.y -= region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask, final Rectangle region, final BitMask result, final int xoffset, final int yoffset, final boolean adjustResult ) {
+        result.tmpRegion.x = region.x + xoffset;
+        result.tmpRegion.y = region.y + yoffset;
+        result.tmpRegion.width = region.width;
+        result.tmpRegion.height = region.height;
+        
+        boolean intersection = createIntersectionMask( bitmask, result.tmpRegion, result );
+        
+        if ( adjustResult ) {
+            result.region.x -= bitmask.region.x;
+            result.region.y -= bitmask.region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask, final Rectangle region, final BitMask result, final boolean adjustResult ) {
+        boolean intersection = createIntersectionMask( bitmask, region, result );
+        
+        if ( adjustResult ) {
+            result.region.x -= bitmask.region.x;
+            result.region.y -= bitmask.region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final Rectangle region, final BitMask bitmask, final BitMask result, final boolean adjustResult ) {
+        boolean intersection = createIntersectionMask( bitmask, region, result );
+        
+        if ( adjustResult ) {
+            result.region.x -= region.x;
+            result.region.y -= region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask, final Rectangle region, final BitMask result ) {
+        result.clearMask();
+        
+        GeomUtils.intersection( bitmask.region, region, result.region );
+        if ( result.region.area() <= 0 ) {
+            return false;
+        }
+
+        int x1 = result.region.x - bitmask.region.x;
+        int y1 = result.region.y - bitmask.region.y;
+        
+        for ( int y = 0; y < result.region.height; y++ ) {
+            for ( int x = 0; x < result.region.width; x++ ) {
+                result.bits.set( 
+                    y * result.region.width + x, 
+                    bitmask.bits.get( ( y + y1 ) * bitmask.region.width + ( x + x1 ) )
+                );
+            }
+        }
+        
+        return !result.bits.isEmpty();
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask1, final BitMask bitmask2, final BitMask result, final int xoffset, final int yoffset, boolean adjustResult ) {
+        bitmask2.region.x += xoffset;
+        bitmask2.region.y += yoffset;
+        
+        boolean intersection = createIntersectionMask( bitmask1, bitmask2, result );
+        
+        bitmask2.region.x -= xoffset;
+        bitmask2.region.y -= yoffset;
+        
+        if ( adjustResult ) {
+            result.region.x -= bitmask1.region.x;
+            result.region.y -= bitmask1.region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask1, final BitMask bitmask2, final BitMask result, boolean adjustResult ) {
+        boolean intersection = createIntersectionMask( bitmask1, bitmask2, result );
+        
+        if ( adjustResult ) {
+            result.region.x -= bitmask1.region.x;
+            result.region.y -= bitmask1.region.y;
+        }
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask1, final BitMask bitmask2, final BitMask result, final int xoffset, final int yoffset ) {
+        bitmask2.region.x += xoffset;
+        bitmask2.region.y += yoffset;
+        
+        boolean intersection = createIntersectionMask( bitmask1, bitmask2, result );
+        
+        bitmask2.region.x -= xoffset;
+        bitmask2.region.y -= yoffset;
+        
+        return intersection;
+    }
+    
+    public static final boolean createIntersectionMask( final BitMask bitmask1, final BitMask bitmask2, final BitMask result ) {
+        result.clearMask();
+        
+        
+        GeomUtils.intersection( bitmask1.region, bitmask2.region, result.region );
+        if ( result.region.area() <= 0 ) {
+            return false;
+        }
+
+        int x1 = result.region.x - bitmask1.region.x;
+        int y1 = result.region.y - bitmask1.region.y;
+        int x2 = result.region.x - bitmask2.region.x;
+        int y2 = result.region.y - bitmask2.region.y;
+        
+        for ( int y = 0; y < result.region.height; y++ ) {
+            for ( int x = 0; x < result.region.width; x++ ) {
+                result.bits.set( 
+                    y * result.region.width + x, 
+                    bitmask1.bits.get( ( y + y1 ) * bitmask1.region.width + ( x + x1 ) ) &&
+                    bitmask2.bits.get( ( y + y2 ) * bitmask2.region.width + ( x + x2 ) ) 
+                );
+            }
+        }
+        
+        return !result.bits.isEmpty();
+    }
+
+    
 
 }
