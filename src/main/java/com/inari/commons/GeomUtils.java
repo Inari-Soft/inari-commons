@@ -58,10 +58,10 @@ public abstract class GeomUtils {
         int r2Right = r2.x + r2.width;
         int r2Bottom = r2.y + r2.height;
         
-        return !( r2.x > r1Right || 
-                  r2Right < r1.x || 
-                  r2.y > r1Bottom ||
-                  r2Bottom < r1.y );
+        return !( r2.x >= r1Right || 
+                  r2Right <= r1.x || 
+                  r2.y >= r1Bottom ||
+                  r2Bottom <= r1.y );
     }
     
     public final static int getIntersectionCode( final Rectangle r, final Rectangle r1 ) {

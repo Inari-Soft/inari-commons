@@ -92,6 +92,11 @@ public final class BitMask {
         return bits.get( y * region.width + x );
     }
     
+    public final void moveRegion( int x, int y ) {
+        region.x += x;
+        region.y += y;
+    }
+    
     public final void setRegion( final Rectangle region, boolean relativeToOrigin ) {
         setRegion( region.x, region.y, region.width, region.height, relativeToOrigin );
     }
@@ -165,8 +170,8 @@ public final class BitMask {
         // adjust intersection to origin
         int x1 = intersection.x - region.x;
         int y1 = intersection.y - region.y;
-        int x2 = ( intersection.x == 0 )? other.region.width - intersection.width : 0;
-        int y2 = ( intersection.y == 0 )? other.region.height - intersection.height : 0;
+        int x2 = ( intersection.x == 0 )? other.region.width - intersection.width : intersection.x - tmpRegion.x;
+        int y2 = ( intersection.y == 0 )? other.region.height - intersection.height : intersection.y - tmpRegion.y;
         
         for ( int y = 0; y < intersection.height; y++ ) {
             for ( int x = 0; x < intersection.width; x++ ) {
@@ -353,6 +358,5 @@ public final class BitMask {
         return !result.bits.isEmpty();
     }
 
-    
 
 }

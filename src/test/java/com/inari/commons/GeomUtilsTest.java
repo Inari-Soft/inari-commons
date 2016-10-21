@@ -48,31 +48,36 @@ public class GeomUtilsTest {
         assertTrue( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 100, 0, 0, 0 );
-        assertTrue( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 101, 0, 0, 0 );
         assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 0, 100, 0, 0 );
-        assertTrue( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 0, 101, 0, 0 );
         assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 0, 0, 0, 0 );
-        assertTrue( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 0, -1, 0, 0 );
         assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( 0, -1, 0, 1 );
-        assertTrue( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( -1, 0, 0, 0 );
         assertFalse( GeomUtils.intersect( r1, r2 ) );
         
         r2 = new Rectangle( -1, 0, 1, 0 );
-        assertTrue( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
+        
+        r2 = new Rectangle( 100, 100, 2, 2 );
+        
+        assertFalse( GeomUtils.intersect( r1, r2 ) );
+        assertFalse( GeomUtils.intersect( r2, r1 ) );
     }
     
     @Test

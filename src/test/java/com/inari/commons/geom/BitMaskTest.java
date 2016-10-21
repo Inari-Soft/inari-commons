@@ -280,6 +280,74 @@ public class BitMaskTest {
     }
     
     @Test
+    public void testOrCase123() {
+        BitMask mask1 = new BitMask( 1, 8, 6, 1 );
+        BitMask mask2 = new BitMask( 1, 5, 5, 4 );
+        
+        mask2.setBit( 2, 0 );
+        mask2.setBit( 4, 1 );
+        mask2.setBit( 2, 2 );
+        mask2.setBit( 3, 2 );
+        mask2.setBit( 4, 2 );
+        mask2.setBit( 0, 3 );
+        mask2.setBit( 1, 3 );
+        mask2.setBit( 2, 3 );
+        mask2.setBit( 3, 3 );
+        mask2.setBit( 4, 3 );
+        
+        assertEquals( 
+            "BitMask [region=[x=1,y=5,width=5,height=4], bits=\n" + 
+            "00100\n" + 
+            "00001\n" + 
+            "00111\n" + 
+            "11111]", 
+            mask2.toString() 
+        );
+        
+        mask1.or( mask2, 1, 0 );
+        
+        assertEquals( 
+            "BitMask [region=[x=1,y=8,width=6,height=1], bits=\n" + 
+            "011111]", 
+            mask1.toString() 
+        );
+    }
+    
+    @Test
+    public void testOrCase456() {
+        BitMask mask1 = new BitMask( 0, 0, 6, 8 );
+        BitMask mask2 = new BitMask( 1, 6, 5, 3 );
+        
+        mask2.setBit( 4, 1 );
+        mask2.setBit( 2, 2 );
+        mask2.setBit( 3, 2 );
+        mask2.setBit( 4, 2 );
+        
+        assertEquals( 
+            "BitMask [region=[x=1,y=6,width=5,height=3], bits=\n" + 
+            "00000\n" + 
+            "00001\n" + 
+            "00111]", 
+            mask2.toString() 
+        );
+        
+        mask1.or( mask2 );
+        
+        assertEquals( 
+            "BitMask [region=[x=0,y=0,width=6,height=8], bits=\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000000\n" + 
+            "000001]", 
+            mask1.toString() 
+        );
+    }
+    
+    @Test
     public void testCreateIntersectionMaskWithRegion() {
         BitMask intersection = new BitMask( 0, 0 );
         Rectangle region = new Rectangle( 0, 0, 8, 8 );
