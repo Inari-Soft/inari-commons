@@ -1,18 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2015 - 2016 - 2016, Andreas Hefti, inarisoft@yahoo.de 
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
 package com.inari.commons.geom;
 
 import java.util.StringTokenizer;
@@ -20,16 +5,16 @@ import java.util.StringTokenizer;
 import com.inari.commons.StringUtils;
 import com.inari.commons.config.StringConfigurable;
 
-/** A simple position in a 2D cartesian coordinate system with integer precision. */
-public class Position implements StringConfigurable {
-
+/** A simple position in a 2D Cartesian coordinate system with float precision. */
+public class PositionF implements StringConfigurable {
+    
     /** The x axis value of the position */
-    public int x;
+    public float x;
     /** The y axis value of the position */
-    public int y;
+    public float y;
 
     /** Use this to create a new Position with 0/0 initialization. */
-    public Position() {
+    public PositionF() {
         x = 0;
         y = 0;
     }
@@ -39,7 +24,7 @@ public class Position implements StringConfigurable {
      * @param x The x axis value of the position
      * @param y The y axis value of the position
      */
-    public Position( int x, int y ) {
+    public PositionF( int x, int y ) {
         this.x = x;
         this.y = y;
     }
@@ -48,12 +33,12 @@ public class Position implements StringConfigurable {
      *
      * @param positionString configuration String value. See also fromConfigString method documentation
      */
-    public Position( String positionString ) {
+    public PositionF( String positionString ) {
         fromConfigString( positionString );
     }
 
     /** Use this as a copy constructor */
-    public Position( Position loc ) {
+    public PositionF( PositionF loc ) {
         setFrom( loc );
     }
 
@@ -65,13 +50,12 @@ public class Position implements StringConfigurable {
         y = p.y;
     }
     
-    /** Use this to set the x/y axis values from specified Position p
-     * NOTE: uses Math.floor to get the convert float to integer
-     *  @param p the Position to get/take the attributes from
+    /** Use this to set the x/y axis values from specified PositionF p
+     *  @param p the PositionF to get/take the attributes from
      */
     public final void setFrom( PositionF p ) {
-        x = (int) Math.floor( p.x );
-        y = (int) Math.floor( p.y );
+        x = p.x;
+        y = p.y;
     }
 
     /** Use this to set  the x/y axis values from specified configuration String value with the
@@ -120,23 +104,27 @@ public class Position implements StringConfigurable {
 
     @Override
     public int hashCode() {
+        final int prime = 31;
         int result = 1;
-        result = 37 * result + x;
-        result = 37 * result + y;
+        result = prime * result + Float.floatToIntBits( x );
+        result = prime * result + Float.floatToIntBits( y );
         return result;
     }
-    
+
     @Override
     public boolean equals( Object obj ) {
-        if ( obj instanceof Position ) {
-            Position p = (Position) obj;
-            return ( 
-                ( x == p.x ) && 
-                ( y == p.y ) 
-            );
-        }
-
-        return false;
+        if ( this == obj )
+            return true;
+        if ( obj == null )
+            return false;
+        if ( getClass() != obj.getClass() )
+            return false;
+        PositionF other = (PositionF) obj;
+        if ( Float.floatToIntBits( x ) != Float.floatToIntBits( other.x ) )
+            return false;
+        if ( Float.floatToIntBits( y ) != Float.floatToIntBits( other.y ) )
+            return false;
+        return true;
     }
 
 }

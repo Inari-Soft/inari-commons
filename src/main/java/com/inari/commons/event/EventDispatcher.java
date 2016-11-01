@@ -31,15 +31,28 @@ import com.inari.commons.lang.list.DynArray;
  */
 public final class EventDispatcher implements IEventDispatcher {
     
+    private final EventPool eventPool;
     private final IEventLog eventLog;
     private final DynArray<List<?>> listeners = new DynArray<List<?>>();
     
     public EventDispatcher() {
         eventLog = null;
+        eventPool = null;
     }
     
     public EventDispatcher( IEventLog eventLog ) {
         this.eventLog = eventLog;
+        eventPool = null;
+    }
+    
+    public EventDispatcher( IEventLog eventLog, EventPool eventPool ) {
+        this.eventLog = eventLog;
+        this.eventPool = eventPool;
+    }
+    
+    public EventDispatcher( EventPool eventPool ) {
+        this.eventLog = null;
+        this.eventPool = eventPool;
     }
 
     /* (non-Javadoc)
@@ -75,6 +88,10 @@ public final class EventDispatcher implements IEventDispatcher {
             L listener = listenersOfType.get( i );
             event.notify( listener );
         }
+        
+        if ( eventPool != null ) {
+            eventPool.restoreEvent( event );
+        }
     }
     
     /* (non-Javadoc)
@@ -89,6 +106,10 @@ public final class EventDispatcher implements IEventDispatcher {
             if ( listener.match( event.getAspects() ) ) {
                 event.notify( listener );
             }
+        }
+        
+        if ( eventPool != null ) {
+            eventPool.restoreEvent( event );
         }
     }
     
@@ -112,6 +133,10 @@ public final class EventDispatcher implements IEventDispatcher {
             if ( matcher.apply( event ) ) {
                 event.notify( listener );
             } 
+        }
+        
+        if ( eventPool != null ) {
+            eventPool.restoreEvent( event );
         }
     }
 
