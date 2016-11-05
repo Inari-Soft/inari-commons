@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.inari.commons.lang.list;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -118,6 +119,10 @@ public final class DynArray<T> implements Iterable<T> {
         return index;
     }
     
+    /** Use this to add all values of a DynArray to the instance of DynArray.
+     * 
+     * @param values the other DynArray to get the values form
+     */
     public final void addAll( DynArray<T> values ) {
         ensureCapacity( this.size + values.size );
         for ( T value : values ) {
@@ -248,6 +253,42 @@ public final class DynArray<T> implements Iterable<T> {
     @Override
     public final Iterator<T> iterator() {
         return new DynArrayIterator();
+    }
+
+    /** Use this to get an Array of specified type from this DynArray.
+     *  The Array has the length of the size of the DynArray but the indexes may change if there are null references 
+     *  in this DynArray that are not at the end of the list. 
+     *  So this gets a packed array of the list representing within this DynArray. If you need the exact array representation 
+     *  with the null references and the exact indices, use toExactArray method.
+     *  
+     * @param type the type of the array
+     * @return an Array of specified type from this DynArray.
+     */
+    public final T[] toArray( Class<T> type ) {
+        @SuppressWarnings( "unchecked" )
+        final T[] result = (T[]) Array.newInstance( type, size() );
+        int index = 0;
+        for ( T value : list ) {
+            if ( value != null ) {
+                result[ index ] = value;
+                index++;
+            }
+        }
+        return result;
+    }
+    
+    /** Use this to get an exact Array representation of this DynArray instance.
+     *  This contains also all null references and the indices has no change to the DynArray.
+     * @param type the type of the array
+     * @return an exact Array representation of this DynArray instance.
+     */
+    public final T[] toExactArray( Class<T> type ) {
+        @SuppressWarnings( "unchecked" )
+        final T[] result = (T[]) Array.newInstance( type, list.size() );
+        for ( int i = 0; i < list.size(); i++ ) {
+            result[ i ] = list.get( i );
+        }
+        return result;
     }
 
     @Override
