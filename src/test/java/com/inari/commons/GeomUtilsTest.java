@@ -183,5 +183,23 @@ public class GeomUtilsTest {
         assertEquals( "10", String.valueOf( GeomUtils.intersection( 0, 10, -10, 30 ) ) );
         assertEquals( "5", String.valueOf( GeomUtils.intersection( 0, 10, -10, 15 ) ) );
     }
+    
+    @Test
+    public void testIntersectionWithResult() {
+        Rectangle r1 = new Rectangle( 0,0,10,10 );
+        Rectangle r2 = new Rectangle( 10,0,10,10 );
+        Rectangle r3 = new Rectangle( 20,0,10,10 );
+        
+        Rectangle intersection = new Rectangle();
+        
+        GeomUtils.intersection( r1, r2, intersection );
+        assertEquals( "[x=10,y=0,width=0,height=10]", intersection.toString() );
+        GeomUtils.intersection( r2, r1, intersection );
+        assertEquals( "[x=10,y=0,width=0,height=10]", intersection.toString() );
+        GeomUtils.intersection( r2, r3, intersection );
+        assertEquals( "[x=20,y=0,width=0,height=10]", intersection.toString() );
+        
+        
+    }
 
 }

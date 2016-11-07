@@ -31,28 +31,29 @@ import com.inari.commons.lang.list.DynArray;
  */
 public final class EventDispatcher implements IEventDispatcher {
     
-    private final EventPool eventPool;
     private final IEventLog eventLog;
+    private final DynArray<EventPool<?>> eventPools = new DynArray<EventPool<?>>();
     private final DynArray<List<?>> listeners = new DynArray<List<?>>();
     
     public EventDispatcher() {
         eventLog = null;
-        eventPool = null;
     }
     
     public EventDispatcher( IEventLog eventLog ) {
         this.eventLog = eventLog;
-        eventPool = null;
     }
     
-    public EventDispatcher( IEventLog eventLog, EventPool eventPool ) {
-        this.eventLog = eventLog;
-        this.eventPool = eventPool;
+    public final void registerEventPool( final EventTypeKey eventType, final EventPool<?> pool ) {
+        eventPools.set( eventType.index(), pool );
     }
     
-    public EventDispatcher( EventPool eventPool ) {
-        this.eventLog = null;
-        this.eventPool = eventPool;
+    public final void unregisterEventPool( final EventTypeKey eventType ) {
+        eventPools.remove( eventType.index() );
+    }
+    
+    @SuppressWarnings( "unchecked" )
+    public final <E extends Event<?>> EventPool<E> getEventPool( final EventTypeKey eventType ) {
+        return (EventPool<E>) eventPools.get( eventType.index() );
     }
 
     /* (non-Javadoc)
@@ -89,9 +90,7 @@ public final class EventDispatcher implements IEventDispatcher {
             event.notify( listener );
         }
         
-        if ( eventPool != null ) {
-            eventPool.restoreEvent( event );
-        }
+        restoreEvent( event );
     }
     
     /* (non-Javadoc)
@@ -108,10 +107,10 @@ public final class EventDispatcher implements IEventDispatcher {
             }
         }
         
-        if ( eventPool != null ) {
-            eventPool.restoreEvent( event );
-        }
+        restoreEvent( event );
     }
+
+    
     
     /* (non-Javadoc)
      * @see com.inari.commons.event.IEventDispatcher#notify(com.inari.commons.event.PredicatedEvent<L>)
@@ -135,9 +134,7 @@ public final class EventDispatcher implements IEventDispatcher {
             } 
         }
         
-        if ( eventPool != null ) {
-            eventPool.restoreEvent( event );
-        }
+        restoreEvent( event );
     }
 
     @Override
@@ -161,6 +158,13 @@ public final class EventDispatcher implements IEventDispatcher {
         }
 
         return listenersOfType;
+    }
+    
+    @SuppressWarnings( "unchecked" )
+    private final void restoreEvent( final Event<?> event ) {
+        if ( eventPools.contains( event.index() ) ) {
+            ( (EventPool<Event<?>>) eventPools.get( event.index() ) ).restore( event );
+        }
     }
 
 }
