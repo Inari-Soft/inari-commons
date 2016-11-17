@@ -96,9 +96,9 @@ public class AspectsTest {
         Aspects aspect3 = aspectGroup.createAspects();
         Aspects aspect4 = aspectGroup.createAspects();
         
-        assertFalse( aspect1.exclude( aspect2 ) );
-        assertFalse( aspect2.exclude( aspect3 ) );
-        assertFalse( aspect4.exclude( aspect4 ) );
+        assertTrue( aspect1.exclude( aspect2 ) );
+        assertTrue( aspect2.exclude( aspect3 ) );
+        assertTrue( aspect4.exclude( aspect4 ) );
         
         aspect1.bitset.set( 1 );
         aspect1.bitset.set( 3 );

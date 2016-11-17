@@ -78,7 +78,7 @@ public final class Aspects implements Iterable<Aspect> {
     public final boolean exclude( Aspects aspects ) {
         checkType( aspects );
         if ( bitset.isEmpty() || aspects.bitset.isEmpty() ) {
-            return false;
+            return true;
         }
         
         if ( this == aspects ) {
