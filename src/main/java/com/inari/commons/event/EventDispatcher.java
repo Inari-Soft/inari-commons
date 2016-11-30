@@ -32,7 +32,7 @@ import com.inari.commons.lang.list.DynArray;
 public final class EventDispatcher implements IEventDispatcher {
     
     private final IEventLog eventLog;
-    private final DynArray<EventPool<?>> eventPools = new DynArray<EventPool<?>>();
+    
     private final DynArray<List<?>> listeners = new DynArray<List<?>>();
     
     public EventDispatcher() {
@@ -41,19 +41,6 @@ public final class EventDispatcher implements IEventDispatcher {
     
     public EventDispatcher( IEventLog eventLog ) {
         this.eventLog = eventLog;
-    }
-    
-    public final void registerEventPool( final EventTypeKey eventType, final EventPool<?> pool ) {
-        eventPools.set( eventType.index(), pool );
-    }
-    
-    public final void unregisterEventPool( final EventTypeKey eventType ) {
-        eventPools.remove( eventType.index() );
-    }
-    
-    @SuppressWarnings( "unchecked" )
-    public final <E extends Event<?>> EventPool<E> getEventPool( final EventTypeKey eventType ) {
-        return (EventPool<E>) eventPools.get( eventType.index() );
     }
 
     /* (non-Javadoc)
@@ -89,8 +76,6 @@ public final class EventDispatcher implements IEventDispatcher {
             L listener = listenersOfType.get( i );
             event.notify( listener );
         }
-        
-        restoreEvent( event );
     }
     
     /* (non-Javadoc)
@@ -106,8 +91,6 @@ public final class EventDispatcher implements IEventDispatcher {
                 event.notify( listener );
             }
         }
-        
-        restoreEvent( event );
     }
 
     
@@ -133,8 +116,6 @@ public final class EventDispatcher implements IEventDispatcher {
                 event.notify( listener );
             } 
         }
-        
-        restoreEvent( event );
     }
 
     @Override
@@ -159,12 +140,4 @@ public final class EventDispatcher implements IEventDispatcher {
 
         return listenersOfType;
     }
-    
-    @SuppressWarnings( "unchecked" )
-    private final void restoreEvent( final Event<?> event ) {
-        if ( eventPools.contains( event.index() ) ) {
-            ( (EventPool<Event<?>>) eventPools.get( event.index() ) ).restore( event );
-        }
-    }
-
 }

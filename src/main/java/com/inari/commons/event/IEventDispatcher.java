@@ -64,27 +64,6 @@ import com.inari.commons.event.Event.EventTypeKey;
  *
  */
 public interface IEventDispatcher {
-    
-    /** Use this to register a EventPool for specified type of Event(s).
-     *  Once a EventPool is registered for a type of Event, the events of that types gets pooled.
-     *  
-     * @param eventType the type of the Event
-     * @param pool the EventPool instance that handles the pooling
-     */
-    void registerEventPool( final EventTypeKey eventType, final EventPool<?> pool );
-    
-    /** use this to stop pooling of Event of a specified type 
-     * 
-     * @param eventType the type of the Event
-     */
-    void unregisterEventPool( final EventTypeKey eventType );
-    
-    /** Use this to get a registered EventPool for a specified type of Event.
-     * 
-     * @param eventType the type of the Event
-     * @return The registered instance of EventPool for specified type of Event. Or null of there is none registered.
-     */
-    <E extends Event<?>> EventPool<E> getEventPool( final EventTypeKey eventType );
 
     /** Register a Listener L to listen to specified type of {@link Event}.
      * 
