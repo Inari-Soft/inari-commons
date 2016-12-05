@@ -56,6 +56,11 @@ public final class IntBag implements StringConfigurable {
             add( i );
         }
     }
+    
+    public IntBag( int... values ) {
+        array = values;
+        size = values.length;
+    }
 
     public final int getNullValue() {
         return nullValue;

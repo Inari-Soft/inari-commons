@@ -53,7 +53,7 @@ public final class Aspects implements Iterable<Aspect> {
         return this;
     }
 
-    public final Aspects remove( Aspects aspects ) {
+    public final Aspects reset( Aspects aspects ) {
         checkType( aspects );
         bitset.andNot( aspects.bitset );
         return this;
