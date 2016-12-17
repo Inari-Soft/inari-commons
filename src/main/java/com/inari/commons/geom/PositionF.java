@@ -28,6 +28,16 @@ public class PositionF implements StringConfigurable {
         this.x = x;
         this.y = y;
     }
+    
+    /** Use this to create a new Position with specified initialization
+     *
+     * @param x The x axis value of the position
+     * @param y The y axis value of the position
+     */
+    public PositionF( float x, float y ) {
+        this.x = x;
+        this.y = y;
+    }
 
     /** Use this to create a new Position form configuration String value.
      *
