@@ -139,8 +139,8 @@ public abstract class GeomUtils {
         return (
             ( x >= r.x ) &&
             ( y >= r.y ) && 
-            ( x <= ( r.x + r.width ) ) && 
-            ( y <= ( r.y + r.height ) )
+            ( x < ( r.x + r.width ) ) && 
+            ( y < ( r.y + r.height ) ) 
         );
     }
     
@@ -152,8 +152,8 @@ public abstract class GeomUtils {
         return (
             ( r1.x >= r.x ) && 
             ( r1.y >= r.y ) && 
-            ( ( r1.x + r1.width ) <= ( r.x + r.width ) ) && 
-            ( ( r1.y + r1.height ) <= ( r.y + r.height ) )
+            ( ( r1.x + r1.width ) < ( r.x + r.width ) ) && 
+            ( ( r1.y + r1.height ) < ( r.y + r.height ) )
         );
     }
     

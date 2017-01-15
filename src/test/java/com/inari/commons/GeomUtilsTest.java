@@ -201,5 +201,22 @@ public class GeomUtilsTest {
         
         
     }
+    
+    @Test
+    public void testContains() {
+        Rectangle r1 = new Rectangle( 1, 1, 10, 10 );
+        
+        assertTrue( GeomUtils.contains( r1, 1, 1 ) );
+        assertTrue( GeomUtils.contains( r1, 5, 5 ) );
+        assertTrue( GeomUtils.contains( r1, 1, 10 ) );
+        assertTrue( GeomUtils.contains( r1, 10, 1 ) );
+        
+        assertFalse( GeomUtils.contains( r1, 0, 0 ) );
+        assertFalse( GeomUtils.contains( r1, 0, 1 ) );
+        assertFalse( GeomUtils.contains( r1, 1, 0 ) );
+        assertFalse( GeomUtils.contains( r1, 1, 11 ) );
+        assertFalse( GeomUtils.contains( r1, 11, 1 ) );
+        
+    }
 
 }
