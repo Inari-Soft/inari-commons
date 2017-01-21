@@ -28,6 +28,7 @@ import static com.inari.commons.geom.Direction.WEST;
 import java.util.BitSet;
 
 import com.inari.commons.geom.Direction;
+import com.inari.commons.geom.Orientation;
 import com.inari.commons.geom.Position;
 import com.inari.commons.geom.Rectangle;
 import com.inari.commons.geom.Vector2i;
@@ -312,17 +313,8 @@ public abstract class GeomUtils {
     }
 
     public final static void movePosition( final Position position, final Direction d, final int distance, final boolean originUpperCorner ) {
-        switch ( d.horizontal ) {
-            case WEST: position.x -= distance; break;
-            case EAST: position.x += distance; break;
-            default : 
-        }
-    
-        switch ( d.vertical ) {
-            case NORTH: position.y = ( originUpperCorner )? position.y - distance: position.y + distance; break;
-            case SOUTH: position.y = ( originUpperCorner )? position.y + distance: position.y - distance; break;
-            default : 
-        }
+        movePosition( position, d.horizontal, distance, originUpperCorner );
+        movePosition( position, d.vertical, distance, originUpperCorner );
     }
     
     public static final void bitMaskIntersection( final BitSet source, final Rectangle sourceRect, final Rectangle intersectionRect, final BitSet result ) {
@@ -339,6 +331,24 @@ public abstract class GeomUtils {
     
     public static final int getFlatArrayIndex( int x, int y, int width ) {
         return y * width + x;
+    }
+    
+    public static final void movePosition( final Position pos, final Orientation orientation ) {
+        movePosition( pos, orientation, 1, true );
+    }
+    
+    public static final void movePosition( final Position pos, final Orientation orientation, final int distance ) {
+        movePosition( pos, orientation, distance, true );
+    }
+    
+    public static final void movePosition( final Position pos, final Orientation orientation, final int distance, final boolean originUpperCorner ) {
+        switch ( orientation ) {
+            case NORTH: pos.y = ( originUpperCorner )? pos.y - distance: pos.y + distance; break;
+            case SOUTH: pos.y = ( originUpperCorner )? pos.y + distance: pos.y - distance; break;
+            case WEST: pos.x -= distance; break;
+            case EAST: pos.x += distance; break;
+            default : 
+        }
     }
 
 }
