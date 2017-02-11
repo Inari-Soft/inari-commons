@@ -76,6 +76,8 @@ public final class EventDispatcher implements IEventDispatcher {
             L listener = listenersOfType.get( i );
             event.notify( listener );
         }
+        
+        event.restore();
     }
     
     /* (non-Javadoc)
@@ -91,6 +93,8 @@ public final class EventDispatcher implements IEventDispatcher {
                 event.notify( listener );
             }
         }
+        
+        event.restore();
     }
 
     
@@ -116,6 +120,8 @@ public final class EventDispatcher implements IEventDispatcher {
                 event.notify( listener );
             } 
         }
+        
+        event.restore();
     }
 
     @Override

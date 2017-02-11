@@ -82,6 +82,14 @@ public abstract class Event<L> implements IndexedType, Indexed {
      */
     protected abstract void notify( final L listener );
     
+    /** This is called within the IEventDispatcher after the Event has passed all its listeners and can be restored.
+     *  Useful for event pooling. 
+     *  This is an empty implementation and does nothing. Override this to get notified on restore
+     */
+    protected void restore() {
+        // This is an empty implementation and does nothing. Override this to get notified on restore
+    }
+    
     
     /** This is internally used to create index for specified event type */
     protected static final EventTypeKey createTypeKey( Class<? extends Event<?>> type ) {
