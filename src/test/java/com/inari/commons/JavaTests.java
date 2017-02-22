@@ -3,6 +3,7 @@ package com.inari.commons;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -53,6 +54,42 @@ public class JavaTests {
         assertEquals( "one", array[ index++ ] );
         assertEquals( "two", array[ index++ ] );
         assertEquals( "three", array[ index++ ] );
+    }
+    
+    @Test
+    public void bitSetMaxTest() {
+        BitSet bitSet = new BitSet();
+        bitSet.set( Integer.MAX_VALUE );
+        long[] longArray = bitSet.toLongArray();
+        assertEquals( "33554432", String.valueOf( longArray.length ) );
+        
+        bitSet.clear();
+        bitSet.set( 1000000 );
+        longArray = bitSet.toLongArray();
+        byte[] byteArray = bitSet.toByteArray();
+        assertEquals( "15626", String.valueOf( longArray.length ) );
+        assertEquals( "125001", String.valueOf( byteArray.length ) );
+        
+        bitSet.clear();
+        bitSet.set( 100000 );
+        longArray = bitSet.toLongArray();
+        byteArray = bitSet.toByteArray();
+        assertEquals( "1563", String.valueOf( longArray.length ) );
+        assertEquals( "12501", String.valueOf( byteArray.length ) );
+        
+        bitSet.clear();
+        bitSet.set( 10000 );
+        longArray = bitSet.toLongArray();
+        byteArray = bitSet.toByteArray();
+        assertEquals( "157", String.valueOf( longArray.length ) );
+        assertEquals( "1251", String.valueOf( byteArray.length ) );
+        
+        bitSet.clear();
+        bitSet.set( 1000 );
+        longArray = bitSet.toLongArray();
+        byteArray = bitSet.toByteArray();
+        assertEquals( "16", String.valueOf( longArray.length ) );
+        assertEquals( "126", String.valueOf( byteArray.length ) );
     }
 
 }
