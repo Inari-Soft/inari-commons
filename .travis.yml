@@ -1,4 +1,2 @@
 language: java
 script: mvn clean install
-
-repo_token: 30yqaiF4R0cNmwWxONPX4lCInnBxLgbvt
