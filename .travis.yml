@@ -2,4 +2,4 @@ language: java
 script: mvn clean install
 
 after_success:
-  - mvn clean cobertura:cobertura coveralls:cobertura
+  - mvn -B cobertura:cobertura coveralls:report
