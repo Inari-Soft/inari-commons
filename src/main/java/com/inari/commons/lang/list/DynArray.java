@@ -248,7 +248,16 @@ public final class DynArray<T> implements Iterable<T> {
     }
 
     public final T[] getArray() {
-        return array;
+        @SuppressWarnings( "unchecked" )
+        T[] result = (T[]) Array.newInstance( typeClass, size );
+        int index = 0;
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( array[ i ] != null ) {
+                result[ index ] = array[ i ];
+                index++;
+            }
+        }
+        return result;
     }
 
     @Override
