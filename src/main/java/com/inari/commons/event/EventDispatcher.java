@@ -15,14 +15,11 @@
  ******************************************************************************/
 package com.inari.commons.event;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.inari.commons.event.Event.EventTypeKey;
 import com.inari.commons.lang.Predicate;
 import com.inari.commons.lang.indexed.Indexed;
 import com.inari.commons.lang.list.DynArray;
+import com.inari.commons.lang.list.StaticList;
 
 /** A simple, synchronous and none thread save implementation of the {@link IEventDispatcher} interface.
  * 
@@ -33,7 +30,7 @@ public final class EventDispatcher implements IEventDispatcher {
     
     private final IEventLog eventLog;
     
-    private final DynArray<List<?>> listeners = new DynArray<List<?>>();
+    private final DynArray<StaticList<?>> listeners = DynArray.createTyped( StaticList.class, 10, 10 );
     
     public EventDispatcher() {
         eventLog = null;
@@ -48,7 +45,7 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> void register( final EventTypeKey eventType, final L listener ) {
-        final List<L> listenersOfType = getListenersOfType( eventType, true );
+        final StaticList<L> listenersOfType = getListenersOfType( eventType, true );
         if ( !listenersOfType.contains( listener ) ) {
             listenersOfType.add( listener );
         }
@@ -59,8 +56,8 @@ public final class EventDispatcher implements IEventDispatcher {
      */
     @Override
     public final <L> boolean unregister( final EventTypeKey eventType, final L listener ) {
-        final List<L> listenersOfType = getListenersOfType( eventType, false );
-        return listenersOfType.remove( listener );
+        final StaticList<L> listenersOfType = getListenersOfType( eventType, false );
+        return ( listenersOfType != null && listenersOfType.remove( listener ) >= 0 );
     }
     
     /* (non-Javadoc)
@@ -71,10 +68,15 @@ public final class EventDispatcher implements IEventDispatcher {
         if ( eventLog != null ) {
             eventLog.log( event );
         }
-        List<L> listenersOfType = this.<L>getListenersOfType( event, false );
-        for ( int i = 0; i < listenersOfType.size(); i++ ) {
-            L listener = listenersOfType.get( i );
-            event.notify( listener );
+        StaticList<L> listenersOfType = this.<L>getListenersOfType( event, false );
+        if ( listenersOfType != null ) {
+            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+                L listener = listenersOfType.get( i );
+                if ( listener == null ) {
+                    continue;
+                }
+                event.notify( listener );
+            }
         }
         
         event.restore();
@@ -88,9 +90,13 @@ public final class EventDispatcher implements IEventDispatcher {
         if ( eventLog != null ) {
             eventLog.log( event );
         }
-        for ( L listener : this.<L>getListenersOfType( event.indexedTypeKey(), false ) ) {
-            if ( listener.match( event.getAspects() ) ) {
-                event.notify( listener );
+        StaticList<L> listenersOfType = this.<L>getListenersOfType( event.indexedTypeKey(), false );
+        if ( listenersOfType != null ) {
+            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+                L listener = listenersOfType.get( i );
+                if ( listener != null && listener.match( event.getAspects() ) ) {
+                    event.notify( listener );
+                }
             }
         }
         
@@ -107,18 +113,23 @@ public final class EventDispatcher implements IEventDispatcher {
         if ( eventLog != null ) {
             eventLog.log( event );
         }
-        List<L> listenersOfType = this.<L>getListenersOfType( event, false );
-        for ( int i = 0; i < listenersOfType.size(); i++ ) {
-            L listener = listenersOfType.get( i );
-            Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
-            if( matcher == null ) {
-                event.notify( listener );
-                return;
+        StaticList<L> listenersOfType = this.<L>getListenersOfType( event, false );
+        if ( listenersOfType != null ) {
+            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+                L listener = listenersOfType.get( i );
+                if ( listener == null ) {
+                    continue;
+                }
+                Predicate<PredicatedEvent<L>> matcher = listener.getMatcher();
+                if( matcher == null ) {
+                    event.notify( listener );
+                    return;
+                }
+                
+                if ( matcher.apply( event ) ) {
+                    event.notify( listener );
+                } 
             }
-            
-            if ( matcher.apply( event ) ) {
-                event.notify( listener );
-            } 
         }
         
         event.restore();
@@ -130,17 +141,15 @@ public final class EventDispatcher implements IEventDispatcher {
     }
 
     @SuppressWarnings( "unchecked" )
-    private final <L> List<L> getListenersOfType( final Indexed indexed, final boolean create ) {
+    private final <L> StaticList<L> getListenersOfType( final Indexed indexed, final boolean create ) {
         int eventIndex = indexed.index();
-        List<L> listenersOfType;
+        StaticList<L> listenersOfType = null;
         if ( listeners.contains( eventIndex ) ) {
-            listenersOfType = (List<L>) listeners.get( eventIndex );
+            listenersOfType = (StaticList<L>) listeners.get( eventIndex );
         } else {
             if ( create ) {
-                listenersOfType = new ArrayList<L>();
+                listenersOfType = new StaticList<L>( 10, 10 );
                 listeners.set( eventIndex, listenersOfType );
-            } else {
-                return Collections.emptyList();
             }
         }
 

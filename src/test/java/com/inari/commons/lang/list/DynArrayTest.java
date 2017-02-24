@@ -2,6 +2,7 @@ package com.inari.commons.lang.list;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -17,11 +18,11 @@ public class DynArrayTest {
 
     @Test
     public void testCreation() {
-        DynArray<String> array1 = new DynArray<String>();
-        DynArray<String> array2 = new DynArray<String>( 10 );
+        DynArray<String> array1 = DynArray.create( String.class );
+        DynArray<String> array2 = DynArray.create( String.class, 10 );
         
         assertEquals( 
-            "DynArray [list=[], size()=0, capacity()=0]", 
+            "DynArray [list=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], size()=0, capacity()=50]", 
             array1.toString() 
         );
         assertEquals( 
@@ -30,9 +31,62 @@ public class DynArrayTest {
         );
     }
     
+    
+    @Test
+    public void testCreationUntyped() {
+        DynArray<DynArray<String>> array1 = DynArray.createTyped( DynArray.class );
+        array1.set( 0, DynArray.create( String.class ) );
+        DynArray<String>[] array = array1.getArray();
+        DynArray<String> instance =  array[ 0 ];
+        
+        assertNotNull( instance );
+    }
+    
+    @Test
+    public void testTrim() {
+        DynArray<String> array = DynArray.create( String.class, 20, 5 );
+        array.set( 3, "1" );
+        array.set( 6, "2" );
+        array.set( 9, "3" );
+        array.set( 14, "4" );
+        array.set( 15, "5" );
+        
+        assertEquals( 
+            "DynArray [list=[null, null, null, 1, null, null, 2, null, null, 3, null, null, null, null, 4, 5, null, null, null, null], size()=5, capacity()=20]", 
+            array.toString() 
+        );
+        
+        array.trim();
+        
+        assertEquals( 
+            "DynArray [list=[1, 2, 3, 4, 5], size()=5, capacity()=5]", 
+            array.toString() 
+        );
+        
+        array.add( "6" );
+        
+        assertEquals( 
+            "DynArray [list=[1, 2, 3, 4, 5, 6, null, null, null, null], size()=6, capacity()=10]", 
+            array.toString() 
+        );
+        
+        array.trim();
+        
+        assertEquals( 
+            "DynArray [list=[1, 2, 3, 4, 5, 6], size()=6, capacity()=6]", 
+            array.toString() 
+        );
+        
+        array.trim();
+        
+        assertEquals( 
+            "DynArray [list=[1, 2, 3, 4, 5, 6], size()=6, capacity()=6]", 
+            array.toString() 
+        );
+    }
     @Test
     public void testSetGet() {
-        DynArray<String> array = new DynArray<String>( 10 );
+        DynArray<String> array = DynArray.create( String.class, 10, 10 );
         
         assertEquals( 
             "DynArray [list=[null, null, null, null, null, null, null, null, null, null], size()=0, capacity()=10]", 
@@ -70,7 +124,7 @@ public class DynArrayTest {
             array.get( 100 );
             fail( "IndexOutOfBoundsException expeceted here" );
         } catch ( IndexOutOfBoundsException e ) {
-            assertEquals( "Index: 100, Size: 10", e.getMessage() );
+            assertEquals( "100", e.getMessage() );
         }
         
         array.set(  9, "last" );
@@ -88,7 +142,7 @@ public class DynArrayTest {
     
     @Test
     public void testAddRemove() {
-        DynArray<String> array = new DynArray<String>( 10, 5 );
+        DynArray<String> array = DynArray.create( String.class, 10, 5 );
         array.set( 1, "one" );
         array.set( 3, "two" );
         array.set( 6, "tree" );
@@ -133,8 +187,8 @@ public class DynArrayTest {
     
     @Test
     public void testGrow() {
-        DynArray<String> array1 = new DynArray<String>( 10, 10 );
-        DynArray<String> array2 = new DynArray<String>( 10, 10 );
+        DynArray<String> array1 = DynArray.create( String.class, 10, 10 );
+        DynArray<String> array2 = DynArray.create( String.class, 10, 10 );
         
         assertEquals( 
             "DynArray [list=[null, null, null, null, null, null, null, null, null, null], size()=0, capacity()=10]", 
@@ -160,7 +214,7 @@ public class DynArrayTest {
     
     @Test
     public void testSort() {
-        DynArray<String> array = new DynArray<String>( 10 );
+        DynArray<String> array = DynArray.create( String.class, 10 );
         array.set( 1, "one" );
         array.set( 3, "two" );
         array.set( 6, "tree" );
@@ -198,7 +252,7 @@ public class DynArrayTest {
         
         Random random = new Random();
         ArrayList<String> arrayList = new ArrayList<String>();
-        DynArray<String> dynArray = new DynArray<String>();
+        DynArray<String> dynArray = DynArray.create( String.class );
         
         System.out.println( operations + " add/set operations on none initialized lists:" );
         
@@ -221,7 +275,7 @@ public class DynArrayTest {
         
         
         arrayList = new ArrayList<String>( operations + 1 );
-        dynArray = new DynArray<String>( operations + 1 );
+        dynArray = DynArray.create( String.class, operations + 1 );
         for ( int i = 0; i < operations + 1; i++ ) {
             arrayList.add( i, "arrayList" );
             dynArray.set( i, "dynArray" );
@@ -253,15 +307,15 @@ public class DynArrayTest {
         int runns = 30 * 50;
         
         ArrayList<String> arrayList = new ArrayList<String>( operations );
-        DynArray<String> dynArray = new DynArray<String>( operations );
-        DynArray_Array<String> dynArrayArray = new DynArray_Array<String>( String.class, operations );
+        DynArray<String> dynArray = DynArray.create( String.class, operations );
+        StaticList<String> staticList = new StaticList<String>( operations );
         
         String[] array = new String[ operations ];
         for ( int i = 0; i < operations; i++ ) {
             arrayList.add( i, entry );
             dynArray.set( i, entry );
             array[ i ] = entry;
-            dynArrayArray.set( i, entry );
+            staticList.set( i, entry );
         }
         
         long startTime = System.nanoTime();
@@ -276,8 +330,12 @@ public class DynArrayTest {
         System.out.println( "ArrayList              :"  + time );
         
         startTime = System.nanoTime();
+        int capacity = dynArray.capacity();
         for ( int run = 0; run < runns; run++ ) {
-            for( @SuppressWarnings( "unused" ) String value : dynArray ) {
+            for( int i = 0; i < capacity; i++ ) {
+                if ( dynArray.get( i ) != null ) {
+                    
+                }
             }
         }
         time = System.nanoTime() - startTime;
@@ -286,10 +344,9 @@ public class DynArrayTest {
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            Iterator<String> listIterator = dynArray.listIterator();
+            Iterator<String> listIterator = dynArray.iterator();
             while ( listIterator.hasNext() ) {
-                String value = listIterator.next();
-                if ( value != null ) {
+                if ( listIterator.next() != null ) {
                 }
             }
         }
@@ -301,8 +358,7 @@ public class DynArrayTest {
         int length = dynArray.capacity();
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < length; i++ ) {
-                String value = dynArray.get( i );
-                if ( value != null ) {
+                if ( dynArray.get( i ) != null ) {
                     
                 }
             }
@@ -313,25 +369,24 @@ public class DynArrayTest {
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            for( @SuppressWarnings( "unused" ) String value : dynArrayArray ) {
+            for( @SuppressWarnings( "unused" ) String value : staticList ) {
             }
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArrayArray iterator :"  + time );
+        System.out.println( "StaticList iterator :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
-            String[] arrayArray = dynArrayArray.getArray();
-            for( int i = 0; i < arrayArray.length; i++ ) {
-                if ( arrayArray[ i ] != null ) {
+            for( int i = 0; i < staticList.capacity(); i++ ) {
+                if ( staticList.get( i ) != null ) {
                     
                 }
             }
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArrayArray          :"  + time );
+        System.out.println( "StaticList          :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {

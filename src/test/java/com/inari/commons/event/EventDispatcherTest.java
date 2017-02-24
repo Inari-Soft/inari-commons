@@ -24,7 +24,7 @@ public class EventDispatcherTest {
     public void testCreation() {
         IEventDispatcher eventDispatcher = new EventDispatcher();
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[], size()=0, capacity()=0]]", 
+            "EventDispatcher [listeners=DynArray [list=[null, null, null, null, null, null, null, null, null, null], size()=0, capacity()=10]]", 
             eventDispatcher.toString() 
         );
     }
@@ -47,30 +47,33 @@ public class EventDispatcherTest {
         eventDispatcher.register( SimpleTestEvent2.TYPE_KEY, listener22 );
         
         assertEquals( 
-              "EventDispatcher [listeners=DynArray [list=[" +
-              "[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]], " +
-              "[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]], null, null, null, null, null, null, null, null" +
-              "], size()=2, capacity()=10]]",
+              "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+              + "[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null], "
+              + "null, null, null, null, null, null, null], size()=3, capacity()=10], StaticList [list=[GenericTestEventListener [lastCall=null], "
+              + "GenericTestEventListener [lastCall=null], null, null, null, null, null, null, null, null], size()=2, capacity()=10], "
+              + "null, null, null, null, null, null, null, null], size()=2, capacity()=10]]",
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new SimpleTestEvent1() );
         
         assertEquals(
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1]], " +
-            "[GenericTestEventListener [lastCall=null], GenericTestEventListener [lastCall=null]], null, null, null, null, null, null, null, null" +
-            "], size()=2, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], "
+            + "null, null, null, null, null, null, null], size()=3, capacity()=10], StaticList [list=[GenericTestEventListener [lastCall=null], "
+            + "GenericTestEventListener [lastCall=null], null, null, null, null, null, null, null, null], size()=2, capacity()=10], "
+            + "null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new SimpleTestEvent2() );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1]], " +
-            "[GenericTestEventListener [lastCall=SimpleTestEvent2], GenericTestEventListener [lastCall=SimpleTestEvent2]], null, null, null, null, null, null, null, null" +
-            "], size()=2, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], "
+            + "null, null, null, null, null, null, null], size()=3, capacity()=10], StaticList [list=[GenericTestEventListener [lastCall=SimpleTestEvent2], "
+            + "GenericTestEventListener [lastCall=SimpleTestEvent2], null, null, null, null, null, null, null, null], size()=2, capacity()=10], "
+            + "null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
     }
@@ -87,33 +90,30 @@ public class EventDispatcherTest {
         eventDispatcher.register( CTestEvent2.TYPE_KEY, listener2 );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[CombinedTestEventListener [event1Notified=false, event2Notified=false]], " +
-            "[CombinedTestEventListener [event1Notified=false, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false]]" +
-            ", null, null, null, null, null, null, null, null" +
-            "], size()=2, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[CombinedTestEventListener [event1Notified=false, event2Notified=false], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], "
+            + "StaticList [list=[CombinedTestEventListener [event1Notified=false, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false], "
+            + "null, null, null, null, null, null, null, null], size()=2, capacity()=10], null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new CTestEvent1() );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[CombinedTestEventListener [event1Notified=true, event2Notified=false]], " +
-            "[CombinedTestEventListener [event1Notified=true, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false]]" +
-            ", null, null, null, null, null, null, null, null" +
-            "], size()=2, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[CombinedTestEventListener [event1Notified=true, event2Notified=false], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], "
+            + "StaticList [list=[CombinedTestEventListener [event1Notified=true, event2Notified=false], CombinedTestEventListener [event1Notified=false, event2Notified=false], "
+            + "null, null, null, null, null, null, null, null], size()=2, capacity()=10], null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new CTestEvent2() );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[CombinedTestEventListener [event1Notified=true, event2Notified=true]], " +
-            "[CombinedTestEventListener [event1Notified=true, event2Notified=true], CombinedTestEventListener [event1Notified=false, event2Notified=true]]" +
-            ", null, null, null, null, null, null, null, null" +
-            "], size()=2, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[CombinedTestEventListener [event1Notified=true, event2Notified=true], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], StaticList [list="
+            + "[CombinedTestEventListener [event1Notified=true, event2Notified=true], CombinedTestEventListener [event1Notified=false, event2Notified=true], "
+            + "null, null, null, null, null, null, null, null], size()=2, capacity()=10], null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
     }
@@ -140,45 +140,45 @@ public class EventDispatcherTest {
         eventDispatcher.register( TestAspectedEvent.TYPE_KEY, listener );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
-            "], size()=1, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null], "
+            + "null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new TestAspectedEvent( noMatchAspect1 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
-            "], size()=1, capacity()=10]]",
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null], "
+            + "null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]",
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new TestAspectedEvent( noMatchAspect2 ) );
         
         assertEquals( 
-             "EventDispatcher [listeners=DynArray [list=[" +
-             "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null]], null, null, null, null, null, null, null, null, null" +
-             "], size()=1, capacity()=10]]", 
+             "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+             + "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=null], "
+             + "null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new TestAspectedEvent( matchAspect1 ) );
         
         assertEquals(
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}]]]], null, null, null, null, null, null, null, null, null" +
-            "], size()=1, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}]]], "
+            + "null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
         
         eventDispatcher.notify( new TestAspectedEvent( matchAspect2 ) );
         
         assertEquals( 
-            "EventDispatcher [listeners=DynArray [list=[" +
-            "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_2, aspect_3}]]]], null, null, null, null, null, null, null, null, null" +
-            "], size()=1, capacity()=10]]", 
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+            + "[AspectedTestEventListener [aspect=Aspects [group=TestGroup {aspect_1, aspect_3}], lastCall=AspectedEvent [aspect=Aspects [group=TestGroup {aspect_1, aspect_2, aspect_3}]]]"
+            + ", null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
     }

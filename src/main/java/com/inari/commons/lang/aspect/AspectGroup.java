@@ -10,7 +10,7 @@ public final class AspectGroup {
     private static final Set<String> NAMES = new HashSet<String>();
     
     private final String name;
-    private final DynArray<Aspect> aspects = new DynArray<Aspect>();
+    private final DynArray<Aspect> aspects = DynArray.create( Aspect.class, 10, 10 );
     private final int hashCode;
 
     public AspectGroup( String name ) {
