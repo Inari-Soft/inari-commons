@@ -150,7 +150,7 @@ public class StaticList<T> implements Iterable<T> {
                 continue;
             }
             
-            if ( _value == value || _value.equals( value ) ) {
+            if ( _value == value ) {
                 return true;
             }
         }
