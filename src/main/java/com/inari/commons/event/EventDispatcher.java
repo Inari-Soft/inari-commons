@@ -70,7 +70,7 @@ public final class EventDispatcher implements IEventDispatcher {
         }
         StaticList<L> listenersOfType = this.<L>getListenersOfType( event, false );
         if ( listenersOfType != null ) {
-            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+            for ( int i = 0; i < listenersOfType.capacity(); i++ ) {
                 L listener = listenersOfType.get( i );
                 if ( listener == null ) {
                     continue;
@@ -92,7 +92,7 @@ public final class EventDispatcher implements IEventDispatcher {
         }
         StaticList<L> listenersOfType = this.<L>getListenersOfType( event.indexedTypeKey(), false );
         if ( listenersOfType != null ) {
-            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+            for ( int i = 0; i < listenersOfType.capacity(); i++ ) {
                 L listener = listenersOfType.get( i );
                 if ( listener != null && listener.match( event.getAspects() ) ) {
                     event.notify( listener );
@@ -115,7 +115,7 @@ public final class EventDispatcher implements IEventDispatcher {
         }
         StaticList<L> listenersOfType = this.<L>getListenersOfType( event, false );
         if ( listenersOfType != null ) {
-            for ( int i = 0; i < listenersOfType.size(); i++ ) {
+            for ( int i = 0; i < listenersOfType.capacity(); i++ ) {
                 L listener = listenersOfType.get( i );
                 if ( listener == null ) {
                     continue;
