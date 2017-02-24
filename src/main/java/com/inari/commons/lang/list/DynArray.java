@@ -51,6 +51,11 @@ public final class DynArray<T> implements Iterable<T> {
         createList( initialCapacity );
         this.grow = grow;
     }
+   
+    /** Returns the type Class of T for this DynArray */
+    public final Class<T> getTypeClass() {
+        return typeClass;
+    }
 
 
     /** Indicates the grow number that defines the number of additional capacity that is added when a object is set with an
