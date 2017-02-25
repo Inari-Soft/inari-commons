@@ -327,7 +327,41 @@ public class DynArrayTest {
         }
         long time = System.nanoTime() - startTime;
         
+        System.out.println( "Iteration Performance: " + operations + " items" );
         System.out.println( "ArrayList              :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            for( @SuppressWarnings( "unused" ) String value : staticList ) {
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "StaticList iterator    :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            for( int i = 0; i < staticList.capacity(); i++ ) {
+                if ( staticList.get( i ) != null ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "StaticList             :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            for( int i = 0; i < array.length; i++ ) {
+                if ( array[ i ] != null ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "Array                  :"  + time );
         
         startTime = System.nanoTime();
         int capacity = dynArray.capacity();
@@ -340,7 +374,32 @@ public class DynArrayTest {
         }
         time = System.nanoTime() - startTime;
         
-        System.out.println( "DynArray               :"  + time );
+        System.out.println( "DynArray with get      :"  + time );
+        
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            for( int i = 0; i < dynArray.capacity(); i++ ) {
+                if ( dynArray.get( i ) != null ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArray with get + cap:"  + time );
+        
+        startTime = System.nanoTime();
+        capacity = dynArray.capacity();
+        for ( int run = 0; run < runns; run++ ) {
+            for( int i = 0; i < capacity; i++ ) {
+                if ( dynArray.contains( i ) ) {
+                    
+                }
+            }
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArray with contains :"  + time );
         
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
@@ -354,51 +413,6 @@ public class DynArrayTest {
         
         System.out.println( "DynArray listIt        :"  + time );
         
-        startTime = System.nanoTime();
-        int length = dynArray.capacity();
-        for ( int run = 0; run < runns; run++ ) {
-            for( int i = 0; i < length; i++ ) {
-                if ( dynArray.get( i ) != null ) {
-                    
-                }
-            }
-        }
-        time = System.nanoTime() - startTime;
-        
-        System.out.println( "DynArray capacityIt    :"  + time );
-        
-        startTime = System.nanoTime();
-        for ( int run = 0; run < runns; run++ ) {
-            for( @SuppressWarnings( "unused" ) String value : staticList ) {
-            }
-        }
-        time = System.nanoTime() - startTime;
-        
-        System.out.println( "StaticList iterator :"  + time );
-        
-        startTime = System.nanoTime();
-        for ( int run = 0; run < runns; run++ ) {
-            for( int i = 0; i < staticList.capacity(); i++ ) {
-                if ( staticList.get( i ) != null ) {
-                    
-                }
-            }
-        }
-        time = System.nanoTime() - startTime;
-        
-        System.out.println( "StaticList          :"  + time );
-        
-        startTime = System.nanoTime();
-        for ( int run = 0; run < runns; run++ ) {
-            for( int i = 0; i < array.length; i++ ) {
-                if ( array[ i ] != null ) {
-                    
-                }
-            }
-        }
-        time = System.nanoTime() - startTime;
-        
-        System.out.println( "Array                  :"  + time );
     }
 
 }
