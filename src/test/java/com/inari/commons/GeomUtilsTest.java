@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.inari.commons.geom.Direction;
+import com.inari.commons.geom.Orientation;
 import org.junit.Test;
 
 import com.inari.commons.geom.Position;
@@ -86,11 +88,7 @@ public class GeomUtilsTest {
         Rectangle r2 = new Rectangle( 50, 50, 100, 100 );
         
         assertEquals( "17", String.valueOf( GeomUtils.getIntersectionCode( r1, r2 ) ) );
-        assertTrue( ( 17 & GeomUtils.LEFT_SIDE ) > 0 );
-        assertTrue( ( 17 & GeomUtils.TOP_SIDE ) > 0 );
         assertEquals( "12", String.valueOf( GeomUtils.getIntersectionCode( r2, r1 ) ) );
-        assertTrue( ( 12 & GeomUtils.RIGHT_SIDE ) > 0 );
-        assertTrue( ( 12 & GeomUtils.BOTTOM_SIDE ) > 0 );
         
         r2 = new Rectangle( 100, 100, 100, 100 );
         assertEquals( "0", String.valueOf( GeomUtils.getIntersectionCode( r1, r2 ) ) );
@@ -103,12 +101,8 @@ public class GeomUtilsTest {
         
         r2 = new Rectangle( 50, 50, 100, 10 );
         assertEquals( "25", String.valueOf( GeomUtils.getIntersectionCode( r1, r2 ) ) );
-        assertTrue( ( 25 & GeomUtils.LEFT_SIDE ) > 0 );
-        assertTrue( ( 25 & GeomUtils.TOP_SIDE ) > 0 );
-        assertTrue( ( 25 & GeomUtils.BOTTOM_SIDE ) > 0 );
         
         assertEquals( "4", String.valueOf( GeomUtils.getIntersectionCode( r2, r1 ) ) );
-        assertTrue( ( 4 & GeomUtils.RIGHT_SIDE ) > 0 );
     }
     
     @Test
@@ -217,6 +211,46 @@ public class GeomUtilsTest {
         assertFalse( GeomUtils.contains( r1, 1, 11 ) );
         assertFalse( GeomUtils.contains( r1, 11, 1 ) );
         
+    }
+
+    @Test
+    public void movePositionTest() {
+        Position p = new Position( 0, 0 );
+
+        assertEquals( "[x=0,y=0]", p.toString() );
+
+        GeomUtils.movePosition( p, Orientation.EAST );
+        assertEquals( "[x=1,y=0]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.SOUTH );
+        assertEquals( "[x=1,y=1]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.WEST );
+        assertEquals( "[x=0,y=1]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.NORTH );
+        assertEquals( "[x=0,y=0]", p.toString() );
+
+        GeomUtils.movePosition( p, Orientation.EAST, 1 );
+        assertEquals( "[x=1,y=0]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.SOUTH, 2 );
+        assertEquals( "[x=1,y=2]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.WEST, 3 );
+        assertEquals( "[x=-2,y=2]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.NORTH, 4 );
+        assertEquals( "[x=-2,y=-2]", p.toString() );
+
+        p.x = 0;
+        p.y = 0;
+        GeomUtils.movePosition( p, Orientation.EAST,1, false );
+        assertEquals( "[x=1,y=0]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.SOUTH,1, false );
+        assertEquals( "[x=1,y=-1]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.WEST,1, false );
+        assertEquals( "[x=0,y=-1]", p.toString() );
+        GeomUtils.movePosition( p, Orientation.NORTH,1, false );
+        assertEquals( "[x=0,y=0]", p.toString() );
+
+        GeomUtils.movePosition( p, Direction.NORTH_EAST, 1, true );
+        assertEquals( "[x=1,y=-1]", p.toString() );
+
     }
 
 }
