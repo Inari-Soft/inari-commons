@@ -55,7 +55,7 @@ public final class RGBColor implements StringConfigurable {
     /** The blue ratio value of the color */
     public float b;
     /** The alpha ratio value of the color */
-    public float a = 0;
+    public float a;
     
     /** Create new RGBColor with r/g/b = 0.0f and alpha = 1.0f */
     public RGBColor() {
@@ -71,11 +71,10 @@ public final class RGBColor implements StringConfigurable {
      * @param b The blue ratio value of the color: 0 - 1
      */
     public RGBColor( float r, float g, float b ) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+        this.r = adjustValue( r );
+        this.g = adjustValue( g );
+        this.b = adjustValue( b );
         this.a = -1.0f;
-        adjustValues();
     }
     
     /** Create new RGBColor with specified r/g/b/a ratio values
@@ -85,11 +84,10 @@ public final class RGBColor implements StringConfigurable {
      * @param a The alpha ratio value of the color: 0 - 1
      */
     public RGBColor( float r, float g, float b, float a ) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
-        adjustValues();
+        this.r = adjustValue( r );
+        this.g = adjustValue( g );
+        this.b = adjustValue( b );
+        this.a = adjustValue( a );
     }
     
     /** Create a RGBColor form specified configuration string value.
@@ -115,24 +113,15 @@ public final class RGBColor implements StringConfigurable {
         return a >= 0;
     }
     
-    /** Adjust the ration values to be between 0.0 and 1,0
-     *  Except the a ration values is only adjust to the upper bound value (negative a value means no alpha)
-     */
-    public final void adjustValues() {
-        if ( r < 0.0f )
-            r = 0.0f;
-        if ( r > 1.0f )
-            r = 1.0f;
-        if ( g < 0.0f )
-            g = 0.0f;
-        if ( g > 1.0f )
-            g = 1.0f;
-        if ( b < 0.0f )
-            b = 0.0f;
-        if ( b > 1.0f )
-            b = 1.0f;
-        if ( a > 1.0f )
-            a = 1.0f;
+    private float adjustValue( float value ) {
+        if ( value > 1.0f ) {
+            return 1.0f;
+        }
+        if ( value < 0.0f ) {
+            return 0.0f;
+        }
+        
+        return value;
     }
     
     public final int getRGBA8888() {
@@ -158,15 +147,14 @@ public final class RGBColor implements StringConfigurable {
         }
 
         StringTokenizer st = new StringTokenizer( stringValue, "," );
-        r = Float.valueOf( st.nextToken() ).floatValue();
-        g = Float.valueOf( st.nextToken() ).floatValue();
-        b = Float.valueOf( st.nextToken() ).floatValue();
+        r = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+        g = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+        b = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
         if ( st.hasMoreTokens() ) {
-            a = Float.valueOf( st.nextToken() ).floatValue();
+            a = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
         } else {
-            a = -1;
+            a = -1.0f;
         }
-        adjustValues();
     }
 
     /** Use this to get a configuration String value that represents this RGBColor
@@ -184,6 +172,26 @@ public final class RGBColor implements StringConfigurable {
             sb.append( "," ).append( a );
         }
         return sb.toString();
+    }
+
+    @Override
+    public final boolean equals( Object obj ) {
+        if ( this == obj )
+            return true;
+        if ( obj == null )
+            return false;
+        if ( getClass() != obj.getClass() )
+            return false;
+        RGBColor other = (RGBColor) obj;
+        if ( Float.floatToIntBits( a ) != Float.floatToIntBits( other.a ) )
+            return false;
+        if ( Float.floatToIntBits( b ) != Float.floatToIntBits( other.b ) )
+            return false;
+        if ( Float.floatToIntBits( g ) != Float.floatToIntBits( other.g ) )
+            return false;
+        if ( Float.floatToIntBits( r ) != Float.floatToIntBits( other.r ) )
+            return false;
+        return true;
     }
 
     @Override
