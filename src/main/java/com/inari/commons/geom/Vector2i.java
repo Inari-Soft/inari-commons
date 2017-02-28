@@ -82,13 +82,6 @@ public final class Vector2i implements StringConfigurable {
     }
 
     @Override
-    public int hashCode() {
-        int result = dx;
-        result = 31 * result + dy;
-        return result;
-    }
-
-    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "[dx=" );

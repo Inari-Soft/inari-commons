@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.inari.commons.lang.Predicate;
 import com.inari.commons.lang.aspect.Aspect;
 import com.inari.commons.lang.aspect.AspectGroup;
 import com.inari.commons.lang.aspect.Aspects;
@@ -76,6 +77,16 @@ public class EventDispatcherTest {
             + "null, null, null, null, null, null, null, null], size()=2, capacity()=10]]", 
             eventDispatcher.toString() 
         );
+
+        eventDispatcher.unregister( SimpleTestEvent1.TYPE_KEY, listener11  );
+        assertEquals(
+            "EventDispatcher [listeners=DynArray [list=[StaticList [list="
+                + "[null, GenericTestEventListener [lastCall=SimpleTestEvent1], GenericTestEventListener [lastCall=SimpleTestEvent1], null, null, null, null, null, null, null], size()=2, capacity()=10], "
+                + "StaticList [list=[GenericTestEventListener [lastCall=SimpleTestEvent2], GenericTestEventListener [lastCall=SimpleTestEvent2], null, null, null, null, null, null, null, null], size()=2, capacity()=10], null, null, null, null, null, null, null, null], size()=2, capacity()=10]]",
+            eventDispatcher.toString()
+        );
+
+
     }
     
     @Test
@@ -181,6 +192,44 @@ public class EventDispatcherTest {
             + ", null, null, null, null, null, null, null, null, null], size()=1, capacity()=10], null, null, null, null, null, null, null, null, null], size()=1, capacity()=10]]", 
             eventDispatcher.toString() 
         );
+    }
+
+    @Test
+    public void testPredicatedEvent() {
+        EventDispatcher eventDispatcher = new EventDispatcher();
+
+        PredicatedTestEventListener listener1 = new PredicatedTestEventListener(
+            new Predicate<TestPredicatedEvent>() {
+                @Override
+                public boolean apply( TestPredicatedEvent event ) {
+                    return event.name.equals( "listener1" );
+                }
+            }
+        );
+        PredicatedTestEventListener listener2 = new PredicatedTestEventListener(
+            new Predicate<TestPredicatedEvent>() {
+                @Override
+                public boolean apply( TestPredicatedEvent event ) {
+                    return event.name.equals( "listener2" );
+                }
+            }
+        );
+
+        eventDispatcher.register( TestPredicatedEvent.TYPE_KEY, listener1 );
+        eventDispatcher.register( TestPredicatedEvent.TYPE_KEY, listener2 );
+
+        assertEquals( "notifiedEvents=0", listener1.toString() );
+        assertEquals( "notifiedEvents=0", listener2.toString() );
+
+        eventDispatcher.notify( new TestPredicatedEvent( "listener1" ) );
+
+        assertEquals( "notifiedEvents=1", listener1.toString() );
+        assertEquals( "notifiedEvents=0", listener2.toString() );
+
+        eventDispatcher.notify( new TestPredicatedEvent( "listener2" ) );
+
+        assertEquals( "notifiedEvents=1", listener1.toString() );
+        assertEquals( "notifiedEvents=1", listener2.toString() );
     }
 
 }

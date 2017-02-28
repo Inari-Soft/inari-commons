@@ -44,6 +44,19 @@ public final class Vector1f implements StringConfigurable {
     }
 
     @Override
+    public boolean equals( Object o ) {
+        if( this == o )
+            return true;
+        if( o == null || getClass() != o.getClass() )
+            return false;
+
+        Vector1f vector1f = (Vector1f) o;
+
+        return Float.compare( vector1f.d, d ) == 0;
+
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "[d=" );
@@ -51,7 +64,5 @@ public final class Vector1f implements StringConfigurable {
         builder.append( "]" );
         return builder.toString();
     }
-
-    
 
 }

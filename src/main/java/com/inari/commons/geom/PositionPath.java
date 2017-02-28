@@ -28,7 +28,7 @@ import com.inari.commons.config.StringConfigurable;
  *  Use this if a path of Positions is needed in a two dimensional coordinate system
  *  with integer precision.
  */
-public class PositionPath implements StringConfigurable, Iterable<Position> {
+public final class PositionPath implements StringConfigurable, Iterable<Position> {
     
     private List<Position> positionPath = new ArrayList<Position>();
 
@@ -36,6 +36,32 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
     @Override
     public Iterator<Position> iterator() {
         return positionPath.iterator();
+    }
+
+    public final void add( Position p ) {
+        positionPath.add( p );
+    }
+
+    public final void add( int index, Position p ) {
+        if ( index < 0 ) {
+            index = 0;
+        }
+
+        if ( index >= positionPath.size() ) {
+            positionPath.add( p );
+            return;
+        }
+
+        positionPath.add( index, p );
+    }
+
+    public boolean remove( int index ) {
+        if ( index < 0 || index >= positionPath.size() ) {
+            return false;
+        }
+
+        positionPath.remove( index );
+        return true;
     }
 
     /** Use this to set the path elemements from a specified configuration String value
@@ -46,7 +72,7 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
      * @throws NumberFormatException if the x/y values from the String value aren't numbers
      */
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         if ( StringUtils.isBlank( stringValue ) ) {
             return;
         }
@@ -62,7 +88,7 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
      *  @return A configuration String value that represents this PositionPath
      */
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         StringBuilder sb = new StringBuilder();
         Iterator<Position> ip = positionPath.iterator();
         while ( ip.hasNext() ) {
@@ -75,4 +101,11 @@ public class PositionPath implements StringConfigurable, Iterable<Position> {
         return sb.toString();
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer( "PositionPath{" );
+        sb.append( "positionPath=" ).append( positionPath );
+        sb.append( '}' );
+        return sb.toString();
+    }
 }

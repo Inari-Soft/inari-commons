@@ -82,13 +82,6 @@ public final class Vector2f implements StringConfigurable {
     }
 
     @Override
-    public int hashCode() {
-        int result = ( dx != +0.0f ? Float.floatToIntBits( dx ) : 0 );
-        result = 31 * result + ( dy != +0.0f ? Float.floatToIntBits( dy ) : 0 );
-        return result;
-    }
-
-    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "[dx=" );

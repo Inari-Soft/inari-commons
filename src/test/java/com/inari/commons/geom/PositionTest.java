@@ -13,23 +13,23 @@ public class PositionTest {
     public void testPoint() {
         Position p1 = new Position();
         
-        assertEquals( p1.x, 0 );
-        assertEquals( p1.y, 0 );
+        assertTrue( p1.x == 0 );
+        assertTrue( p1.y == 0 );
         
         p1 = new Position( 10, 4 );
-        
-        assertEquals( p1.x, 10 );
-        assertEquals( p1.y, 4 );
+
+        assertTrue( p1.x == 10 );
+        assertTrue( p1.y == 4 );
         
         Position p2 = new Position( p1 );
-        
-        assertEquals( p2.x, 10 );
-        assertEquals( p2.y, 4 );
+
+        assertTrue( p2.x == 10 );
+        assertTrue( p2.y == 4 );
         
         Position p3 = new Position( "40,100" );
-        
-        assertEquals( p3.x, 40 );
-        assertEquals( p3.y, 100 );
+
+        assertTrue( p3.x == 40 );
+        assertTrue( p3.y == 100 );
         
         try {
             p3 = new Position( "40.5,100" );
@@ -42,14 +42,14 @@ public class PositionTest {
     @Test
     public void testFrom() {
         Position p1 = new Position();
-        
-        assertEquals( p1.x, 0 );
-        assertEquals( p1.y, 0 );
+
+        assertTrue( p1.x == 0 );
+        assertTrue( p1.y == 0 );
         
         p1.fromConfigString( "100,40" );
-        
-        assertEquals( p1.x, 100 );
-        assertEquals( p1.y, 40 );
+
+        assertTrue( p1.x == 100 );
+        assertTrue( p1.y == 40 );
         
         try {
             p1.fromConfigString( "hey" );
@@ -61,17 +61,17 @@ public class PositionTest {
         Position p2 = new Position( 1, 1 );
         
         p1.setFrom( p2 );
-        
-        assertEquals( p1.x, 1 );
-        assertEquals( p1.y, 1 );
+
+        assertTrue( p1.x == 1 );
+        assertTrue( p1.y == 1 );
     }
     
     @Test
     public void testToString() {
         Position p1 = new Position( 30, 40 );
-        
-        assertEquals( p1.x, 30 );
-        assertEquals( p1.y, 40 );
+
+        assertTrue( p1.x == 30 );
+        assertTrue( p1.y == 40 );
         
         assertEquals( "[x=30,y=40]", p1.toString() );
     }
