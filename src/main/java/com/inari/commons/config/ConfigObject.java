@@ -20,9 +20,9 @@ package com.inari.commons.config;
 public interface ConfigObject {
     
     /** Get the instance/configuration identifier */
-    public String configId();
+    String configId();
     
     /** Set the instance/configuration identifier */
-    public void configId( String id );
+    void configId( String id );
 
 }

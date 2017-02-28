@@ -25,6 +25,6 @@ public interface ImageColorTransform {
      * @param image The BufferedImage instance to transform
      * @return The transformed image within a new BufferedImage instance 
      */
-    public BufferedImage transform( BufferedImage image );
+    BufferedImage transform( BufferedImage image );
 
 }

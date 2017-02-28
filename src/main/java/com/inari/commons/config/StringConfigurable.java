@@ -26,11 +26,11 @@ public interface StringConfigurable {
     /** Sets the attribute of the object form String phrase.
      *  @param stringValue the String phrase
      */
-    public void fromConfigString( String stringValue );
+    void fromConfigString( String stringValue );
     
     /** Gets the attributes of the object in a String phrase
      *  @return a String representation of the object attributes
      */
-    public String toConfigString();
+    String toConfigString();
 
 }

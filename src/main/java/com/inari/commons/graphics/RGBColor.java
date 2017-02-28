@@ -37,9 +37,9 @@ public final class RGBColor implements StringConfigurable {
         GREEN ( new RGBColor( 0f, 1f, 0f, 1f ) ),
         BLU( new RGBColor( 0f, 0f, 1f, 1f ) )
         ;
-        private RGBColor prototype;
+        private final RGBColor prototype;
 
-        private Colors( RGBColor prototype ) {
+        Colors( RGBColor prototype ) {
             this.prototype = prototype;
         }
         
@@ -146,14 +146,19 @@ public final class RGBColor implements StringConfigurable {
             return;
         }
 
-        StringTokenizer st = new StringTokenizer( stringValue, "," );
-        r = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
-        g = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
-        b = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
-        if ( st.hasMoreTokens() ) {
-            a = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
-        } else {
-            a = -1.0f;
+        try {
+
+            StringTokenizer st = new StringTokenizer( stringValue, "," );
+            r = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+            g = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+            b = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+            if( st.hasMoreTokens() ) {
+                a = adjustValue( Float.valueOf( st.nextToken() ).floatValue() );
+            } else {
+                a = -1.0f;
+            }
+        } catch ( Exception e ) {
+            throw new IllegalArgumentException( "Failed to build an RGBColor form configuration String: " + stringValue );
         }
     }
 

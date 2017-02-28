@@ -32,17 +32,17 @@ public @interface Configured {
     /** The name if configuration property. If empty the field name will be the name of configuration property.
      *  @return The name if configuration property
      */
-    public String name() default "";
+    String name() default "";
     
     /** Indicates whether the configuration property is mandatory or not
      *  @return if the configuration property is mandatory
      */
-    public boolean required() default false ;
+    boolean required() default false ;
     
     /** The type of the configured field. Used on none instance-able Field typed
      *  E.g. List, Set... to define the specified instance type
      *  @return The type of the Configured field
      */
-    public Class<?> type() default Object.class;
+    Class<?> type() default Object.class;
     
 }
