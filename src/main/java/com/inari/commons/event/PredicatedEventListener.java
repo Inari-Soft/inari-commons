@@ -32,6 +32,6 @@ public interface PredicatedEventListener {
      *  
      *  @return The Matcher to check if the MatchedEventListener is interested in a specified Event
      */
-    public <L extends PredicatedEventListener> Predicate<PredicatedEvent<L>> getMatcher();
+    <L extends PredicatedEventListener> Predicate<PredicatedEvent<L>> getMatcher();
 
 }
