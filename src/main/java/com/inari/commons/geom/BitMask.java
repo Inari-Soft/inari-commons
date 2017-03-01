@@ -79,13 +79,33 @@ public final class BitMask {
             setBit( x, y );
         }
     }
-    
+
     public final void setBit( int x, int y ) {
         if ( x < 0 || x >= region.width || y < 0 || y >= region.height ) {
             return;
         }
-        
+
         bits.set( y * region.width + x );
+    }
+
+    public final void resetBit( int index ) {
+        bits.set( index, false );
+    }
+
+    public final void resetBit( int x, int y, boolean relativeToOrigin ) {
+        if ( relativeToOrigin ) {
+            resetBit( x - region.x, y - region.y );
+        } else {
+            resetBit( x, y );
+        }
+    }
+
+    public final void resetBit( int x, int y ) {
+        if ( x < 0 || x >= region.width || y < 0 || y >= region.height ) {
+            return;
+        }
+
+        bits.set( y * region.width + x, false );
     }
     
     public boolean getBit( int x, int y ) {
@@ -107,13 +127,29 @@ public final class BitMask {
     
     public final void setRegion( int x, int y, int width, int height, boolean relativeToOrigin ) {
         if ( relativeToOrigin ) {
-            setIntersectionRegion( x, y, width, height );
+            setIntersectionRegion( x, y, width, height, true );
         } else {
-            setIntersectionRegion( x + region.x, y + region.y, width, height );
+            setIntersectionRegion( x + region.x, y + region.y, width, height, true );
+        }
+    }
+
+    public final void resetRegion( final Rectangle region, boolean relativeToOrigin ) {
+        resetRegion( region.x, region.y, region.width, region.height, relativeToOrigin );
+    }
+
+    public final void resetRegion( int x, int y, int width, int height ) {
+        resetRegion( x, y, width, height, true );
+    }
+
+    public final void resetRegion( int x, int y, int width, int height, boolean relativeToOrigin ) {
+        if ( relativeToOrigin ) {
+            setIntersectionRegion( x, y, width, height, false );
+        } else {
+            setIntersectionRegion( x + region.x, y + region.y, width, height, false );
         }
     }
     
-    private final void setIntersectionRegion( int xoffset, int yoffset, int width, int height ) {
+    private final void setIntersectionRegion( int xoffset, int yoffset, int width, int height, boolean set ) {
         tmpRegion.x = xoffset;
         tmpRegion.y = yoffset;
         tmpRegion.width = width;
@@ -122,15 +158,15 @@ public final class BitMask {
         if ( intersection.area() <= 0 ) {
             return;
         }
-        
-        int x1 = intersection.x - region.x;
-        int y1 = intersection.y - region.y;
-        int width1 = x1 + intersection.width;
-        int height1 = y1 + intersection.height;
+
+        final int x1 = intersection.x - region.x;
+        final int y1 = intersection.y - region.y;
+        final int width1 = x1 + intersection.width;
+        final int height1 = y1 + intersection.height;
         
         for ( int y = y1; y < height1; y++ ) {
             for ( int x = x1; x < width1; x++ ) {
-                bits.set( y * region.width + x );
+                bits.set( y * region.width + x, set );
             }
         }
     }
@@ -168,10 +204,10 @@ public final class BitMask {
         tmpBits.clear();
         
         // adjust intersection to origin
-        int x1 = intersection.x - region.x;
-        int y1 = intersection.y - region.y;
-        int x2 = ( intersection.x == 0 )? other.region.width - intersection.width : intersection.x - tmpRegion.x;
-        int y2 = ( intersection.y == 0 )? other.region.height - intersection.height : intersection.y - tmpRegion.y;
+        final int x1 = intersection.x - region.x;
+        final int y1 = intersection.y - region.y;
+        final int x2 = ( intersection.x == 0 )? other.region.width - intersection.width : intersection.x - tmpRegion.x;
+        final int y2 = ( intersection.y == 0 )? other.region.height - intersection.height : intersection.y - tmpRegion.y;
         
         for ( int y = 0; y < intersection.height; y++ ) {
             for ( int x = 0; x < intersection.width; x++ ) {
@@ -185,11 +221,14 @@ public final class BitMask {
         if ( intersection.area() <= 0 ) {
             return false;
         }
-        
-        int width = intersection.x + intersection.width;
-        int height = intersection.y + intersection.height;
-        for ( int y = intersection.y; y < height; y++ ) {
-            for ( int x = intersection.x; x < width; x++ ) {
+
+        final int x1 = intersection.x - this.region.x;
+        final int y1 = intersection.y - this.region.y;
+        final int width1 = x1 + intersection.width;
+        final int height1 = y1 + intersection.height;
+
+        for ( int y = y1; y < height1; y++ ) {
+            for ( int x = x1; x < width1; x++ ) {
                 if ( bits.get( y * this.region.width + x ) ) {
                     return true;
                 }

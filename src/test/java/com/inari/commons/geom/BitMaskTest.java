@@ -1,6 +1,8 @@
 package com.inari.commons.geom;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -41,10 +43,71 @@ public class BitMaskTest {
             "0000000000]", 
             bitMask.toString() 
         );
+
+        bitMask = new BitMask( new Rectangle( 10, 10, 10, 10 ) );
+
+        assertEquals(
+            "BitMask [region=[x=10,y=10,width=10,height=10], bits=\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000]",
+            bitMask.toString()
+        );
+
+        assertTrue( bitMask.isEmpty() );
+    }
+
+    @Test
+    public void testReset() {
+        BitMask bitMask = new BitMask( 0, 0, 10, 10 );
+
+        assertEquals(
+            "BitMask [region=[x=0,y=0,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.reset( 0, 0, 5, 5 );
+        assertEquals(
+            "BitMask [region=[x=0,y=0,width=5,height=5], bits=\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000]",
+            bitMask.toString()
+        );
+
+        bitMask.reset( new Rectangle( 5, 5, 5, 5 ) );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=5,height=5], bits=\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000\n"
+                + "00000]",
+            bitMask.toString()
+        );
     }
     
     @Test
-    public void testSetBit() {
+    public void testSetRestBit() {
         BitMask bitMask = new BitMask( 5, 5, 10, 10 );
         
         assertEquals( 
@@ -93,10 +156,133 @@ public class BitMaskTest {
             "0000000000]", 
             bitMask.toString() 
         );
+
+        bitMask.resetBit( 7, 7, true );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000000\n" +
+                "0000000100\n" +
+                "0000000000\n" +
+                "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.setBit( 5, 5, false );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000010000\n"
+                + "0000000000\n"
+                + "0000000100\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.resetBit( 5 * 10 + 5 );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000100\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+    }
+
+    @Test
+    public void testGetBit() {
+        BitMask bitMask = new BitMask( 5, 5, 10, 10 );
+        bitMask.setBit( 2, 2 );
+
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0010000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        assertTrue( bitMask.getBit( 2, 2 ) );
+        assertFalse( bitMask.getBit( 2, 3 ) );
+    }
+
+    @Test
+    public void testMoveRegion() {
+        BitMask bitMask = new BitMask( 0, 0, 10, 10 );
+        assertEquals(
+            "BitMask [region=[x=0,y=0,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.moveRegion( 5, 5 );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.moveRegion( -10, -10 );
+        assertEquals(
+            "BitMask [region=[x=-5,y=-5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
     }
     
     @Test
-    public void testSetRegion() {
+    public void testSetResetRegion() {
         BitMask bitMask = new BitMask( 5, 5, 10, 10 );
         
         assertEquals( 
@@ -160,6 +346,149 @@ public class BitMaskTest {
             "0000000110\n" + 
             "0000000000]", 
             bitMask.toString() 
+        );
+
+        bitMask.resetRegion( 5, 5, 20, 3 );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0011000000\n"
+                + "0000000000\n"
+                + "0000111111\n"
+                + "0000111111\n"
+                + "0000000110\n"
+                + "0000000110\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.resetRegion( 10, 10, 10, 3, true );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0011000000\n"
+                + "0000000000\n"
+                + "0000100000\n"
+                + "0000100000\n"
+                + "0000000000\n"
+                + "0000000110\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        bitMask.resetRegion( 100, 100, 10, 3, true );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0011000000\n"
+                + "0000000000\n"
+                + "0000100000\n"
+                + "0000100000\n"
+                + "0000000000\n"
+                + "0000000110\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+    }
+
+    @Test
+    public void testHashIntersection() {
+        BitMask bitMask = new BitMask( 5, 5, 10, 10 );
+
+        // no intersection with empty bitMask
+        assertFalse( bitMask.hasIntersection( new Rectangle( 5, 5, 10, 10 ) ) );
+
+        bitMask.setBit( 5, 5 );
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000010000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            bitMask.toString()
+        );
+
+        assertTrue( bitMask.hasIntersection( new Rectangle( 5, 5, 10, 10 ) ) );
+        assertTrue( bitMask.hasIntersection( new Rectangle( 1, 1, 10, 10 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 0, 1, 10, 10 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 1, 0, 10, 10 ) ) );
+
+        assertTrue( bitMask.hasIntersection( new Rectangle( 10, 10, 10, 10 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 11, 10, 10, 10 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 10, 11, 10, 10 ) ) );
+
+        bitMask = new BitMask( 5, 5, 2, 2 );
+        bitMask.fill();
+        assertEquals(
+            "BitMask [region=[x=5,y=5,width=2,height=2], bits=\n"
+                + "11\n"
+                + "11]",
+            bitMask.toString()
+        );
+
+        // boundaries x axis
+        assertFalse( bitMask.hasIntersection( new Rectangle( 4, 6, 1, 1 ) ) );
+        assertTrue( bitMask.hasIntersection( new Rectangle( 5, 6, 1, 1 ) ) );
+        assertTrue( bitMask.hasIntersection( new Rectangle( 6, 6, 1, 1 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 7, 6, 1, 1 ) ) );
+
+        // boundaries y axis
+        assertFalse( bitMask.hasIntersection( new Rectangle( 6, 4, 1, 1 ) ) );
+        assertTrue( bitMask.hasIntersection( new Rectangle( 6, 5, 1, 1 ) ) );
+        assertTrue( bitMask.hasIntersection( new Rectangle( 6, 6, 1, 1 ) ) );
+        assertFalse( bitMask.hasIntersection( new Rectangle( 6, 7, 1, 1 ) ) );
+    }
+
+    @Test
+    public void testAnd() {
+        BitMask mask1 = new BitMask( 0, 0, 10, 10 );
+        BitMask mask2 = new BitMask( 5, 5, 10, 10 );
+        mask1.fill();
+        mask2.fill();
+
+        mask1.and( mask2 );
+        assertEquals(
+            "BitMask [region=[x=0,y=0,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000011111\n"
+                + "0000011111\n"
+                + "0000011111\n"
+                + "0000011111\n"
+                + "0000011111]",
+            mask1.toString()
+        );
+
+        mask2.moveRegion( -8, -8 );
+        mask1.and( mask2 );
+        assertEquals(
+            "BitMask [region=[x=0,y=0,width=10,height=10], bits=\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000011000\n"
+                + "0000011000\n"
+                + "0000000000\n"
+                + "0000000000\n"
+                + "0000000000]",
+            mask1.toString()
         );
     }
     
