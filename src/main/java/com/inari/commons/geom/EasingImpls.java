@@ -34,7 +34,7 @@ public abstract class EasingImpls {
         @Override
         public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
-            if (t < 1) return -c/2 * GeomUtils.sqrtf( 1 - t*t ) - 1 + b;
+            if (t < 1) return -c/2 * ( GeomUtils.sqrtf( 1 - t*t ) - 1 ) + b;
             t -= 2;
             return c/2 * ( GeomUtils.sqrtf( 1 - t*t ) + 1 ) + b;
         }
@@ -211,7 +211,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( float t, float b, float c, float d ) {
-            return -c/2 * GeomUtils.cosf( GeomUtils.PI_F * t / d ) - 1 + b;
+            return -c/2 * ( GeomUtils.cosf( GeomUtils.PI_F * t / d ) - 1 ) + b;
         }
     }
     
