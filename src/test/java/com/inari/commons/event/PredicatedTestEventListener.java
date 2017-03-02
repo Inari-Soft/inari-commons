@@ -13,6 +13,7 @@ public class PredicatedTestEventListener implements PredicatedEventListener {
         this.predicate = predicate;
     }
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public Predicate<TestPredicatedEvent> getMatcher() {
         return predicate;

@@ -15,43 +15,45 @@
  ******************************************************************************/
 package com.inari.commons.geom;
 
+import com.inari.commons.GeomUtils;
+
 /** Implements Easing types within static classes implementing the Easing interface */
 public abstract class EasingImpls {
     
     static final class CircularIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
-            return -c * (float) ( Math.sqrt( 1 - t * t ) - 1 ) + b;
+            return -c * GeomUtils.sqrtf( 1f - t * t ) - 1f + b;
         }
     }
     
     static final class CircularInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
-            if (t < 1) return -c/2 * (float) ( Math.sqrt( 1 - t*t ) - 1 ) + b;
+            if (t < 1) return -c/2 * GeomUtils.sqrtf( 1 - t*t ) - 1 + b;
             t -= 2;
-            return c/2 * (float) ( Math.sqrt( 1 - t*t ) + 1 ) + b;
+            return c/2 * GeomUtils.sqrtf( 1 - t*t ) + 1 + b;
         }
     }
     
     static final class CircularOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             t--;
-            return c * (float)Math.sqrt(1 - t*t) + b;
+            return c * GeomUtils.sqrtf(1 - t*t) + b;
         }
     }
     
     static final class CubicIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return c*t*t*t + b;
         }
@@ -60,7 +62,7 @@ public abstract class EasingImpls {
     static final class CubicInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
             if (t < 1) return c/2*t*t*t + b;
             t -= 2;
@@ -71,7 +73,7 @@ public abstract class EasingImpls {
     static final class CubicOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             t--;
             return c*(t*t*t + 1) + b;
@@ -81,35 +83,35 @@ public abstract class EasingImpls {
     static final class ExponentialIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
-            return c * (float) Math.pow( 2.0f, 10.0f * ( (float) t/d - 1.0f ) ) + b;
+        public final float calc( float t, float b, float c, float d ) {
+            return c * GeomUtils.powf( 2.0f, 10.0f * ( t/d - 1.0f ) ) + b;
         }
     }
     
     static final class ExponentialInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
             if (t < 1) 
-                return c/2 * (float)Math.pow( 2, 10 * ( t - 1 ) ) + b;
+                return c/2 * GeomUtils.powf( 2, 10 * ( t - 1 ) ) + b;
             t--;
-            return c/2 * (float)( -Math.pow( 2, -10 * t ) + 2 ) + b;
+            return c/2 * -GeomUtils.powf( 2, -10 * t ) + 2 + b;
         }
     }
     
     static final class ExponentialOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
-            return c * (float)( -Math.pow( 2, -10 * (float) t/d ) + 1 ) + b;
+        public final float calc( float t, float b, float c, float d ) {
+            return c * -GeomUtils.powf( 2, -10 * (float) t/d ) + 1 + b;
         }
     }
     
     static final class Linear implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             return c * ( (float) t ) / ( (float) d ) + b;
         }
     }
@@ -117,7 +119,7 @@ public abstract class EasingImpls {
     static final class QuadraticIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return c * t * t + b;
         }
@@ -126,7 +128,7 @@ public abstract class EasingImpls {
     static final class QuarticIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return c * t * t * t * t + b;
         }
@@ -135,7 +137,7 @@ public abstract class EasingImpls {
     static final class QuadraticInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
             if ( t < 1 ) 
                 return c / 2 * t * t + b;
@@ -147,7 +149,7 @@ public abstract class EasingImpls {
     static final class QuadraticOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return -c * t * ( t - 2 ) + b;
         }
@@ -156,7 +158,7 @@ public abstract class EasingImpls {
     static final class QuarticInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
             if (t < 1) 
                 return c/2*t*t*t*t + b;
@@ -168,7 +170,7 @@ public abstract class EasingImpls {
     static final class QuinticIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return c*t*t*t*t*t + b;
         }
@@ -177,7 +179,7 @@ public abstract class EasingImpls {
     static final class QuinticInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d/2;
             if (t < 1) return c/2*t*t*t*t*t + b;
             t -= 2;
@@ -189,7 +191,7 @@ public abstract class EasingImpls {
     static final class QuinticOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
+        public final float calc( float t, float b, float c, float d ) {
             t /= d;
             t--;
             return c*(t*t*t*t*t + 1) + b;
@@ -199,8 +201,8 @@ public abstract class EasingImpls {
     static final class SinusoidalIn implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
-            return -c * (float)Math.cos(t/d * (Math.PI/2)) + c + b;
+        public final float calc( float t, float b, float c, float d ) {
+            return -c * GeomUtils.cosf( t / d * (float) Math.PI/2f ) + c + b;
         }
 
     }
@@ -208,16 +210,16 @@ public abstract class EasingImpls {
     static final class SinusoidalInOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
-            return -c/2 * (float)(Math.cos(Math.PI*t/d) - 1) + b;
+        public final float calc( float t, float b, float c, float d ) {
+            return -c/2 * GeomUtils.cosf( (float) Math.PI * t / d) - 1 + b;
         }
     }
     
     static final class SinusoidalOut implements Easing {
 
         @Override
-        public final float calc( long t, float b, float c, long d ) {
-            return c * (float)Math.sin(t/d * (Math.PI/2)) + b;
+        public final float calc( float t, float b, float c, float d ) {
+            return c * GeomUtils.sinf( t / d * (float) Math.PI / 2 ) + b;
         }
     }
 

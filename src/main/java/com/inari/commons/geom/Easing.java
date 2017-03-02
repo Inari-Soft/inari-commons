@@ -62,6 +62,6 @@ public interface Easing {
      * @param d duration
      * @return the value for current time
      */
-    public float calc( long t, float b, float c, long d );
+    public float calc( float t, float b, float c, float d );
 
 }

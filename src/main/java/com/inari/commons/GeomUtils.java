@@ -44,7 +44,21 @@ public abstract class GeomUtils {
     public static final int BOTTOM_SIDE = 1 << 3;
     public static final int LEFT_SIDE = 1 << 4;
     
+    public static final float sqrtf( float value ) {
+        return (float) Math.sqrt( value );
+    }
     
+    public static final float powf( float v1, float v2 ) {
+        return (float) Math.pow( v1, v2 );
+    }
+    
+    public static final float sinf( float value ) {
+        return (float) Math.sin( value );
+    }
+    
+    public static final float cosf( float value ) {
+        return (float) Math.cos( value );
+    }
     
     public static final float getDistance( final Position p1, final Position p2 ) {
         int dx = p2.x - p1.x;
