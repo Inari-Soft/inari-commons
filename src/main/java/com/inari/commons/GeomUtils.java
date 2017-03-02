@@ -36,6 +36,9 @@ import com.inari.commons.geom.Vector2i;
 // TODO write tests
 public abstract class GeomUtils {
     
+    public static final float PI_F = (float) Math.PI;
+    public static final float PI_2_F = PI_F / 2f;
+    
     public static final String NULL_POINT_STRING = "0,0";
     public static final String NULL_RECTANGLE_STRING = "0,0,0,0";
     

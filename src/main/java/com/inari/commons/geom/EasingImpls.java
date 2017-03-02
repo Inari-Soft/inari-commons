@@ -25,7 +25,7 @@ public abstract class EasingImpls {
         @Override
         public final float calc( float t, float b, float c, float d ) {
             t /= d;
-            return -c * GeomUtils.sqrtf( 1f - t * t ) - 1f + b;
+            return -c * ( GeomUtils.sqrtf( 1f - t * t ) - 1f ) + b;
         }
     }
     
@@ -36,7 +36,7 @@ public abstract class EasingImpls {
             t /= d/2;
             if (t < 1) return -c/2 * GeomUtils.sqrtf( 1 - t*t ) - 1 + b;
             t -= 2;
-            return c/2 * GeomUtils.sqrtf( 1 - t*t ) + 1 + b;
+            return c/2 * ( GeomUtils.sqrtf( 1 - t*t ) + 1 ) + b;
         }
     }
     
@@ -96,7 +96,7 @@ public abstract class EasingImpls {
             if (t < 1) 
                 return c/2 * GeomUtils.powf( 2, 10 * ( t - 1 ) ) + b;
             t--;
-            return c/2 * -GeomUtils.powf( 2, -10 * t ) + 2 + b;
+            return c/2 * ( -GeomUtils.powf( 2, -10 * t ) + 2 ) + b;
         }
     }
     
@@ -104,7 +104,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( float t, float b, float c, float d ) {
-            return c * -GeomUtils.powf( 2, -10 * (float) t/d ) + 1 + b;
+            return c * ( -GeomUtils.powf( 2, -10 * (float) t/d ) + 1 ) + b;
         }
     }
     
@@ -202,7 +202,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( float t, float b, float c, float d ) {
-            return -c * GeomUtils.cosf( t / d * (float) Math.PI/2f ) + c + b;
+            return -c * GeomUtils.cosf( t / d * GeomUtils.PI_2_F ) + c + b;
         }
 
     }
@@ -211,7 +211,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( float t, float b, float c, float d ) {
-            return -c/2 * GeomUtils.cosf( (float) Math.PI * t / d) - 1 + b;
+            return -c/2 * GeomUtils.cosf( GeomUtils.PI_F * t / d ) - 1 + b;
         }
     }
     
@@ -219,7 +219,7 @@ public abstract class EasingImpls {
 
         @Override
         public final float calc( float t, float b, float c, float d ) {
-            return c * GeomUtils.sinf( t / d * (float) Math.PI / 2 ) + b;
+            return c * GeomUtils.sinf( t / d * GeomUtils.PI_2_F ) + b;
         }
     }
 
