@@ -27,7 +27,7 @@ import com.inari.commons.config.StringConfigurable;
  * @author andreashefti
  *
  */
-public class RectCoords implements StringConfigurable {
+public final class RectCoords implements StringConfigurable {
     
     /** The 2d coordinates of a Rectangle */
     public final float[][] coords;
@@ -46,22 +46,15 @@ public class RectCoords implements StringConfigurable {
         setCoords(x, y, width, height);
     }
 
-    protected RectCoords( float[][] coords ) {
-        if ( ( coords.length != 4 ) || ( coords[ 0 ].length != 2 ) ) {
-            throw new IllegalArgumentException( "The points array must have a dimension of [ 4 ][ 2 ]" );
-        }
-        this.coords = coords;
-    }
-
-    public float width() {
+    public final float width() {
         return coords[ 1 ][ 0 ] - coords[ 0 ][ 0 ];
     }
     
-    public float height() {
+    public final float height() {
         return coords[ 2 ][ 1 ] - coords[ 0 ][ 1 ];
     }
     
-    public void clear() {
+    public final void clear() {
         for ( int i = 0; i < coords.length; i++ ) {
             for ( int j = 0; j < coords[ i ].length; j++ ) {
                 coords[ i ][ j ] = 0.0f;
@@ -69,7 +62,7 @@ public class RectCoords implements StringConfigurable {
         }
     }
     
-    public boolean intersects( RectCoords rect ) {
+    public final boolean intersects( RectCoords rect ) {
         if ( rect == null ) {
             return false;
         }
@@ -93,7 +86,7 @@ public class RectCoords implements StringConfigurable {
         return true;
     } 
     
-    public boolean intersects( Rectangle rect ) {
+    public final boolean intersects( Rectangle rect ) {
         if ( rect == null ) {
             return false;
         }
@@ -124,7 +117,7 @@ public class RectCoords implements StringConfigurable {
 
 
     @Override
-    public void fromConfigString( String stringValue ) {
+    public final void fromConfigString( String stringValue ) {
         float x = 0;
         float y = 0;
         float width = 0;
@@ -142,7 +135,7 @@ public class RectCoords implements StringConfigurable {
     }
 
     @Override
-    public String toConfigString() {
+    public final String toConfigString() {
         float x = coords[ 0 ][ 0 ];
         float y = coords[ 0 ][ 1 ];
         float width = coords[ 1 ][ 0 ] - coords[ 0 ][ 0 ];
@@ -152,7 +145,7 @@ public class RectCoords implements StringConfigurable {
     } 
     
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append( "QuadCoords[\n" );
         
