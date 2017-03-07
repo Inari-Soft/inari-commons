@@ -24,15 +24,15 @@ import com.inari.commons.config.StringConfigurable;
 
 public interface ResourceLoader extends ConfigObject, StringConfigurable {
     
-    public String rootPath();
+    String rootPath();
     
-    public boolean exists( Resource resource );
+    boolean exists( Resource resource );
     
-    public InputStream inputStream( Resource resource );
+    InputStream inputStream( Resource resource );
     
-    public String path( Resource resource );
+    String path( Resource resource );
     
-    public URL url( Resource resource );
+    URL url( Resource resource );
     
     
 

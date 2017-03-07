@@ -19,13 +19,13 @@ package com.inari.commons.geom;
 public interface Easing {
     
     /** Defines a Easing repository with different types of Easing implementations */
-    public static enum Type {
+    enum Type {
         LINEAR( new EasingImpls.Linear() ),
         QUAD_IN( new EasingImpls.QuadraticIn() ),
         QUAD_OUT( new EasingImpls.QuadraticOut() ),
         QUAD_IN_OUT( new EasingImpls.QuadraticInOut() ),
         CUBIC_IN( new EasingImpls.CubicIn() ),
-        CUBIC_OUT( new EasingImpls.CubicInOut() ),
+        CUBIC_OUT( new EasingImpls.CubicOut() ),
         CUBIC_IN_OUT( new EasingImpls.CubicInOut() ),
         QRT_IN( new EasingImpls.QuarticIn() ),
         QRT_OUT( new EasingImpls.QuarticInOut() ),

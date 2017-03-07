@@ -74,19 +74,19 @@ public class RectCoords implements StringConfigurable {
             return false;
         }
         // check completely left
-        if ( coords[ 0 ][ 0 ] <= rect.coords[ 1 ][ 0 ] ) {
+        if ( rect.coords[ 1 ][ 0 ] <= coords[ 0 ][ 0 ]   ) {
             return false;
         }
         // check completely right
-        if ( coords[ 1 ][ 0 ] >= rect.coords[ 0 ][ 0 ] ) {
+        if ( rect.coords[ 0 ][ 0 ] >= coords[ 1 ][ 0 ] ) {
             return false;
         }
         // check completely above
-        if ( coords[ 2 ][ 1 ] >= rect.coords[ 0 ][ 1 ] ) {
+        if ( rect.coords[ 0 ][ 1 ] >= coords[ 2 ][ 1 ] ) {
             return false;
         }
         // check completely beneath
-        if ( coords[ 0 ][ 1 ] <= rect.coords[ 2 ][ 1 ] ) {
+        if ( rect.coords[ 2 ][ 1 ] <= coords[ 0 ][ 1 ] ) {
             return false;
         }
         // intersection

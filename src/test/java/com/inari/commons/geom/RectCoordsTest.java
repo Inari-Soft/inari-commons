@@ -1,6 +1,8 @@
 package com.inari.commons.geom;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -76,7 +78,18 @@ public class RectCoordsTest {
         
         assertEquals( configString, coords.toConfigString() );
     }
-    
-    // TODO intersection tests
+
+    @Test
+    public void testIntersection() {
+        RectCoords coords1 = new RectCoords( new Rectangle( 0, 0, 10, 10 ) );
+        RectCoords coords2 = new RectCoords( new Rectangle( 0, 0, 10, 10 ) );
+
+        assertTrue( coords1.intersects( coords2 ) );
+
+        coords2 = new RectCoords( new Rectangle( -9, 0, 10, 10 ) );
+        assertTrue( coords1.intersects( coords2 ) );
+        coords2 = new RectCoords( new Rectangle( -10, 0, 10, 10 ) );
+        assertFalse( coords1.intersects( coords2 ) );
+    }
 
 }

@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 
 import com.inari.commons.StringUtils;
 
+@Deprecated
 public class QuadCoords extends RectCoords {
     
     public QuadCoords() {
@@ -69,22 +70,22 @@ public class QuadCoords extends RectCoords {
         // intersection
         return true;
     }
-    
+
     public final boolean intersects( QuadCoords coords ) {
         // check completely left
-        if ( getLeftX() <= coords.getRightX() ) {
+        if ( coords.getRightX() <= getLeftX()  ) {
             return false;
         }
         // check completely right
-        if ( getRightX() >= coords.getLeftX() ) {
+        if ( coords.getLeftX() >= getRightX() ) {
             return false;
         }
         // check completely above
-        if ( getTopY() >= coords.getBottomY() ) {
+        if ( coords.getBottomY() <= getTopY() ) {
             return false;
         }
         // check completely beneath
-        if ( getBottomY() <= coords.getTopY() ) {
+        if ( coords.getTopY() >= getBottomY() ) {
             return false;
         }
         // intersection
@@ -102,7 +103,7 @@ public class QuadCoords extends RectCoords {
     }
     
     public final float getRightX() {
-        float right = Float.MIN_VALUE;
+        float right = -Float.MAX_VALUE;
         for ( int i = 0; i < 4; i++ ) {
             if ( coords[ i ][ 0 ] > right ) {
                 right = coords[ i ][ 0 ];
@@ -122,7 +123,7 @@ public class QuadCoords extends RectCoords {
     }
     
     public final float getBottomY() {
-        float bottom = Float.MIN_VALUE;
+        float bottom = -Float.MAX_VALUE;
         for ( int i = 0; i < 4; i++ ) {
             if ( coords[ i ][ 1 ] > bottom ) {
                 bottom = coords[ i ][ 1 ];

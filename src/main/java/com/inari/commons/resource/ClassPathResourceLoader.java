@@ -33,6 +33,14 @@ public class ClassPathResourceLoader implements ResourceLoader {
         this.rootPath = packageName.replace( '.', '/' ) + '/';
     }
 
+    public ClassPathResourceLoader( Class<?> clazz ) {
+        this( clazz.getPackage() );
+    }
+
+    public ClassPathResourceLoader( Package pkg ) {
+        this( pkg.getName() );
+    }
+
     @Override
     public String configId() {
         return configId;
@@ -52,16 +60,7 @@ public class ClassPathResourceLoader implements ResourceLoader {
     public String toConfigString() {
         return rootPath;
     }
-    
-    public ClassPathResourceLoader( Class<?> clazz ) {
-        this( clazz.getPackage() );
-    }
-        
-    public ClassPathResourceLoader( Package pkg ) {
-        this( pkg.getName() );
-    }
-    
-    
+
     public ClassPathResourceLoader classLoader( ClassLoader classLoader ) {
         this.classLoader = classLoader;
         return this;
@@ -78,6 +77,10 @@ public class ClassPathResourceLoader implements ResourceLoader {
 
     @Override
     public boolean exists( Resource resource ) {
+        if ( resource == null ) {
+            return false;
+        }
+
         return url( resource ) != null;
     }
 
