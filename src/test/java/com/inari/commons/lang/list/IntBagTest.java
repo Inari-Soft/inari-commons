@@ -1,5 +1,6 @@
 package com.inari.commons.lang.list;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -21,6 +22,11 @@ public class IntBagTest {
             "IntBag [nullValue=-2147483648, expand=10, size=0, length=10, array=[-2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648]]", 
             array.toString() 
         );
+        assertEquals( "-2147483648", String.valueOf( array.getNullValue() ) );
+        assertEquals( "10", String.valueOf( array.getExpand() ) );
+        assertEquals( "0", String.valueOf( array.size() ) );
+        assertEquals( "10", String.valueOf( array.length() ) );
+        assertTrue( array.isEmpty() );
         
         array = new IntBag( 3 );
         assertEquals( 
@@ -39,6 +45,49 @@ public class IntBagTest {
             "IntBag [nullValue=-1, expand=20, size=0, length=3, array=[-1, -1, -1]]", 
             array.toString() 
         );
+
+        BitSet bitset = new BitSet();
+        bitset.set( 2 );
+        bitset.set( 12 );
+        array = new IntBag( bitset, -1, 20 );
+        assertEquals(
+            "IntBag [nullValue=-1, expand=20, size=2, length=2, array=[2, 12]]",
+            array.toString()
+        );
+        assertFalse( array.isEmpty() );
+
+        array.clear();
+        assertEquals(
+            "IntBag [nullValue=-1, expand=20, size=0, length=2, array=[-1, -1]]",
+            array.toString()
+        );
+    }
+
+    @Test
+    public void testNullValue() {
+        IntBag array = new IntBag();
+        array.set( 2, 3 );
+        array.set( 6, 2 );
+        assertEquals(
+            "IntBag [nullValue=-2147483648, expand=10, size=2, length=10, array=[-2147483648, -2147483648, 3, -2147483648, -2147483648, -2147483648, 2, -2147483648, -2147483648, -2147483648]]",
+            array.toString()
+        );
+
+        assertTrue( Integer.MIN_VALUE == array.getNullValue() );
+
+        array.setNullValue( -1 );
+        assertEquals(
+            "IntBag [nullValue=-1, expand=10, size=2, length=10, array=[-1, -1, 3, -1, -1, -1, 2, -1, -1, -1]]",
+            array.toString()
+        );
+
+        try {
+            array.setNullValue( 2 );
+            fail( "IllegalArgumentException expected here " );
+        } catch( IllegalArgumentException iae ) {
+            assertEquals( "The IntBag contains already a not-null value that is equals to the new null-value", iae.getMessage() );
+        }
+
     }
     
     @Test
@@ -63,6 +112,23 @@ public class IntBagTest {
         assertEquals( 
             "IntBag [nullValue=-2147483648, expand=10, size=3, length=10, array=[1, 2, 3, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648, -2147483648]]", 
             array.toString() 
+        );
+
+        array = new IntBag( 10, -1, 10 );
+        array.addAll( 1, 4, 5 );
+        assertEquals(
+            "IntBag [nullValue=-1, expand=10, size=3, length=10, array=[1, 4, 5, -1, -1, -1, -1, -1, -1, -1]]",
+            array.toString()
+        );
+
+        array.clear();
+        IntBag array2 = new IntBag();
+        array2.set( 2, 3 );
+        array2.set( 5, 1 );
+        array.addAll( array2 );
+        assertEquals(
+            "IntBag [nullValue=-1, expand=10, size=2, length=10, array=[3, 1, -1, -1, -1, -1, -1, -1, -1, -1]]",
+            array.toString()
         );
     }
     

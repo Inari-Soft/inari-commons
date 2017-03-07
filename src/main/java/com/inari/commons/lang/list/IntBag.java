@@ -56,17 +56,16 @@ public final class IntBag implements StringConfigurable {
             add( i );
         }
     }
-    
-    public IntBag( int... values ) {
-        array = values;
-        size = values.length;
-    }
 
     public final int getNullValue() {
         return nullValue;
     }
 
     public final void setNullValue( int nullValue ) {
+        if ( indexOf( nullValue ) >= 0 ) {
+            throw new IllegalArgumentException( "The IntBag contains already a not-null value that is equals to the new null-value" );
+        }
+
         for ( int i = 0; i < array.length; i++ ) {
             if ( array[ i ] == this.nullValue ) {
                 array[ i ] = nullValue;
