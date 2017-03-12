@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import com.inari.commons.lang.Method;
+import com.inari.commons.lang.functional.Function;
+
 /** An Array that dynamically grows if more space is needed.
  * 
  *  Since the creation of a typed Array need the class of the type to properly create the array and since this implementation wants to 
@@ -251,6 +254,14 @@ public final class DynArray<T> implements Iterable<T> {
             }
         }
     }
+    
+    public final void forEach( Method<T> m ) {
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( array[ i ] != null ) {
+                m.call( array[ i ] );
+            }
+        }
+    }
 
     public final T[] getArray() {
         @SuppressWarnings( "unchecked" )
@@ -323,7 +334,7 @@ public final class DynArray<T> implements Iterable<T> {
         public final void remove() {
             array[ index ] = null;
         }
-        
+ 
         private final void findNext() {
             while( index < array.length && array[ index ] == null ) {
                 index++;

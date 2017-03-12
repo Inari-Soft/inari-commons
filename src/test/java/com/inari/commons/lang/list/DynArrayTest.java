@@ -14,6 +14,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.inari.commons.lang.Method;
+
 public class DynArrayTest {
 
     @Test
@@ -362,6 +364,20 @@ public class DynArrayTest {
         time = System.nanoTime() - startTime;
         
         System.out.println( "Array                  :"  + time );
+        
+        Method<String> method = new Method<String>() {
+            @Override
+            public void call( String value ) {
+                // TPDP
+            }
+        };
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            dynArray.forEach( method );
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArray with Method   :"  + time );
         
         startTime = System.nanoTime();
         int capacity = dynArray.capacity();
