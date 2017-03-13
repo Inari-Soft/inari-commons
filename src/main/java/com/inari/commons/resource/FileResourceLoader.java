@@ -75,6 +75,9 @@ public class FileResourceLoader implements ResourceLoader {
 
     @Override
     public boolean exists( Resource resource ) {
+        if ( resource == null || resource.name() == null ) {
+            return false;
+        }
         return toFile( resource ).exists();
     }
 

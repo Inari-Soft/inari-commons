@@ -365,9 +365,9 @@ public class DynArrayTest {
         
         System.out.println( "Array                  :"  + time );
         
-        Method<String> method = new Method<String>() {
+        final Method<String> method = new Method<String>() {
             @Override
-            public void call( String value ) {
+            public final void call( String value ) {
                 // TPDP
             }
         };

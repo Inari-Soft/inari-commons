@@ -55,6 +55,9 @@ public class Resource implements ConfigObject {
     }
     
     public String path() {
+        if ( loader == null ) {
+            return "";
+        }
         return loader.path( this );
     }
     

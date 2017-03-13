@@ -29,6 +29,7 @@ public class ClassPathResourceLoaderTest {
         assertEquals( "classpath:/com/inari/commons/resource/", loader.toString() );
         assertEquals( "com/inari/commons/resource/", loader.toConfigString() );
         assertEquals( "com/inari/commons/resource/", loader.rootPath() );
+        assertEquals( "classpath:/com/inari/commons/resource/ClassPathResourceLoaderTest.class", loader.path( res ) );
         assertTrue( loader.exists( res ) );
         assertNotNull( loader.url( res ) );
         assertNotNull( loader.inputStream( res ) );
@@ -37,6 +38,13 @@ public class ClassPathResourceLoaderTest {
         assertEquals( "classpath:/com/inari/commons/resource/", loader.toString() );
         assertEquals( "com/inari/commons/resource/", loader.toConfigString() );
         assertEquals( "com/inari/commons/resource/", loader.rootPath() );
+
+        loader.configId( "testConfigId" );
+        assertEquals( "testConfigId", loader.configId() );
+        assertEquals( "com/inari/commons/resource/", loader.toConfigString() );
+
+        loader.fromConfigString( "com/inari/commons/resource/" );
+        assertEquals( "classpath:/com/inari/commons/resource/", loader.toString() );
     }
 
 }
