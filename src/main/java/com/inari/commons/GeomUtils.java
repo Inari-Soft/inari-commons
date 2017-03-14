@@ -170,63 +170,43 @@ public abstract class GeomUtils {
         return (
             ( r1.x >= r.x ) && 
             ( r1.y >= r.y ) && 
-            ( ( r1.x + r1.width ) < ( r.x + r.width ) ) && 
-            ( ( r1.y + r1.height ) < ( r.y + r.height ) )
+            ( ( r1.x + r1.width ) <= ( r.x + r.width ) ) &&
+            ( ( r1.y + r1.height ) <= ( r.y + r.height ) )
         );
     }
     
     public final static int getOppositeSide( int side ) {
-        return ( ( side << 2 ) & 0xC ) | ( ( side >> 2 ) & 0x3 );
+        switch ( side ) {
+            case LEFT_SIDE: return RIGHT_SIDE;
+            case TOP_SIDE: return BOTTOM_SIDE;
+            case RIGHT_SIDE: return LEFT_SIDE;
+            case BOTTOM_SIDE: return TOP_SIDE;
+            default: return -1;
+        }
     }
     
     public final static Rectangle setOutsideBoundary( final Rectangle r, int side, int boundary ) {
-        switch ( side ) {
-            case LEFT_SIDE: {
-                r.width += r.x - boundary - 1;
-                r.x = boundary + 1;
-                break;
-            }
-            case TOP_SIDE: {
-                r.height += r.y - boundary - 1;
-                r.y = boundary + 1;
-                break;
-            }
-            case RIGHT_SIDE: {
-                r.width = boundary - r.x;
-                break;
-            }
-            case BOTTOM_SIDE: {
-                r.height = boundary - r.y;
-                break;
-            }
-            default:
-                break;
+        switch( side ) {
+        case LEFT_SIDE: {
+            r.width += r.x - boundary;
+            r.x = boundary;
+            break;
         }
-        return r;
-    }
-    
-    public final static Rectangle setBoundary( final Rectangle r, final int side, final int boundary ) {
-        switch ( side ) {
-            case LEFT_SIDE: {
-                r.width += r.x - boundary;
-                r.x = boundary;
-                break;
-            }
-            case TOP_SIDE: {
-                r.height += r.y - boundary;
-                r.y = boundary;
-                break;
-            }
-            case RIGHT_SIDE: {
-                r.width = boundary - r.x + 1;
-                break;
-            }
-            case BOTTOM_SIDE: {
-                r.height = boundary - r.y + 1;
-                break;
-            }
-            default:
-                break;
+        case TOP_SIDE: {
+            r.height += r.y - boundary;
+            r.y = boundary;
+            break;
+        }
+        case RIGHT_SIDE: {
+            r.width = boundary - r.x;
+            break;
+        }
+        case BOTTOM_SIDE: {
+            r.height = boundary - r.y;
+            break;
+        }
+        default:
+            break;
         }
         return r;
     }

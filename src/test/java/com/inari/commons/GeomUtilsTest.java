@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.inari.commons.geom.Position;
 import com.inari.commons.geom.Rectangle;
+import com.inari.commons.geom.Vector2i;
 
 public class GeomUtilsTest {
     
@@ -203,14 +204,24 @@ public class GeomUtilsTest {
         assertTrue( GeomUtils.contains( r1, 1, 1 ) );
         assertTrue( GeomUtils.contains( r1, 5, 5 ) );
         assertTrue( GeomUtils.contains( r1, 1, 10 ) );
-        assertTrue( GeomUtils.contains( r1, 10, 1 ) );
+        assertTrue( GeomUtils.contains( r1, new Position( 10, 1 ) ) );
         
         assertFalse( GeomUtils.contains( r1, 0, 0 ) );
         assertFalse( GeomUtils.contains( r1, 0, 1 ) );
         assertFalse( GeomUtils.contains( r1, 1, 0 ) );
         assertFalse( GeomUtils.contains( r1, 1, 11 ) );
-        assertFalse( GeomUtils.contains( r1, 11, 1 ) );
-        
+        assertFalse( GeomUtils.contains( r1, new Position( 11, 1 ) ) );
+
+        assertTrue( GeomUtils.contains( r1, new Rectangle( 2, 2, 2, 2 ) ) );
+        assertFalse( GeomUtils.contains( r1, new Rectangle( 0, 0, 2, 2 ) ) );
+        assertFalse( GeomUtils.contains( r1, new Rectangle( 2, 2, 10, 2 ) ) );
+        assertTrue( GeomUtils.contains( r1, new Rectangle( 1, 1, 10, 10 ) ) );
+        assertTrue( GeomUtils.contains( r1, new Rectangle( 1, 1, 9, 10 ) ) );
+        assertTrue( GeomUtils.contains( r1, new Rectangle( 1, 1, 10, 9 ) ) );
+        assertTrue( GeomUtils.contains( r1, new Rectangle( 1, 1, 9, 9 ) ) );
+
+        assertFalse( GeomUtils.contains( r1, new Rectangle( 1, 1, 11, 10 ) ) );
+        assertFalse( GeomUtils.contains( r1, new Rectangle( 1, 1, 10, 11 ) ) );
     }
 
     @Test
@@ -251,6 +262,202 @@ public class GeomUtilsTest {
         GeomUtils.movePosition( p, Direction.NORTH_EAST, 1, true );
         assertEquals( "[x=1,y=-1]", p.toString() );
 
+    }
+
+    @Test
+    public void testUnion() {
+        Rectangle r1 = new Rectangle( 0, 0, 1, 1 );
+        Rectangle r2 = new Rectangle( 9, 9, 1, 1 );
+
+        Rectangle union = GeomUtils.union( r1, r2 );
+        assertEquals( "[x=0,y=0,width=10,height=10]", String.valueOf( union ) );
+
+        r1 = new Rectangle( -10, -10, 1, 1 );
+        union = GeomUtils.union( r1, r2 );
+        assertEquals( "[x=-10,y=-10,width=20,height=20]", String.valueOf( union ) );
+    }
+
+    @Test
+    public void testGetBoundary() {
+        Rectangle r1 = new Rectangle( -10, -10, 15, 16 );
+
+        assertEquals( "-10", String.valueOf( GeomUtils.getBoundary( r1, GeomUtils.LEFT_SIDE ) ) );
+        assertEquals( "5", String.valueOf( GeomUtils.getBoundary( r1, GeomUtils.BOTTOM_SIDE ) ) );
+        assertEquals( "4", String.valueOf( GeomUtils.getBoundary( r1, GeomUtils.RIGHT_SIDE ) ) );
+        assertEquals( "-10", String.valueOf( GeomUtils.getBoundary( r1, GeomUtils.TOP_SIDE ) ) );
+    }
+
+    @Test
+    public void testgetOppositeSide() {
+        assertTrue( GeomUtils.RIGHT_SIDE == GeomUtils.getOppositeSide( GeomUtils.LEFT_SIDE ) );
+        assertTrue( GeomUtils.BOTTOM_SIDE == GeomUtils.getOppositeSide( GeomUtils.TOP_SIDE ) );
+        assertTrue( GeomUtils.TOP_SIDE == GeomUtils.getOppositeSide( GeomUtils.BOTTOM_SIDE ) );
+        assertTrue( GeomUtils.LEFT_SIDE == GeomUtils.getOppositeSide( GeomUtils.RIGHT_SIDE ) );
+    }
+
+    @Test
+    public void testsetOutsideBoundary() {
+        Rectangle r1 = new Rectangle( 0, 0, 10, 10 );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.RIGHT_SIDE, 15 );
+        assertEquals( "[x=0,y=0,width=15,height=10]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.BOTTOM_SIDE, 15 );
+        assertEquals( "[x=0,y=0,width=15,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.BOTTOM_SIDE, 15 );
+        assertEquals( "[x=0,y=0,width=15,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.LEFT_SIDE, 0 );
+        assertEquals( "[x=0,y=0,width=15,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.LEFT_SIDE, 1 );
+        assertEquals( "[x=1,y=0,width=14,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.LEFT_SIDE, -1 );
+        assertEquals( "[x=-1,y=0,width=16,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.LEFT_SIDE, 0 );
+        assertEquals( "[x=0,y=0,width=15,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.TOP_SIDE, 0 );
+        assertEquals( "[x=0,y=0,width=15,height=15]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.TOP_SIDE, 1 );
+        assertEquals( "[x=0,y=1,width=15,height=14]", String.valueOf( r1 ) );
+
+        GeomUtils.setOutsideBoundary( r1, GeomUtils.TOP_SIDE, -1 );
+        assertEquals( "[x=0,y=-1,width=15,height=16]", String.valueOf( r1 ) );
+    }
+
+    @Test
+    public void testrotateLeft() {
+        assertTrue( Direction.NORTH_EAST == GeomUtils.rotateLeft( Direction.NORTH ) );
+        assertTrue( Direction.EAST == GeomUtils.rotateLeft( Direction.NORTH_EAST ) );
+        assertTrue( Direction.SOUTH_EAST == GeomUtils.rotateLeft( Direction.EAST ) );
+        assertTrue( Direction.SOUTH == GeomUtils.rotateLeft( Direction.SOUTH_EAST ) );
+        assertTrue( Direction.SOUTH_WEST == GeomUtils.rotateLeft( Direction.SOUTH ) );
+        assertTrue( Direction.WEST == GeomUtils.rotateLeft( Direction.SOUTH_WEST ) );
+        assertTrue( Direction.NORTH_WEST == GeomUtils.rotateLeft( Direction.WEST ) );
+        assertTrue( Direction.NORTH == GeomUtils.rotateLeft( Direction.NORTH_WEST ) );
+        assertTrue( Direction.NONE == GeomUtils.rotateLeft( Direction.NONE ) );
+    }
+
+    @Test
+    public void testrotateRight() {
+        assertTrue( Direction.NORTH_WEST == GeomUtils.rotateRight( Direction.NORTH ) );
+        assertTrue( Direction.WEST == GeomUtils.rotateRight( Direction.NORTH_WEST ) );
+        assertTrue( Direction.SOUTH_WEST == GeomUtils.rotateRight( Direction.WEST ) );
+        assertTrue( Direction.SOUTH == GeomUtils.rotateRight( Direction.SOUTH_WEST ) );
+        assertTrue( Direction.SOUTH_EAST == GeomUtils.rotateRight( Direction.SOUTH ) );
+        assertTrue( Direction.EAST == GeomUtils.rotateRight( Direction.SOUTH_EAST ) );
+        assertTrue( Direction.NORTH_EAST == GeomUtils.rotateRight( Direction.EAST ) );
+        assertTrue( Direction.NORTH == GeomUtils.rotateRight( Direction.NORTH_EAST ) );
+        assertTrue( Direction.NONE == GeomUtils.rotateRight( Direction.NONE ) );
+    }
+
+    @Test
+    public void testrotateLeft2() {
+        assertTrue( Direction.EAST == GeomUtils.rotateLeft2( Direction.NORTH ) );
+        assertTrue( Direction.SOUTH_EAST == GeomUtils.rotateLeft2( Direction.NORTH_EAST ) );
+        assertTrue( Direction.SOUTH == GeomUtils.rotateLeft2( Direction.EAST ) );
+        assertTrue( Direction.SOUTH_WEST == GeomUtils.rotateLeft2( Direction.SOUTH_EAST ) );
+        assertTrue( Direction.WEST == GeomUtils.rotateLeft2( Direction.SOUTH ) );
+        assertTrue( Direction.NORTH_WEST == GeomUtils.rotateLeft2( Direction.SOUTH_WEST ) );
+        assertTrue( Direction.NORTH == GeomUtils.rotateLeft2( Direction.WEST ) );
+        assertTrue( Direction.NORTH_EAST == GeomUtils.rotateLeft2( Direction.NORTH_WEST ) );
+        assertTrue( Direction.NONE == GeomUtils.rotateLeft2( Direction.NONE ) );
+    }
+
+    @Test
+    public void testrotateRight2() {
+        assertTrue( Direction.WEST == GeomUtils.rotateRight2( Direction.NORTH ) );
+        assertTrue( Direction.SOUTH_WEST == GeomUtils.rotateRight2( Direction.NORTH_WEST ) );
+        assertTrue( Direction.SOUTH == GeomUtils.rotateRight2( Direction.WEST ) );
+        assertTrue( Direction.SOUTH_EAST == GeomUtils.rotateRight2( Direction.SOUTH_WEST ) );
+        assertTrue( Direction.EAST == GeomUtils.rotateRight2( Direction.SOUTH ) );
+        assertTrue( Direction.NORTH_EAST == GeomUtils.rotateRight2( Direction.SOUTH_EAST ) );
+        assertTrue( Direction.NORTH == GeomUtils.rotateRight2( Direction.EAST ) );
+        assertTrue( Direction.NORTH_WEST == GeomUtils.rotateRight2( Direction.NORTH_EAST ) );
+        assertTrue( Direction.NONE == GeomUtils.rotateRight2( Direction.NONE ) );
+    }
+
+    @Test
+    public void testisVertical() {
+        assertTrue( GeomUtils.isVertical( Direction.NORTH ) );
+        assertTrue( GeomUtils.isVertical( Direction.SOUTH ) );
+        assertFalse( GeomUtils.isVertical( Direction.EAST ) );
+        assertFalse( GeomUtils.isVertical( Direction.WEST ) );
+        assertFalse( GeomUtils.isVertical( Direction.NORTH_EAST ) );
+        assertFalse( GeomUtils.isVertical( Direction.NORTH_WEST ) );
+        assertFalse( GeomUtils.isVertical( Direction.SOUTH_EAST ) );
+        assertFalse( GeomUtils.isVertical( Direction.SOUTH_WEST ) );
+        assertFalse( GeomUtils.isVertical( Direction.NONE ) );
+    }
+
+    @Test
+    public void testisHorizontal() {
+        assertFalse( GeomUtils.isHorizontal( Direction.NORTH ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.SOUTH ) );
+        assertTrue( GeomUtils.isHorizontal( Direction.EAST ) );
+        assertTrue( GeomUtils.isHorizontal( Direction.WEST ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.NORTH_EAST ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.NORTH_WEST ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.SOUTH_EAST ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.SOUTH_WEST ) );
+        assertFalse( GeomUtils.isHorizontal( Direction.NONE ) );
+    }
+
+    @Test
+    public void testtranslateTo() {
+        Position p1 = new Position( 0, 0 );
+
+        GeomUtils.translateTo( p1, new Position( 10, -67 ) );
+        assertEquals( "[x=10,y=-67]", String.valueOf( p1 ) );
+    }
+
+    @Test
+    public void testtranslate() {
+        Position p1 = new Position( 10, 10 );
+
+        GeomUtils.translate( p1, new Vector2i( 4, 6 ) );
+        assertEquals( "[x=14,y=16]", String.valueOf( p1 ) );
+    }
+
+    @Test
+    public void testtranslatedPos() {
+        Position p1 = new Position( 10, 5 );
+        assertTrue( 9 == GeomUtils.getTranslatedXPos( p1, Direction.WEST ) );
+        assertTrue( 9 == GeomUtils.getTranslatedXPos( p1, Direction.SOUTH_WEST ) );
+        assertTrue( 9 == GeomUtils.getTranslatedXPos( p1, Direction.NORTH_WEST ) );
+
+        assertTrue( 11 == GeomUtils.getTranslatedXPos( p1, Direction.EAST ) );
+        assertTrue( 11 == GeomUtils.getTranslatedXPos( p1, Direction.SOUTH_EAST ) );
+        assertTrue( 11 == GeomUtils.getTranslatedXPos( p1, Direction.NORTH_EAST ) );
+
+        assertTrue( 4 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH ) );
+        assertTrue( 4 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH_EAST ) );
+        assertTrue( 4 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH_WEST ) );
+
+        assertTrue( 6 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH ) );
+        assertTrue( 6 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH_EAST ) );
+        assertTrue( 6 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH_WEST ) );
+
+        assertTrue( 9 == GeomUtils.getTranslatedXPos( p1, Direction.WEST, 1 ) );
+        assertTrue( 8 == GeomUtils.getTranslatedXPos( p1, Direction.SOUTH_WEST, 2 ) );
+        assertTrue( 7 == GeomUtils.getTranslatedXPos( p1, Direction.NORTH_WEST, 3 ) );
+
+        assertTrue( 11 == GeomUtils.getTranslatedXPos( p1, Direction.EAST, 1 ) );
+        assertTrue( 12 == GeomUtils.getTranslatedXPos( p1, Direction.SOUTH_EAST, 2 ) );
+        assertTrue( 13 == GeomUtils.getTranslatedXPos( p1, Direction.NORTH_EAST, 3 ) );
+
+        assertTrue( -5 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH, 10 ) );
+        assertTrue( -15 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH_EAST, 20 ) );
+        assertTrue( -25 == GeomUtils.getTranslatedYPos( p1, Direction.NORTH_WEST, 30 ) );
+
+        assertTrue( 15 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH, 10 ) );
+        assertTrue( 25 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH_EAST, 20 ) );
+        assertTrue( 35 == GeomUtils.getTranslatedYPos( p1, Direction.SOUTH_WEST, 30 ) );
     }
 
 }

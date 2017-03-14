@@ -60,9 +60,10 @@ public abstract class StringUtils {
     
     
     public final static Collection<String> split( String string, String separator ) {
-        if ( StringUtils.isBlank( string ) ) {
+        if ( StringUtils.isBlank( string ) || separator == null ) {
             return null;
         }
+
         ArrayList<String> list = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer( string, separator );
         while ( st.hasMoreTokens() ) {
@@ -72,9 +73,10 @@ public abstract class StringUtils {
     }
     
     public final static String[] splitToArray( String string, String separator ) {
-        if ( StringUtils.isBlank( string ) ) {
+        if ( StringUtils.isBlank( string ) || separator == null ) {
             return null;
         }
+
         StringTokenizer st = new StringTokenizer( string, separator );
         String[] tokens = new String[ st.countTokens() ];
         int i = 0;
@@ -86,9 +88,10 @@ public abstract class StringUtils {
     }
     
     public final static Map<String, String> splitToMap( String string, String separator, String keyValueSeparator ) {
-        if ( StringUtils.isBlank( string ) ) {
+        if ( StringUtils.isBlank( string ) || separator == null || keyValueSeparator == null ) {
             return null;
         }
+
         HashMap<String, String> map = new LinkedHashMap<String, String>();
         StringTokenizer stEntry = new StringTokenizer( string, separator );
         while ( stEntry.hasMoreTokens() ) {
@@ -105,9 +108,14 @@ public abstract class StringUtils {
     }
     
     public static final String fillPrepending( String string, char fill, int length ) {
+        if ( string == null ) {
+            return null;
+        }
+
         if ( string.length() >= length ) {
             return string;
         }
+
         StringBuilder sb = new StringBuilder( string );
         while ( sb.length() < length ) {
             sb.insert( 0, fill );
@@ -116,6 +124,10 @@ public abstract class StringUtils {
     }
     
     public static final String fillAppending( String string, char fill, int length ) {
+        if ( string == null ) {
+            return null;
+        }
+
         if ( string.length() >= length ) {
             return string;
         }
@@ -132,6 +144,10 @@ public abstract class StringUtils {
     }
 
     public static String array2DToString( int[][] grid ) {
+        if ( grid == null ) {
+            return null;
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append( "[" );
         for ( int i = 0; i < grid.length; i++ ) {
@@ -164,8 +180,15 @@ public abstract class StringUtils {
     
     public static final BitSet bitsetFromString( String pixelsString ) {
         BitSet pixels = new BitSet( pixelsString.length() );
+        int index = 0;
         for ( int i = 0; i < pixelsString.length(); i++ ) {
-            pixels.set( i, pixelsString.charAt( i ) != '0' );
+            char c = pixelsString.charAt( i );
+            if ( c == '\n' ) {
+                continue;
+            }
+
+            pixels.set( index, c != '0' );
+            index++;
         }
         return pixels;
     }
