@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -305,7 +306,7 @@ public class DynArrayTest {
     private final static String entry = "ENTRY";
     @Test
     public void testIteratorPerformance() {
-        int operations = 10000;
+        int operations = 10000000;
         int runns = 30 * 50;
         
         ArrayList<String> arrayList = new ArrayList<String>( operations );
@@ -378,6 +379,20 @@ public class DynArrayTest {
         time = System.nanoTime() - startTime;
         
         System.out.println( "DynArray with Method   :"  + time );
+        
+        final Function<String, Void> f = new Function<String, Void>() {
+            @Override
+            public final Void apply( String value ) {
+                return null;
+            }
+        };
+        startTime = System.nanoTime();
+        for ( int run = 0; run < runns; run++ ) {
+            dynArray.forEach( f );
+        }
+        time = System.nanoTime() - startTime;
+        
+        System.out.println( "DynArray with Function :"  + time );
         
         startTime = System.nanoTime();
         int capacity = dynArray.capacity();
