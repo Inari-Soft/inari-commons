@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.function.Function;
 
 import org.junit.Test;
 
 import com.inari.commons.lang.Method;
+import com.inari.commons.lang.functional.Function;
 
 public class DynArrayTest {
 

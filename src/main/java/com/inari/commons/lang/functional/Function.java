@@ -22,6 +22,6 @@ package com.inari.commons.lang.functional;
  */
 public interface Function<IN, OUT> {
     
-    public OUT f( IN value );
+    public OUT apply( IN value );
 
 }

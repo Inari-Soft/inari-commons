@@ -19,9 +19,9 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.function.Function;
 
 import com.inari.commons.lang.Method;
+import com.inari.commons.lang.functional.Function;
 
 /** An Array that dynamically grows if more space is needed.
  * 
