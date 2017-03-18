@@ -306,7 +306,7 @@ public class DynArrayTest {
     private final static String entry = "ENTRY";
     @Test
     public void testIteratorPerformance() {
-        int operations = 10000000;
+        int operations = 10000;
         int runns = 30 * 50;
         
         ArrayList<String> arrayList = new ArrayList<String>( operations );
