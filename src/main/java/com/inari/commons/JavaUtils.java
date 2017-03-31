@@ -13,7 +13,7 @@ public abstract class JavaUtils {
      * @return
      */
     @SafeVarargs
-    public static final <T> Set<T> unmodifiableSetSet( T... values ) {
+    public static final <T> Set<T> unmodifiableSet( T... values ) {
         Set<T> set = new HashSet<T>();
         set.addAll( Arrays.asList( values ) );
         return Collections.unmodifiableSet( set );
