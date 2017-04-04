@@ -143,6 +143,17 @@ public abstract class GeomUtils {
         return new Rectangle( x1, y1, x2 - x1 + 1, y2 - y1 + 1 );
     }
     
+    public final static void unionAdd( final Rectangle r, final Rectangle r1 ) {
+        int x1 = Math.min( r.x, r1.x );
+        int y1 = Math.min( r.y, r1.y );
+        int x2 = Math.max( r.x + r.width - 1, r1.x + r1.width - 1 );
+        int y2 = Math.max( r.y + r.height - 1, r1.y + r1.height - 1 ) ;
+        r.x = x1;
+        r.y = y1;
+        r.width = x2 - x1 + 1;
+        r.height = y2 - y1 + 1;
+    }
+    
     public final static int getBoundary( final Rectangle r, int side ) {
         switch ( side ) {
             case LEFT_SIDE: return r.x; 
