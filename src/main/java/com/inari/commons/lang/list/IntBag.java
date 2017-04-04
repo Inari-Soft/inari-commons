@@ -129,9 +129,11 @@ public final class IntBag implements StringConfigurable {
             return;
         }
         
-        IntIterator iterator = toAdd.iterator();
-        while( iterator.hasNext() ) {
-            add( iterator.next() );
+        for ( int i = 0; i < toAdd.length(); i++ ) {
+            if ( toAdd.isEmpty( i ) ) {
+                continue;
+            }
+            add( toAdd.get( i ) );
         }
     }
     
