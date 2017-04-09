@@ -306,7 +306,7 @@ public class DynArrayTest {
     private final static String entry = "ENTRY";
     @Test
     public void testIteratorPerformance() {
-        int operations = 10000;
+        int operations = 100000;
         int runns = 30 * 50;
         
         ArrayList<String> arrayList = new ArrayList<String>( operations );
@@ -325,6 +325,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( String value : arrayList ) {
                 if ( value != null ) {
+                    doSomething();
                 }
             }
         }
@@ -336,6 +337,7 @@ public class DynArrayTest {
         startTime = System.nanoTime();
         for ( int run = 0; run < runns; run++ ) {
             for( @SuppressWarnings( "unused" ) String value : staticList ) {
+                doSomething();
             }
         }
         time = System.nanoTime() - startTime;
@@ -346,7 +348,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < staticList.capacity(); i++ ) {
                 if ( staticList.get( i ) != null ) {
-                    
+                    doSomething();
                 }
             }
         }
@@ -358,7 +360,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < array.length; i++ ) {
                 if ( array[ i ] != null ) {
-                    
+                    doSomething();
                 }
             }
         }
@@ -369,7 +371,7 @@ public class DynArrayTest {
         final Method<String> method = new Method<String>() {
             @Override
             public final void call( String value ) {
-                // TPDP
+                doSomething();
             }
         };
         startTime = System.nanoTime();
@@ -383,6 +385,7 @@ public class DynArrayTest {
         final Function<String, Void> f = new Function<String, Void>() {
             @Override
             public final Void apply( String value ) {
+                doSomething();
                 return null;
             }
         };
@@ -399,7 +402,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < capacity; i++ ) {
                 if ( dynArray.get( i ) != null ) {
-                    
+                    doSomething();
                 }
             }
         }
@@ -411,7 +414,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < dynArray.capacity(); i++ ) {
                 if ( dynArray.get( i ) != null ) {
-                    
+                    doSomething();
                 }
             }
         }
@@ -424,7 +427,7 @@ public class DynArrayTest {
         for ( int run = 0; run < runns; run++ ) {
             for( int i = 0; i < capacity; i++ ) {
                 if ( dynArray.contains( i ) ) {
-                    
+                    doSomething();
                 }
             }
         }
@@ -437,6 +440,7 @@ public class DynArrayTest {
             Iterator<String> listIterator = dynArray.iterator();
             while ( listIterator.hasNext() ) {
                 if ( listIterator.next() != null ) {
+                    doSomething();
                 }
             }
         }
@@ -444,6 +448,12 @@ public class DynArrayTest {
         
         System.out.println( "DynArray listIt        :"  + time );
         
+    }
+    
+    private final static void doSomething() {
+        int l = 0;
+        int y = 2;
+        int g = l + y;
     }
 
 }
