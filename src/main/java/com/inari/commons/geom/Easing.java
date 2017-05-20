@@ -28,7 +28,7 @@ public interface Easing {
         CUBIC_OUT( new EasingImpls.CubicOut() ),
         CUBIC_IN_OUT( new EasingImpls.CubicInOut() ),
         QRT_IN( new EasingImpls.QuarticIn() ),
-        QRT_OUT( new EasingImpls.QuarticInOut() ),
+        QRT_OUT( new EasingImpls.QuarticOut() ),
         QRT_IN_OUT( new EasingImpls.QuarticInOut() ),
         QNT_IN( new EasingImpls.QuinticIn() ),
         QNT_OUT( new EasingImpls.QuinticOut() ),

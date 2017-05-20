@@ -125,14 +125,7 @@ public abstract class EasingImpls {
         }
     }
     
-    static final class QuarticIn implements Easing {
-
-        @Override
-        public final float calc( float t, float b, float c, float d ) {
-            t /= d;
-            return c * t * t * t * t + b;
-        }
-    }
+    
     
     static final class QuadraticInOut implements Easing {
 
@@ -152,6 +145,25 @@ public abstract class EasingImpls {
         public final float calc( float t, float b, float c, float d ) {
             t /= d;
             return -c * t * ( t - 2 ) + b;
+        }
+    }
+    
+    static final class QuarticIn implements Easing {
+
+        @Override
+        public final float calc( float t, float b, float c, float d ) {
+            t /= d;
+            return c * t * t * t * t + b;
+        }
+    }
+    
+    static final class QuarticOut implements Easing {
+
+        @Override
+        public final float calc( float t, float b, float c, float d ) {
+            t /= d;
+            t--;
+            return -c * ( t * t * t * t - 1 ) + b;
         }
     }
     
