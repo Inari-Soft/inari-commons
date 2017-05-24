@@ -139,8 +139,8 @@ public final class DynArray<T> implements Iterable<T> {
         return array[ index ] != null;
     }
 
-    /** Use this to get the index of a specified object in the DynArray. This inernally uses
-     *  ArrayList.indexOf and has the same performance.
+    /** Use this to get the index of a specified object in the DynArray. 
+     *  This checks only gives back the index of the same object instance (no equals check)
      *
      *  @param value The object value to get the associated index
      */
@@ -149,7 +149,7 @@ public final class DynArray<T> implements Iterable<T> {
             return -1;
         }
         for ( int i = 0; i < array.length; i++ ) {
-            if ( value.equals( array[ i ] ) ) {
+            if ( value == array[ i ] ) {
                 return i;
             }
         }
