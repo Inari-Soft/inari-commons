@@ -17,8 +17,6 @@ package com.inari.commons.lang.indexed;
 
 import java.lang.reflect.Constructor;
 import java.util.BitSet;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -231,6 +229,9 @@ public abstract class Indexer {
         
         Map<String, Set<IndexedTypeKey>> grouped = new LinkedHashMap<>();
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
+            if ( indexedTypeKey.index < 0 ) {
+                continue;
+            }
             String baseType = indexedTypeKey.indexedObjectType().getName();
             if ( !grouped.containsKey( baseType ) ) {
                 grouped.put( baseType, new LinkedHashSet<IndexedTypeKey>() );
@@ -241,9 +242,7 @@ public abstract class Indexer {
         for ( Map.Entry<String, Set<IndexedTypeKey>> entry : grouped.entrySet() ) {
             builder.append( "\n  " ).append( entry.getKey() ).append( ":" );
             for ( IndexedTypeKey indexedTypeKey : entry.getValue() ) {
-                if ( indexedTypeKey.index >= 0 ) {
-                    builder.append( "\n    " ).append( indexedTypeKey.type().getName() ).append( " : " ).append( indexedTypeKey.index );
-                }
+                builder.append( "\n    " ).append( indexedTypeKey.type().getName() ).append( " : " ).append( indexedTypeKey.index );
             }
         }
         builder.append( "\n}" );
