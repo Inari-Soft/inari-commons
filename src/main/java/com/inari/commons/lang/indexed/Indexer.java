@@ -229,7 +229,7 @@ public abstract class Indexer {
             builder.append( "\n  " ).append( indexedObjectType.getKey() ).append( " : " ).append( indexedObjectType.getValue() );
         }
         
-        Map<String, Set<IndexedTypeKey>> grouped = new HashMap<>();
+        Map<String, Set<IndexedTypeKey>> grouped = new LinkedHashMap<>();
         for ( IndexedTypeKey indexedTypeKey : indexedTypeKeys ) {
             String baseType = indexedTypeKey.indexedObjectType().getName();
             if ( !grouped.containsKey( baseType ) ) {
