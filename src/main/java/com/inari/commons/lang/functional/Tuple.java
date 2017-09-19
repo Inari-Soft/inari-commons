@@ -2,8 +2,8 @@ package com.inari.commons.lang.functional;
 
 public final class Tuple<L, R> {
     
-    final L left;
-    final R right;
+    public final L left;
+    public final R right;
     
     private final int hash;
     
