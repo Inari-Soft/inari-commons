@@ -102,6 +102,10 @@ public final class IntBag implements StringConfigurable {
     }
     
     public final void set( int index, int value ) {
+        if ( value == nullValue ) {
+            return;
+        }
+        
         ensureCapacity( index );
         if ( array[ index ] == nullValue ) {
             size++;
@@ -110,6 +114,10 @@ public final class IntBag implements StringConfigurable {
     }
     
     public final int add( int value ) {
+        if ( value == nullValue ) {
+            return -1;
+        }
+        
         int firstEmptyIndex = firstEmptyIndex();
         if ( firstEmptyIndex >= 0 ) {
             array[ firstEmptyIndex ] = value;
