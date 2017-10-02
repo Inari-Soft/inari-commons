@@ -34,6 +34,10 @@ public final class Aspects implements Iterable<Aspect> {
         return bitset.size();
     }
     
+    public final boolean isEmpty() {
+        return bitset.cardinality() <= 0;
+    }
+    
     public final Aspects set( Aspect aspect ) {
         checkType( aspect );
         bitset.set( aspect.index() );
