@@ -363,6 +363,17 @@ public final class DynArray<T> implements Iterable<T> {
         return new DynArray<T>( type, initialCapacity, grow );
     }
     
+    public final static <T> DynArray<T> fromArray( Class<T> type, T[] array, int grow ) {
+        DynArray<T> result = new DynArray<T>( type, array.length, grow );
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( array[ i ] != null ) {
+                result.set( i, array[ i ] );
+            }
+        }
+        
+        return result;
+    }
+    
     @SuppressWarnings( { "unchecked", "rawtypes" } )
     public final static <T> T createTyped( Class<?> type ) {
         return (T) new DynArray( type, 50, 20 );
