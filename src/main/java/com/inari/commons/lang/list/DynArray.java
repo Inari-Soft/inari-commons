@@ -140,7 +140,8 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
     }
 
     /** Use this to get the index of a specified object in the DynArray. 
-     *  This checks only gives back the index of the same object instance (no equals check)
+     *  This checks only gives back the index of the same object instance (no equals check) that was first found in the array.
+     *  If there are more reference to the same instance within an DynArray, this will only return the index of the first match
      *
      *  @param value The object value to get the associated index
      */
@@ -171,8 +172,30 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
         size--;
         return result;
     }
+    
+    /** This removes all given equal instances to a given value instance from the DynArray. 
+     *  Uses equals to check equality and sets a null value on specified index where a equal instance was found
+     *  
+     *  @param value The value to for that all given equal value instances are removed from the DynArray
+     *  @return the number of removed instances.
+     */
+    public final int removeAll( T value ) {
+        if ( value == null ) {
+            return 0;
+        }
+        
+        int number = 0;
+        for ( int i = 0; i < array.length; i++ ) {
+            if ( value.equals( array[ i ] ) ) {
+                remove( i );
+                number++;
+            }
+        }
+        
+        return number;
+    }
 
-    /** Removes the specified object value from DynArray and returns the index where it as removed.
+    /** Removes the first found specified instance of object value from DynArray and returns the index where it as removed.
      *  Also this remove sets a null value on specified index of internal ArrayList instead of removing it
      *  to avoid the index shift of an ArrayList remove.
      *
@@ -186,6 +209,8 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
         }
         return indexOf;
     }
+    
+    
 
     /** Sorts the list within the given comparator.
      *  @param comparator
