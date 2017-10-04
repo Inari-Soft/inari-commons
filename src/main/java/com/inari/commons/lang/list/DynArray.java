@@ -38,7 +38,7 @@ import com.inari.commons.lang.functional.Function;
  *
  * @param <T> The type of objects in the DynArray
  */
-public final class DynArray<T> implements Iterable<T> {
+public final class DynArray<T> implements ReadOnlyDynArray<T> {
     
     private final Class<T> typeClass;
     private T[] array;
@@ -233,7 +233,6 @@ public final class DynArray<T> implements Iterable<T> {
      *
      *  @return an Iterator of specified type to iterate over all objects in the DynArray by skipping the empty/null values
      */
-    @Override
     public final Iterator<T> iterator() {
         return new DynArrayIterator();
     }
@@ -325,12 +324,10 @@ public final class DynArray<T> implements Iterable<T> {
             findNext();
         }
 
-        @Override
         public final boolean hasNext() {
             return index < array.length;
         }
 
-        @Override
         public final T next() {
             T result = array[ index ];
             index++;
@@ -338,7 +335,6 @@ public final class DynArray<T> implements Iterable<T> {
             return result;
         }
 
-        @Override
         public final void remove() {
             array[ index ] = null;
         }
