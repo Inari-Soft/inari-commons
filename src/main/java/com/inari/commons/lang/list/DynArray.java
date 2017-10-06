@@ -109,8 +109,8 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
      * 
      * @param values the other DynArray to get the values form
      */
-    public final void addAll( DynArray<T> values ) {
-        ensureCapacity( this.size + values.size );
+    public final void addAll( ReadOnlyDynArray<T> values ) {
+        ensureCapacity( this.size + values.size() );
         for ( T value : values ) {
             add( value );
         }
