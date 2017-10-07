@@ -55,15 +55,15 @@ public class IndexedTypeSetTest {
         
         aSet1.set( aa );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=1 size:1, indexed={AA} ]", aSet1.toString() );
-        assertEquals( "Aspects [group=AIndexedTypeKey {AA}]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey {com_inari_commons_lang_indexed_AA}]", aSet1.getAspect().toString() );
         
         aSet1.set( ac );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=3 size:2, indexed={AA,null,AC} ]", aSet1.toString() );
-        assertEquals( "Aspects [group=AIndexedTypeKey {AA, AC}]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey {com_inari_commons_lang_indexed_AA, com_inari_commons_lang_indexed_AC}]", aSet1.getAspect().toString() );
         
         aSet1.set( ab );
         assertEquals( "IndexedTypeSet [ indexedBaseType=AIndexedTypeKey length=3 size:3, indexed={AA,AB,AC} ]", aSet1.toString() );
-        assertEquals( "Aspects [group=AIndexedTypeKey {AA, AB, AC}]", aSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=AIndexedTypeKey {com_inari_commons_lang_indexed_AA, com_inari_commons_lang_indexed_AB, com_inari_commons_lang_indexed_AC}]", aSet1.getAspect().toString() );
 
     }
     
@@ -107,15 +107,15 @@ public class IndexedTypeSetTest {
 
         bSet1.set( ba );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:1, indexed={BA,null,null} ]", bSet1.toString() );
-        assertEquals( "Aspects [group=BIndexedTypeKey {BA}]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey {com_inari_commons_lang_indexed_BA}]", bSet1.getAspect().toString() );
         
         bSet1.set( bc );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:2, indexed={BA,null,BC} ]", bSet1.toString() );
-        assertEquals( "Aspects [group=BIndexedTypeKey {BA, BC}]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey {com_inari_commons_lang_indexed_BA, com_inari_commons_lang_indexed_BC}]", bSet1.getAspect().toString() );
         
         bSet1.set( bb );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
-        assertEquals( "Aspects [group=BIndexedTypeKey {BA, BB, BC}]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey {com_inari_commons_lang_indexed_BA, com_inari_commons_lang_indexed_BB, com_inari_commons_lang_indexed_BC}]", bSet1.getAspect().toString() );
     }
     
     @Test
@@ -244,7 +244,7 @@ public class IndexedTypeSetTest {
         bSet1.set( bc );
         bSet1.set( bb );
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:3, indexed={BA,BB,BC} ]", bSet1.toString() );
-        assertEquals( "Aspects [group=BIndexedTypeKey {BA, BB, BC}]", bSet1.getAspect().toString() );
+        assertEquals( "Aspects [group=BIndexedTypeKey {com_inari_commons_lang_indexed_BA, com_inari_commons_lang_indexed_BB, com_inari_commons_lang_indexed_BC}]", bSet1.getAspect().toString() );
         
         bSet1.clear();
         assertEquals( "IndexedTypeSet [ indexedBaseType=BIndexedTypeKey length=3 size:0, indexed={null,null,null} ]", bSet1.toString() );
