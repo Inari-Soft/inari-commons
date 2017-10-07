@@ -23,7 +23,7 @@ public abstract class IndexedTypeKey extends BaseIndexedObject implements IIndex
     
     @Override
     public final String name() {
-        return indexedType.getSimpleName();
+        return indexedType.getName().replace( ".", "_" );
     }
 
     @Override
