@@ -130,7 +130,7 @@ public final class IntBag implements IntBagRO {
         return oldLength;
     }
     
-    public final void addAll( IntBag toAdd ) {
+    public final void addAll( IntBagRO toAdd ) {
         if ( toAdd == null ) {
             return;
         }
