@@ -1,11 +1,6 @@
 package com.inari.commons.lang.list;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,7 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.inari.commons.lang.Method;
+import com.inari.commons.lang.functional.Effect;
 import com.inari.commons.lang.functional.Function;
 
 public class DynArrayTest {
@@ -368,9 +363,8 @@ public class DynArrayTest {
         
         System.out.println( "Array                  :"  + time );
         
-        final Method<String> method = new Method<String>() {
-            @Override
-            public final void call( String value ) {
+        final Effect<String> method = new Effect<String>() {
+            public final void apply( String value ) {
                 doSomething();
             }
         };

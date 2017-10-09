@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import com.inari.commons.lang.Method;
+import com.inari.commons.lang.functional.Effect;
 import com.inari.commons.lang.functional.Function;
 
 /** An Array that dynamically grows if more space is needed.
@@ -38,7 +38,7 @@ import com.inari.commons.lang.functional.Function;
  *
  * @param <T> The type of objects in the DynArray
  */
-public final class DynArray<T> implements ReadOnlyDynArray<T> {
+public final class DynArray<T> implements DynArrayRO<T> {
     
     private final Class<T> typeClass;
     private T[] array;
@@ -109,7 +109,7 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
      * 
      * @param values the other DynArray to get the values form
      */
-    public final void addAll( ReadOnlyDynArray<T> values ) {
+    public final void addAll( DynArrayRO<T> values ) {
         ensureCapacity( this.size + values.size() );
         for ( T value : values ) {
             add( value );
@@ -279,10 +279,10 @@ public final class DynArray<T> implements ReadOnlyDynArray<T> {
         }
     }
     
-    public final void forEach( Method<T> m ) {
+    public final void forEach( Effect<T> m ) {
         for ( int i = 0; i < array.length; i++ ) {
             if ( array[ i ] != null ) {
-                m.call( array[ i ] );
+                m.apply( array[ i ] );
             }
         }
     }

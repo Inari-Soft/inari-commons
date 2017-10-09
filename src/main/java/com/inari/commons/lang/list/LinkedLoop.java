@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.inari.commons.lang.list;
 
+import com.inari.commons.lang.list.LinkedList.LLNode;
+
 public class LinkedLoop<T> {
 
     private LLNode<T> pointer = null;

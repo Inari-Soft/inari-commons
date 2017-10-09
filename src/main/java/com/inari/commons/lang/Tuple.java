@@ -1,4 +1,4 @@
-package com.inari.commons.lang.functional;
+package com.inari.commons.lang;
 
 public final class Tuple<L, R> {
     

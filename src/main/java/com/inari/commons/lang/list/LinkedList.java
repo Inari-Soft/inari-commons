@@ -169,7 +169,6 @@ public class LinkedList <T extends Object> implements Iterable<T> {
         return ( this.firstMark.nextNode == this.lastMark );
     }
 
-    @Override
     public Iterator<T> iterator() {
         return new LListIterator<T>( this.firstMark, this.lastMark );
     }
@@ -232,18 +231,15 @@ public class LinkedList <T extends Object> implements Iterable<T> {
             this.lastNode = lastNode;
         }
 
-        @Override
         public boolean hasNext() {
             return ( this.findNextNode() != this.lastNode );
         }
 
-        @Override
         public T next() {
             this.currentNode = this.findNextNode();
             return this.currentNode.value;
         }
 
-        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -257,4 +253,62 @@ public class LinkedList <T extends Object> implements Iterable<T> {
         }
         
     }
+    
+    public interface INode<T> {
+    
+        T value();
+        
+        INode<T> nextNode();
+        
+        INode<T> previousNode();
+        
+        void remove();
+    
+    }
+    
+    public static final class LLNode<T> implements INode<T> {
+    
+        boolean markerNode = false;
+        
+        public T value;
+        
+        LLNode<T> nextNode;
+        LLNode<T> prevNode;
+        
+        public LLNode() {
+            this.value = null;
+            this.nextNode = null;
+            this.prevNode = null;
+        }
+        
+        public LLNode( T value ) {
+            this.value = value;
+            this.nextNode = null;
+            this.prevNode = null;
+        }
+        
+        public final T value() {
+            return value;
+        }
+    
+        public final INode<T> nextNode() {
+            return nextNode;
+        }
+    
+        public final INode<T> previousNode() {
+            return prevNode;
+        }
+        
+        public final void remove() {
+            if ( this.prevNode != null ) {
+                this.prevNode.nextNode = this.nextNode;
+            }
+            if ( this.nextNode != null ) {
+                this.nextNode.prevNode = this.prevNode;
+            }
+            this.nextNode = null;
+            this.prevNode = null;
+        }
+    }
+
 }

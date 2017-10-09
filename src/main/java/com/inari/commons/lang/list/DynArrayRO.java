@@ -1,6 +1,6 @@
 package com.inari.commons.lang.list;
 
-public interface ReadOnlyDynArray<T> extends Iterable<T> {
+public interface DynArrayRO<T> extends Iterable<T> {
 
     /** Indicates the grow number that defines the number of additional capacity that is added when a object is set with an
      *  index higher then the actual capacity.

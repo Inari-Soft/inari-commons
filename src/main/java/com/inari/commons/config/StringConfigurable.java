@@ -23,9 +23,19 @@ package com.inari.commons.config;
  */
 public interface StringConfigurable {
     
+    enum FactoryType { INSTANCE_METHOD, STATIC_METHOD, CONSTRUCTOR }
+    @interface ConfiguredType {
+        
+        String factory() default "";
+        FactoryType factoryType() default FactoryType.STATIC_METHOD;
+        String methodName() default "fromConfigString";
+        
+    }
+    
     /** Sets the attribute of the object form String phrase.
      *  @param stringValue the String phrase
      */
+    @Deprecated // will be replaced with an Annotation defining a factory to create from String value
     void fromConfigString( String stringValue );
     
     /** Gets the attributes of the object in a String phrase
