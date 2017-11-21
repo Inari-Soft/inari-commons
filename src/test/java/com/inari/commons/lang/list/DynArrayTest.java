@@ -447,6 +447,7 @@ public class DynArrayTest {
     private final static void doSomething() {
         int l = 0;
         int y = 2;
+        @SuppressWarnings( "unused" )
         int g = l + y;
     }
 

@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import com.inari.commons.lang.list.IntBag;
 
-public final class Aspects implements Iterable<Aspect> {
+public final class Aspects implements IAspects {
     
     final AspectGroup group;
     final BitSet bitset;

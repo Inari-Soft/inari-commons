@@ -25,6 +25,7 @@ public class TypedKeyTest {
             assertEquals( "type is null", iae.getMessage() );
         }
 
+        @SuppressWarnings( "rawtypes" )
         TypedKey<ArrayList> key = TypedKey.create( "name", ArrayList.class );
         assertEquals( "name:ArrayList", key.toString() );
 
