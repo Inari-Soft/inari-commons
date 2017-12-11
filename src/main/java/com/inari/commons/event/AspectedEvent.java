@@ -16,7 +16,7 @@
 package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspect;
-import com.inari.commons.lang.aspect.Aspects;
+import com.inari.commons.lang.aspect.IAspects;
 
 /** An {@link Event} with an {@link Aspect} to verify interested listeners.<p>
  *  Use this to notify {@link AspectedEventListener} listening to specified {@link Event} and {@link Aspect}.
@@ -36,6 +36,6 @@ public abstract class AspectedEvent<L extends AspectedEventListener> extends Eve
      *  
      *  @return The Aspect of this event
      */
-    public abstract Aspects getAspects();
+    public abstract IAspects getAspects();
     
 }

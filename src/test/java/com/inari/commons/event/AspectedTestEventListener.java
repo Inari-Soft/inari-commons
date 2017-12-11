@@ -1,6 +1,7 @@
 package com.inari.commons.event;
 
 import com.inari.commons.lang.aspect.Aspects;
+import com.inari.commons.lang.aspect.IAspects;
 
 public class AspectedTestEventListener implements AspectedEventListener {
     
@@ -12,7 +13,7 @@ public class AspectedTestEventListener implements AspectedEventListener {
     }
 
     @Override
-    public boolean match( Aspects aspects ) {
+    public boolean match( IAspects aspects ) {
         return aspects.include( this.aspects );
     }
 
